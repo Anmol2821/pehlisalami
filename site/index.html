@@ -1,0 +1,781 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+</head>
+<body>
+<title>Pehli Salami</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Teko:wght@500;600;700&family=Hind:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: parade-ground discipline. A night-to-dawn hero band, then ordered "drill" sections; practice rooms are two-column consoles with a big mono clock. */
+:root{
+  --bg:#eef1f3; --surface:#ffffff; --ink:#101a24; --muted:#5a6773; --line:#d3d9df;
+  --saffron:#c9650f; --saffron-ink:#1d0e00; --green:#1c7546; --green-soft:#e1efe6; --navy:#13294b;
+  --good:#1c7546; --warn:#a6600a; --bad:#b13a2a; --stage:#dde1e4; --night:#0b1622; --night-ink:#eef2f6;
+  --display:"Teko","Arial Narrow",system-ui,sans-serif;
+  --body:"Hind",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0c141c; --surface:#131e29; --ink:#e6edf3; --muted:#93a1ae; --line:#243241;
+  --saffron:#f0913a; --saffron-ink:#1d0e00; --green:#4cc37f; --green-soft:#16281f; --navy:#9db8e0;
+  --good:#4cc37f; --warn:#e8a447; --bad:#ef7a66; --stage:#1b2733; --night:#070e15; --night-ink:#eef2f6; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0c141c; --surface:#131e29; --ink:#e6edf3; --muted:#93a1ae; --line:#243241;
+  --saffron:#f0913a; --saffron-ink:#1d0e00; --green:#4cc37f; --green-soft:#16281f; --navy:#9db8e0;
+  --good:#4cc37f; --warn:#e8a447; --bad:#ef7a66; --stage:#1b2733; --night:#070e15; --night-ink:#eef2f6; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--night)}
+a{color:var(--saffron)}
+h1,h2,h3{font-family:var(--display);font-weight:600;line-height:.95;text-wrap:balance;margin:0;letter-spacing:.01em}
+h1{font-size:clamp(3.2rem,9vw,6.2rem);text-transform:uppercase}
+h2{font-size:clamp(2rem,4.4vw,2.8rem);text-transform:uppercase}
+h3{font-size:1.45rem}
+p{margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.muted{color:var(--muted)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+:focus-visible{outline:3px solid var(--saffron);outline-offset:2px}
+
+header.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--night);color:var(--night-ink);border-bottom:3px solid var(--saffron)}
+header.bar .wrap{display:flex;align-items:center;gap:20px;padding-block:8px}
+.brand{font-family:var(--display);font-weight:700;font-size:1.7rem;letter-spacing:.04em;text-transform:uppercase;color:var(--night-ink);text-decoration:none;white-space:nowrap;display:flex;align-items:center;gap:8px;line-height:1}
+nav.main{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;min-width:0}
+nav.main a{color:var(--night-ink);opacity:.7;text-decoration:none;padding:6px 10px;border-radius:3px;white-space:nowrap;font-weight:500;font-size:.95rem}
+nav.main a:hover{opacity:1}
+nav.main a[aria-current="page"]{opacity:1;background:rgba(255,255,255,.12)}
+
+main{padding-block:0 64px}
+section.view{display:flex;flex-direction:column;gap:36px;padding-top:28px}
+section.view[data-view="home"]{padding-top:0}
+.btn{display:inline-flex;align-items:center;gap:8px;font:600 .95rem var(--body);padding:10px 16px;border-radius:3px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);cursor:pointer;text-decoration:none;line-height:1.2}
+.btn.alt{background:transparent;color:var(--ink)}
+.btn.saf{background:var(--saffron);border-color:var(--saffron);color:var(--saffron-ink)}
+.btn.small{padding:6px 10px;font-size:.85rem}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.tag{align-self:flex-start;display:inline-block;font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:2px;background:var(--green-soft);color:var(--green)}
+.tag.saf{background:color-mix(in srgb,var(--saffron) 15%,transparent);color:var(--saffron)}
+.sechead{display:flex;flex-direction:column;gap:8px;max-width:72ch}
+
+/* hero */
+.hero{background:var(--night);color:var(--night-ink);position:relative;overflow:hidden}
+.hero svg.sky{position:absolute;inset:0;width:100%;height:100%}
+.hero .wrap{position:relative;padding-block:56px 150px;display:flex;flex-direction:column;gap:16px}
+.hero .dev{font-family:var(--display);font-size:clamp(1.6rem,4vw,2.4rem);color:var(--saffron);line-height:1}
+.hero p.lede{font-size:1.15rem;max-width:52ch;opacity:.85}
+.hero .btn.alt{color:var(--night-ink);border-color:var(--night-ink)}
+.flag-stripe{height:6px;background:linear-gradient(90deg,#ff9933 0 33.3%,#ffffff 33.3% 66.6%,#138808 66.6%)}
+
+/* war cries */
+.services{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media (max-width:860px){.services{grid-template-columns:1fr 1fr}}
+@media (max-width:480px){.services{grid-template-columns:1fr}}
+.svc{background:var(--night);color:var(--night-ink);border-radius:4px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.svc svg{display:block;width:100%;height:auto}
+.svc .txt{padding:14px 16px 18px;display:flex;flex-direction:column;gap:4px}
+.svc .cry{font-family:var(--display);font-size:1.9rem;line-height:1;color:#ffb366}
+.svc small{opacity:.75;font-size:.85rem}
+.cries{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:0;border-top:2px solid var(--ink)}
+.cry-i{padding:16px 14px 16px 0;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:2px;min-width:0}
+.cry-i .d{font-family:var(--display);font-size:1.9rem;line-height:1.05;color:var(--saffron)}
+.cry-i b{font-weight:600}
+.cry-i span{font-size:.86rem;color:var(--muted)}
+
+/* discipline */
+.drill{display:grid;grid-template-columns:1.1fr 1fr;gap:16px}
+@media (max-width:820px){.drill{grid-template-columns:1fr}}
+.check{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.check:last-child{border-bottom:0}
+.check input{width:22px;height:22px;accent-color:var(--green);flex:none}
+.check .t{font-family:var(--mono);font-size:.78rem;color:var(--muted);width:56px;flex:none}
+.streak{font-family:var(--display);font-size:3.4rem;line-height:.9;color:var(--saffron)}
+blockquote{margin:0;font-family:var(--display);font-size:1.7rem;line-height:1.1}
+blockquote + p{margin-top:10px}
+
+.pipeline{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:4px;overflow:hidden;background:var(--surface)}
+.pipeline > a{padding:16px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:6px;min-width:0;color:inherit;text-decoration:none}
+.pipeline > a:hover{background:var(--green-soft)}
+.pipeline > a:last-child{border-right:0}
+.pipeline .n{font-family:var(--mono);color:var(--saffron);font-size:.76rem}
+@media (max-width:760px){.pipeline{grid-template-columns:1fr 1fr}.pipeline>a:nth-child(2){border-right:0}.pipeline>a:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+
+/* written */
+.tabs{display:flex;gap:4px;flex-wrap:wrap;border-bottom:2px solid var(--ink)}
+.tabs button{font:600 1rem var(--body);padding:8px 14px;border:0;background:transparent;color:var(--muted);cursor:pointer;border-radius:3px 3px 0 0}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg)}
+.subj{display:flex;flex-direction:column;gap:0}
+.subj-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;padding-bottom:8px;border-bottom:1px solid var(--ink)}
+.chap{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.chap .cnt{font-family:var(--mono);font-size:.78rem;color:var(--muted);white-space:nowrap}
+.chap .acc{font-family:var(--mono);font-size:.78rem}
+@media (max-width:560px){.chap{grid-template-columns:1fr auto}.chap .cnt{display:none}}
+.mock{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500}
+tr:last-child td{border-bottom:0}
+.meter{height:6px;background:var(--line);border-radius:3px;overflow:hidden;min-width:80px}
+.meter i{display:block;height:100%;background:var(--green)}
+
+/* test room */
+.room{display:grid;grid-template-columns:1fr 300px;gap:20px;align-items:start}
+@media (max-width:820px){.room{grid-template-columns:1fr}}
+.stagebox{background:var(--stage);border-radius:4px;min-height:260px;display:flex;align-items:center;justify-content:center;padding:16px;overflow:hidden}
+.stagebox svg.scene{width:100%;max-width:640px;height:auto;border-radius:2px}
+.word{font-family:var(--display);font-weight:600;font-size:clamp(3rem,10vw,5.4rem);letter-spacing:.03em;text-transform:uppercase;line-height:1}
+.side{display:flex;flex-direction:column;gap:14px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 70px)}
+@media (max-width:820px){.side{position:static}}
+.clock{font-family:var(--mono);font-size:2.8rem;font-weight:600;line-height:1;font-variant-numeric:tabular-nums}
+.clock.low{color:var(--bad)}
+.phase{font-family:var(--mono);font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;color:var(--saffron)}
+.bar-p{height:4px;background:var(--line);border-radius:2px;overflow:hidden}
+.bar-p i{display:block;height:100%;background:var(--saffron);width:0}
+textarea,input[type=text],input[type=number],select{width:100%;font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:10px 12px}
+textarea{min-height:200px;resize:vertical;line-height:1.6}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:.86rem;color:var(--muted);min-width:0}
+.form{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.note{font-size:.9rem;color:var(--muted);border-left:2px solid var(--saffron);padding-left:12px}
+.q{display:flex;flex-direction:column;gap:12px}
+.q .stem{font-size:1.15rem;font-weight:500}
+.opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+.opt{text-align:left;font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:10px 12px;cursor:pointer;display:flex;gap:10px;align-items:center;min-width:0}
+.opt:hover{border-color:var(--ink)}
+.opt.sel{border-color:var(--saffron);box-shadow:inset 0 0 0 1px var(--saffron)}
+.opt.right{border-color:var(--good);background:color-mix(in srgb,var(--good) 12%,var(--surface))}
+.opt.wrong{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface))}
+.opt .k{font-family:var(--mono);font-size:.78rem;color:var(--muted)}
+.opt svg{color:var(--ink)}
+.expl{border-left:3px solid var(--good);padding:8px 12px;background:var(--green-soft);border-radius:0 3px 3px 0}
+.expl.bad{border-left-color:var(--bad)}
+.qnav{display:flex;flex-wrap:wrap;gap:5px;max-height:220px;overflow-y:auto}
+.qnav button{width:34px;height:32px;font:500 .78rem var(--mono);border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:2px;cursor:pointer}
+.qnav button.done{background:var(--green-soft);border-color:var(--green)}
+.qnav button.cur{outline:2px solid var(--saffron)}
+.review li{margin-bottom:14px}
+.ok{color:var(--good)} .no{color:var(--bad)} .wn{color:var(--warn)}
+.big{font-family:var(--display);font-size:3rem;line-height:1}
+.srt-list{display:flex;flex-direction:column;gap:14px;max-height:62vh;overflow-y:auto;padding-right:6px}
+.srt-item{display:flex;flex-direction:column;gap:6px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font:500 .82rem var(--body);padding:4px 11px;border-radius:20px;border:1px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.chip.c1[aria-pressed="true"]{background:var(--good);border-color:var(--good);color:var(--surface)}
+.chip.c2[aria-pressed="true"]{background:var(--warn);border-color:var(--warn);color:var(--surface)}
+.chip.c3[aria-pressed="true"]{background:var(--bad);border-color:var(--bad);color:var(--surface)}
+.iq{display:flex;flex-direction:column;gap:6px;padding:12px 0;border-bottom:1px solid var(--line)}
+.iq:last-child{border-bottom:0}
+
+/* SSB days */
+.days{display:flex;flex-direction:column;border-top:2px solid var(--ink)}
+.day{display:grid;grid-template-columns:150px 1fr;gap:20px;padding-block:18px;border-bottom:1px solid var(--line)}
+.day .d{font-family:var(--display);font-size:2rem;line-height:.9}
+.day .d small{display:block;font-family:var(--mono);font-size:.7rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-top:4px}
+.tasks{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.task{padding:10px 12px;border:1px solid var(--line);border-radius:3px;background:var(--surface);min-width:0;color:inherit;text-decoration:none;display:flex;flex-direction:column;gap:2px}
+a.task:hover{border-color:var(--saffron)}
+.task b{font-size:.98rem}
+.task span{font-size:.86rem;color:var(--muted)}
+.task .t{font-family:var(--mono);font-size:.7rem;color:var(--saffron)}
+@media (max-width:600px){.day{grid-template-columns:1fr;gap:10px}}
+
+/* briefing */
+.filters{display:flex;flex-direction:column;gap:8px}
+.alist{display:flex;flex-direction:column;border-top:2px solid var(--ink)}
+.art{display:grid;grid-template-columns:110px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line);cursor:pointer;text-align:left;background:none;border-left:0;border-right:0;border-top:0;font:inherit;color:inherit;width:100%}
+.art:hover h3{color:var(--saffron)}
+.art .dt{font-family:var(--mono);font-size:.78rem;color:var(--muted)}
+.art p{color:var(--muted);font-size:.95rem;margin-top:4px}
+@media (max-width:560px){.art{grid-template-columns:1fr;gap:4px}}
+.reader{max-width:72ch;display:flex;flex-direction:column;gap:14px}
+.reader p{font-size:1.05rem}
+.reader h3{margin-top:8px}
+.reader ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.pc{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:600px){.pc{grid-template-columns:1fr}}
+.empty{padding:28px;border:1px dashed var(--line);border-radius:4px;color:var(--muted)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:3px;font-size:.92rem;z-index:20;max-width:calc(100% - 32px)}
+footer{border-top:1px solid var(--line);padding-block:20px;font-size:.84rem;color:var(--muted)}
+@media (prefers-reduced-motion:no-preference){.jet{animation:fly 9s linear infinite}}
+@keyframes fly{from{transform:translateX(-30px)}to{transform:translateX(30px)}}
+</style>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="#home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><path d="M6 26 L16 4 L26 26 Z" fill="none" stroke="#ff9933" stroke-width="2.4"/><path d="M11 20 h10" stroke="#ffffff" stroke-width="2.4"/><path d="M8.5 25 h15" stroke="#138808" stroke-width="2.4"/></svg>Pehli Salami</a>
+    <nav class="main" id="nav">
+      <a href="#home">Home</a>
+      <a href="#written">Written practice</a>
+      <a href="#ssb">SSB practice</a>
+      <a href="#briefing">Briefing Room</a>
+      <a href="#record">My record</a>
+    </nav>
+  </div>
+</header>
+
+<main id="app">
+
+<!-- HOME -->
+<section class="view" data-view="home">
+  <div class="hero">
+    <svg class="sky" viewBox="0 0 1200 520" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+      <defs><linearGradient id="dawn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b1622"/><stop offset=".55" stop-color="#1d2b44"/><stop offset=".85" stop-color="#7a3d1c"/><stop offset="1" stop-color="#d9731a"/></linearGradient></defs>
+      <rect width="1200" height="520" fill="url(#dawn)"/>
+      <circle cx="930" cy="470" r="70" fill="#ffb347" opacity=".85"/>
+      <g fill="#fff" opacity=".5"><circle cx="120" cy="60" r="1.4"/><circle cx="300" cy="110" r="1"/><circle cx="520" cy="40" r="1.2"/><circle cx="760" cy="90" r="1"/><circle cx="1040" cy="50" r="1.4"/><circle cx="660" cy="150" r="1"/></g>
+      <path d="M0 440 L140 360 L230 400 L380 300 L470 350 L600 260 L700 330 L820 280 L960 380 L1080 320 L1200 370 V520 H0Z" fill="#14202f"/>
+      <path d="M0 480 L170 420 L300 455 L470 390 L620 440 L760 380 L900 450 L1050 410 L1200 440 V520 H0Z" fill="#0b131d"/>
+      <line x1="600" y1="260" x2="600" y2="180" stroke="#c9ced6" stroke-width="3"/>
+      <rect x="601" y="182" width="54" height="12" fill="#ff9933"/><rect x="601" y="194" width="54" height="12" fill="#ffffff"/><rect x="601" y="206" width="54" height="12" fill="#138808"/><circle cx="628" cy="200" r="4" fill="none" stroke="#000080" stroke-width="1.2"/>
+      <g fill="#0b131d"><circle cx="585" cy="250" r="5"/><path d="M580 256 h10 l2 20 h-14z"/><path d="M588 258 l14 -18" stroke="#0b131d" stroke-width="4"/><circle cx="560" cy="268" r="5"/><path d="M555 274 h10 l3 20 h-14z"/><circle cx="535" cy="285" r="5"/><path d="M530 291 h10 l3 20 h-14z"/></g>
+    </svg>
+    <div class="wrap">
+      <p class="eyebrow" style="color:#ffb366">NDA · CDS · AFCAT · CGCAT · INET · SSB</p>
+      <span class="dev">पहली सलामी</span>
+      <h1>Earn your<br>first salute.</h1>
+      <p class="lede">The day you are commissioned, your own men give you your first salute. Every question you solve and every test you sit here is a step towards that day.</p>
+      <div class="row" style="margin-top:8px"><a class="btn saf" href="#written">Start written practice</a><a class="btn alt" href="#ssb">Enter SSB practice</a></div>
+    </div>
+  </div>
+  <div class="flag-stripe"></div>
+
+  <div class="wrap" style="display:flex;flex-direction:column;gap:40px">
+    <div class="sechead"><p class="eyebrow">Rann-naad</p><h2>The cries that win battles</h2><p class="muted">Every regiment carries its own cry into battle. Learn them; an SSB interviewer may ask what yours will be.</p></div>
+    <div class="services" id="services"></div>
+    <div class="cries" id="cries"></div>
+
+    <div class="drill">
+      <div class="card">
+        <div class="row" style="justify-content:space-between;align-items:flex-end"><div><p class="eyebrow">Aaj ka anushasan</p><h3>Today's drill</h3></div><div style="text-align:right"><div class="streak" id="streak">0</div><span class="eyebrow">day streak</span></div></div>
+        <div id="drill"></div>
+        <p class="muted" style="font-size:.86rem">A day counts towards the streak when you tick at least 6 of 7. Saved in this browser.</p>
+      </div>
+      <div class="card" style="background:var(--night);color:var(--night-ink);border-color:var(--night);justify-content:space-between">
+        <p class="eyebrow" style="color:#ffb366">Words from the uniform</p>
+        <blockquote id="quote"></blockquote>
+        <p id="quote-by" style="opacity:.75"></p>
+      </div>
+    </div>
+
+    <div class="sechead"><p class="eyebrow">Your route</p><h2>Written exam to commission</h2></div>
+    <div class="pipeline">
+      <a href="#written"><span class="n">STEP 1</span><h3>Written exam</h3><p class="muted">Subject-wise, chapter-wise and full mocks for NDA, CDS, AFCAT, CGCAT and INET.</p></a>
+      <a href="#ssb"><span class="n">STEP 2</span><h3>Screening</h3><p class="muted">OIR and PPDT at board timing.</p></a>
+      <a href="#ssb"><span class="n">STEP 3</span><h3>Psych · GTO · Interview</h3><p class="muted">TAT, WAT, SRT, SD, GPE, lecturette, GD and a PIQ-based interview.</p></a>
+      <a href="#briefing"><span class="n">DAILY</span><h3>Briefing Room</h3><p class="muted">Current affairs, borders, geopolitics, AI, GD and lecturette topics.</p></a>
+    </div>
+
+    <div class="sechead"><p class="eyebrow">Latest from the Briefing Room</p><h2>Today's briefing</h2></div>
+    <div id="home-brief"></div>
+  </div>
+</section>
+
+<!-- WRITTEN -->
+<section class="view wrap" data-view="written" hidden>
+  <div class="sechead"><p class="eyebrow">Written practice</p><h2>Pick an exam. Drill by chapter. Then sit the full paper.</h2>
+  <p class="muted">Maths, numerical and reasoning questions are generated fresh each time, with the answer computed and the working shown, so you never run out. GK, science and English come from a verified bank that grows every day. Practice sets show the answer after each question; mocks run on the clock with negative marking.</p></div>
+  <div class="tabs" role="tablist" id="exam-tabs"></div>
+  <div id="exam-body" style="display:flex;flex-direction:column;gap:28px"></div>
+</section>
+
+<!-- RUN (question engine) -->
+<section class="view wrap" data-view="run" hidden>
+  <div class="row" style="justify-content:space-between"><div><p class="eyebrow" id="r-eyebrow"></p><h2 id="r-title"></h2></div><a class="btn alt small" id="r-leave" href="#written">Leave</a></div>
+  <div id="r-body"></div>
+</section>
+
+<!-- SSB -->
+<section class="view wrap" data-view="ssb" hidden>
+  <div class="sechead"><p class="eyebrow">SSB practice</p><h2>Five days. Every test. Board timing.</h2>
+  <p class="muted">Screening is on the first morning: OIR and PPDT. Only screened-in candidates stay for psychology, GTO and the interview, which test the same officer-like qualities from three sides. Each test has a "Skip ahead" button for trying the format quickly.</p></div>
+  <div class="days">
+    <div class="day"><div class="d">Day 1<small>Screening</small></div><div class="tasks">
+      <a class="task" href="#oir"><span class="t">PRACTISE →</span><b>OIR test</b><span>40 questions · 25 min, new set every time</span></a>
+      <a class="task" href="#ppdt"><span class="t">PRACTISE →</span><b>PPDT</b><span>30 s picture · 1 min character box · 4 min story</span></a>
+      <div class="task"><span class="t">AT THE BOARD</span><b>Narration & discussion</b><span>Narrate in about 1 min, then the group agrees a common story</span></div>
+    </div></div>
+    <div class="day"><div class="d">Day 2<small>Psychology</small></div><div class="tasks">
+      <a class="task" href="#tat"><span class="t">PRACTISE →</span><b>TAT</b><span>30 s view · 4 min story per picture, with a blank slide</span></a>
+      <a class="task" href="#wat"><span class="t">PRACTISE →</span><b>WAT</b><span>60 words · 15 s each</span></a>
+      <a class="task" href="#srt"><span class="t">PRACTISE →</span><b>SRT</b><span>30 situations · 15 min (half a board set)</span></a>
+      <a class="task" href="#sd"><span class="t">PRACTISE →</span><b>Self Description</b><span>5 headings · 15 min</span></a>
+    </div></div>
+    <div class="day"><div class="d">Day 3–4<small>GTO · Interview</small></div><div class="tasks">
+      <a class="task" href="#gd"><span class="t">PRACTISE →</span><b>Group discussion</b><span>20 min on a live topic</span></a>
+      <a class="task" href="#gpe"><span class="t">PRACTISE →</span><b>GPE</b><span>Map, 5 min read, 10 min written plan</span></a>
+      <a class="task" href="#lecturette"><span class="t">PRACTISE →</span><b>Lecturette</b><span>1 of 4 topics · 3 min prep · 3 min talk</span></a>
+      <div class="task"><span class="t">OUTDOOR</span><b>PGT</b><span>4 obstacles with helping material, whole group</span></div>
+      <div class="task"><span class="t">OUTDOOR</span><b>Snake race</b><span>Group obstacle race carrying the snake</span></div>
+      <div class="task"><span class="t">OUTDOOR</span><b>HGT</b><span>PGT with half the group</span></div>
+      <div class="task"><span class="t">OUTDOOR</span><b>Individual obstacles</b><span>10 obstacles, 1–10 points each, 3 min</span></div>
+      <div class="task"><span class="t">OUTDOOR</span><b>Command task</b><span>You lead two subordinates across an obstacle</span></div>
+      <div class="task"><span class="t">OUTDOOR</span><b>Final group task</b><span>One last group obstacle</span></div>
+      <a class="task" href="#interview"><span class="t">PRACTISE →</span><b>Personal interview</b><span>Questions built from your PIQ</span></a>
+    </div></div>
+    <div class="day"><div class="d">Day 5<small>Conference</small></div><div class="tasks">
+      <div class="task"><span class="t">AT THE BOARD</span><b>Conference</b><span>A short appearance before all assessors, then results</span></div>
+      <div class="task"><span class="t">AFTER</span><b>Medical & merit list</b><span>Recommended candidates go for medicals, then the all-India merit list</span></div>
+    </div></div>
+  </div>
+</section>
+
+<!-- TEST ROOM -->
+<section class="view wrap" data-view="test" hidden>
+  <div class="row" style="justify-content:space-between"><div><p class="eyebrow" id="t-eyebrow"></p><h2 id="t-title"></h2></div><a class="btn alt small" href="#ssb">Leave test</a></div>
+  <div id="t-body"></div>
+</section>
+
+<!-- BRIEFING -->
+<section class="view wrap" data-view="briefing" hidden>
+  <div class="sechead"><p class="eyebrow">Briefing Room</p><h2>Read like an officer. Every day.</h2>
+  <p class="muted">Current affairs for the written exam and the interview, plus ready-to-use GD and lecturette topics. New briefings are added every day.</p></div>
+  <div id="brief-body"></div>
+</section>
+
+<!-- RECORD -->
+<section class="view wrap" data-view="record" hidden>
+  <div class="sechead"><p class="eyebrow">My record</p><h2>Your progress</h2><p class="muted">Saved in this browser only.</p></div>
+  <div id="record"></div>
+</section>
+
+</main>
+<footer><div class="wrap">Pehli Salami · Practice platform for defence aspirants. Not affiliated with UPSC, the Indian Armed Forces or the Indian Coast Guard. Exam patterns change: always check the official notification.</div></footer>
+
+<script>
+(function(){
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt=s=>{s=Math.max(0,Math.ceil(s));return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')};
+const toast=m=>{const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2600)};
+const R=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const gcd=(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b]}return a};
+const frac=(n,d)=>{if(d<0){n=-n;d=-d}const g=gcd(n,d)||1;n/=g;d/=g;return d===1?String(n):n+'/'+d};
+const todayStr=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const LS={get(k,d){try{const v=localStorage.getItem('ps-'+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem('ps-'+k,JSON.stringify(v))}catch(e){}}};
+
+/* ================= HOME ================= */
+const SVC=[
+ {n:'Indian Army',cry:'Bharat Mata ki Jai',m:'Motto: Service Before Self',art:'army'},
+ {n:'Indian Navy',cry:'शं नो वरुणः',m:'Sham No Varunah · May the Lord of the Waters be auspicious unto us',art:'navy'},
+ {n:'Indian Air Force',cry:'नभः स्पृशं दीप्तम्',m:'Nabha Sparsham Deeptam · Touch the sky with glory',art:'iaf'},
+ {n:'Indian Coast Guard',cry:'वयम् रक्षामः',m:'Vayam Rakshamah · We protect',art:'icg'}];
+const ART={
+ army:`<svg viewBox="0 0 300 150" aria-hidden="true"><rect width="300" height="150" fill="#1d2b22"/><path d="M0 120 L60 70 L100 95 L160 40 L210 85 L250 60 L300 95 V150 H0Z" fill="#33463a"/><path d="M0 140 L80 105 L150 130 L230 100 L300 125 V150 H0Z" fill="#121a14"/><line x1="160" y1="40" x2="160" y2="10" stroke="#ccc" stroke-width="2"/><rect x="161" y="11" width="22" height="5" fill="#ff9933"/><rect x="161" y="16" width="22" height="5" fill="#fff"/><rect x="161" y="21" width="22" height="5" fill="#138808"/><g fill="#121a14"><circle cx="138" cy="58" r="4"/><path d="M134 62 h8 l2 16 h-12z"/><circle cx="118" cy="74" r="4"/><path d="M114 78 h8 l2 16 h-12z"/></g></svg>`,
+ navy:`<svg viewBox="0 0 300 150" aria-hidden="true"><rect width="300" height="150" fill="#0f2238"/><circle cx="240" cy="40" r="16" fill="#e8eef5" opacity=".8"/><path d="M40 100 L260 100 L245 118 L60 118 Z" fill="#9fb0c2"/><path d="M90 100 v-16 h40 v-12 h24 v12 h30 v16z" fill="#b9c6d4"/><line x1="142" y1="72" x2="142" y2="44" stroke="#b9c6d4" stroke-width="3"/><line x1="132" y1="54" x2="152" y2="54" stroke="#b9c6d4" stroke-width="2"/><path d="M200 94 h28 v6 h-28z" fill="#b9c6d4"/><path d="M0 122 Q25 116 50 122 T100 122 T150 122 T200 122 T250 122 T300 122 V150 H0Z" fill="#183a5a"/><path d="M0 132 Q25 126 50 132 T100 132 T150 132 T200 132 T250 132 T300 132 V150 H0Z" fill="#0b2a44"/></svg>`,
+ iaf:`<svg viewBox="0 0 300 150" aria-hidden="true"><rect width="300" height="150" fill="#13314f"/><g class="jet"><path d="M10 92 L170 92" stroke="#ff9933" stroke-width="6" opacity=".8"/><path d="M10 102 L170 102" stroke="#ffffff" stroke-width="6" opacity=".8"/><path d="M10 112 L170 112" stroke="#138808" stroke-width="6" opacity=".8"/><g fill="#dfe6ee"><path d="M170 92 l28 0 l10 -2 l-10 -2 l-12 0 l-8 -10 l-4 0 l4 10 z"/><path d="M170 102 l28 0 l10 -2 l-10 -2 l-12 0 l-8 -10 l-4 0 l4 10 z"/><path d="M170 112 l28 0 l10 -2 l-10 -2 l-12 0 l-8 -10 l-4 0 l4 10 z"/></g></g><g fill="#fff" opacity=".35"><circle cx="40" cy="30" r="1"/><circle cx="250" cy="20" r="1.2"/><circle cx="200" cy="50" r="1"/></g></svg>`,
+ icg:`<svg viewBox="0 0 300 150" aria-hidden="true"><rect width="300" height="150" fill="#10283a"/><path d="M250 120 V58 l6 -6 l6 6 V120z" fill="#d7dde3"/><rect x="250" y="70" width="12" height="6" fill="#b13a2a"/><rect x="250" y="88" width="12" height="6" fill="#b13a2a"/><path d="M256 54 L120 30 L120 46 Z" fill="#ffd27a" opacity=".35"/><path d="M50 108 L190 108 L178 122 L60 122Z" fill="#e8ecef"/><path d="M60 108 l14 -4 h50 v-10 h22 v14z" fill="#e8ecef"/><path d="M150 108 l10 -4" stroke="#e8ecef" stroke-width="3"/><path d="M100 104 h30" stroke="#d6551f" stroke-width="5"/><path d="M0 126 Q30 120 60 126 T120 126 T180 126 T240 126 T300 126 V150 H0Z" fill="#163a54"/></svg>`};
+const CRIES=[
+ ['जो बोले सो निहाल, सत श्री अकाल','Jo Bole So Nihal, Sat Sri Akal','Sikh Regiment','Whoever utters it shall be fulfilled; God is the ultimate truth'],
+ ['जय महाकाली, आयो गोरखाली','Jai Mahakali, Ayo Gorkhali','Gorkha Rifles','Glory to Mahakali, the Gorkhas are here'],
+ ['राजा रामचंद्र की जय','Raja Ramchandra ki Jai','Rajputana Rifles','Victory to King Ramchandra'],
+ ['बोल श्री छत्रपति शिवाजी महाराज की जय','Bol Shri Chhatrapati Shivaji Maharaj ki Jai','Maratha Light Infantry','Victory to Chhatrapati Shivaji Maharaj'],
+ ['जाट बलवान, जय भगवान','Jat Balwan, Jai Bhagwan','Jat Regiment','The Jat is mighty; victory to God'],
+ ['बद्री विशाल लाल की जय','Badri Vishal Lal ki Jai','Garhwal Rifles','Victory to Lord Badri Vishal'],
+ ['कालिका माता की जय','Kalika Mata ki Jai','Kumaon Regiment','Victory to Goddess Kali'],
+ ['ज्वाला माता की जय','Jwala Mata ki Jai','Dogra Regiment','Victory to Goddess Jwala'],
+ ['वीरा मद्रासी, अडि कोल्लु, अडि कोल्लु','Veera Madrasi, Adi Kollu, Adi Kollu','Madras Regiment','Brave Madrasi, strike and kill'],
+ ['जय बजरंग बली','Jai Bajrang Bali','Bihar Regiment','Victory to Lord Hanuman'],
+ ['राइनो चार्ज','Rhino Charge','Assam Regiment','Charge like the rhino'],
+ ['बोलो हिंदुस्तान की जय','Bolo Hindustan ki Jai','Mahar Regiment','Say victory to India'],
+ ['दुर्गा माता की जय','Durga Mata ki Jai','Jammu & Kashmir Rifles','Victory to Goddess Durga'],
+ ['सेवा परमो धर्म','Seva Paramo Dharma','National Defence Academy (motto)','Service before self']];
+$('#services').innerHTML=SVC.map(s=>`<div class="svc">${ART[s.art]}<div class="txt"><span class="eyebrow" style="color:#ffb366">${s.n}</span><span class="cry">${s.cry}</span><small>${s.m}</small></div></div>`).join('');
+$('#cries').innerHTML=CRIES.map(c=>`<div class="cry-i"><span class="d">${c[0]}</span><b>${c[1]}</b><span>${c[2]} · ${c[3]}</span></div>`).join('');
+const QUOTES=[
+ ['The safety, honour and welfare of your country come first, always and every time. The honour, welfare and comfort of the men you command come next. Your own ease, comfort and safety come last, always and every time.','The Chetwode Motto, Indian Military Academy'],
+ ['Either I will come back after hoisting the Tricolour, or I will come back wrapped in it, but I will be back for sure.','Captain Vikram Batra, PVC'],
+ ['Yeh dil maange more!','Captain Vikram Batra, PVC, after capturing Point 5140'],
+ ['If death strikes before I prove my blood, I swear I will kill death.','Captain Manoj Kumar Pandey, PVC'],
+ ['If a man says he is not afraid of dying, he is either lying or he is a Gurkha.','Field Marshal Sam Manekshaw'],
+ ['The enemy is only 50 yards from us. We are heavily outnumbered. I shall not withdraw an inch but will fight to the last man and the last round.','Major Somnath Sharma, PVC, Badgam, 1947'],
+ ['Arise, awake, and stop not till the goal is reached.','Swami Vivekananda']];
+const dayIdx=Math.floor(Date.now()/86400000);
+const Q0=QUOTES[dayIdx%QUOTES.length];$('#quote').textContent='“'+Q0[0]+'”';$('#quote-by').textContent='— '+Q0[1];
+const DRILL=[['0530','Up and out of bed'],['0545','5 km run or 30 min PT'],['0630','50 push-ups · 50 sit-ups · 10 pull-ups'],['0800','Read one newspaper editorial'],['1700','Solve 25 written-exam questions'],['2100','10 WAT words and 5 SRTs'],['2230','Lights out']];
+function drawDrill(){const t=todayStr();const all=LS.get('drill',{});const today=all[t]||[];
+ $('#drill').innerHTML=DRILL.map((d,i)=>`<label class="check"><input type="checkbox" data-i="${i}" ${today.includes(i)?'checked':''}><span class="t">${d[0]}</span><span>${d[1]}</span></label>`).join('');
+ let s=0;const d=new Date();if((all[t]||[]).length<6)d.setDate(d.getDate()-1);
+ for(;;){const k=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');if((all[k]||[]).length>=6){s++;d.setDate(d.getDate()-1)}else break}
+ $('#streak').textContent=s;
+ $('#drill').querySelectorAll('input').forEach(c=>c.onchange=()=>{const a=LS.get('drill',{});const l=new Set(a[t]||[]);c.checked?l.add(+c.dataset.i):l.delete(+c.dataset.i);a[t]=[...l];LS.set('drill',a);drawDrill()})}
+drawDrill();
+
+/* ================= QUESTION GENERATORS ================= */
+function mk(s,ans,dis,e,x={}){ans=String(ans);const o=[ans];for(const d of dis){const v=String(d);if(o.length<4&&!o.includes(v))o.push(v)}
+ let n=parseFloat(ans),k=1;while(o.length<4){const v=String(isFinite(n)?n+k*(k%2?1:-1)*Math.max(1,Math.round(Math.abs(n)*.1)):ans+k);if(!o.includes(v))o.push(v);k++}
+ const sh=shuffle(o);return Object.assign({s,o:sh,a:sh.indexOf(ans),e},x)}
+const near=(n,st=1)=>shuffle([n+st,n-st,n+2*st,n-2*st,n*2,n+3*st]);
+const sgn=b=>b<0?' − '+(-b):' + '+b;
+const svgArrow=a=>`<svg width="44" height="44" viewBox="0 0 40 40" aria-hidden="true"><g transform="rotate(${a} 20 20)" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"><line x1="20" y1="32" x2="20" y2="8"/><path d="M13 15 L20 8 L27 15"/></g></svg>`;
+const svgPoly=n=>{const p=[];for(let i=0;i<n;i++){const a=-Math.PI/2+i*2*Math.PI/n;p.push((20+14*Math.cos(a)).toFixed(1)+','+(20+14*Math.sin(a)).toFixed(1))}return `<svg width="44" height="44" viewBox="0 0 40 40" aria-hidden="true"><polygon points="${p.join(' ')}" fill="none" stroke="currentColor" stroke-width="2.5"/></svg>`};
+const svgDots=n=>{let c='';for(let i=0;i<n;i++){c+=`<circle cx="${7+(i%4)*9}" cy="${7+Math.floor(i/4)*9}" r="3" fill="currentColor"/>`}return `<svg width="44" height="44" viewBox="0 0 40 40" aria-hidden="true">${c}</svg>`};
+const WORDS=['ARMY','NAVY','RIFLE','CADET','SALUTE','BRAVE','TANK','MARCH','RADAR','PILOT','SHIP','CAMP','DRILL','VALOUR','HONOUR'];
+const shiftW=(w,k)=>w.split('').map(c=>String.fromCharCode((c.charCodeAt(0)-65+k+26)%26+65)).join('');
+const DAYS=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const TRIG=[['sin 30°','1/2'],['cos 60°','1/2'],['tan 45°','1'],['sin 90°','1'],['cos 0°','1'],['tan 60°','√3'],['tan 30°','1/√3'],['sin 60°','√3/2'],['cos 30°','√3/2'],['sin 45°','1/√2'],['sin²30° + cos²30°','1'],['sin 30° × cos 60°','1/4'],['tan²60°','3'],['sec²45°','2'],['2 sin 30° cos 30°','√3/2'],['cosec 30°','2'],['sec 60°','2'],['cot 45°','1'],['sin 0° + cos 90°','0'],['1 + tan²45°','2'],['45° in radians','π/4'],['60° in radians','π/3'],['π/6 radians in degrees','30°'],['sec²θ − tan²θ (any valid θ)','1']];
+const TRIGV=['0','1/2','1','√3','1/√3','√3/2','1/√2','1/4','3','2','π/4','π/3','π/6','30°','60°','45°','−1'];
+const TRIPLES=[[3,4,5],[6,8,10],[5,12,13],[8,15,17],[9,12,15],[12,16,20],[7,24,25]];
+const VEC=[[1,2,2,3],[2,3,6,7],[2,6,9,11],[4,4,7,9],[1,4,8,9],[6,6,7,11],[2,10,11,15]];
+const PAIRS_TW=[[12,24,8],[10,15,6],[20,30,12],[6,12,4],[15,30,10],[12,36,9],[18,36,12],[20,60,15],[30,60,20],[24,40,15]];
+
+const G={
+'arith-percent':()=>{if(Math.random()<.5){const y=40*R(1,20),x=pick([5,10,12.5,15,20,25,30,40,60,75]);const a=x*y/100;return mk(`What is ${x}% of ${y}?`,a,near(a,Math.max(1,Math.round(a/10))),`${x}/100 × ${y} = ${a}.`)}
+ const a=20*R(2,40),p=pick([5,10,20,25,50]),b=a*(100+p)/100;return mk(`The price of an item rises from ₹${a} to ₹${b}. What is the percentage increase?`,p+'%',[p+5+'%',p-2+'%',Math.round(100*(b-a)/b)+'%',p*2+'%'],`Increase = ${b-a}; ${b-a}/${a} × 100 = ${p}%.`)},
+'arith-profit':()=>{const cp=100*R(2,60),p=pick([5,10,12,15,20,25,-10,-20,-5]),sp=cp*(100+p)/100;
+ if(Math.random()<.5)return mk(`An article bought for ₹${cp} is sold at a ${p>=0?'profit':'loss'} of ${Math.abs(p)}%. What is the selling price?`,'₹'+sp,['₹'+(cp*(100-p)/100),'₹'+(sp+cp/20),'₹'+(sp-cp/20),'₹'+(cp+Math.abs(p))],`SP = ${cp} × ${100+p}/100 = ${sp}.`);
+ return mk(`Cost price ₹${cp}, selling price ₹${sp}. Find the ${p>=0?'profit':'loss'} percent.`,Math.abs(p)+'%',[Math.abs(p)+5+'%',Math.abs(p)+2+'%',Math.round(Math.abs(sp-cp)/sp*100)+'%',Math.abs(p)*2+'%'],`${p>=0?'Profit':'Loss'} = ${Math.abs(sp-cp)}; ${Math.abs(sp-cp)}/${cp} × 100 = ${Math.abs(p)}%.`)},
+'arith-si-ci':()=>{if(Math.random()<.5){const P=500*R(2,20),r=R(4,12),t=R(2,5),si=P*r*t/100;return mk(`Find the simple interest on ₹${P} at ${r}% per annum for ${t} years.`,'₹'+si,['₹'+(si+P*r/100),'₹'+(si-P*r/100),'₹'+(P+si),'₹'+Math.round(P*(Math.pow(1+r/100,t)-1))],`SI = P×R×T/100 = ${P}×${r}×${t}/100 = ${si}.`)}
+ const P=100*R(10,100),r=pick([10,20]),ci=Math.round(P*((1+r/100)**2-1)),si=P*r*2/100;return mk(`Find the compound interest on ₹${P} at ${r}% per annum for 2 years, compounded annually.`,'₹'+ci,['₹'+si,'₹'+(ci+P/100*r/10),'₹'+(P+ci),'₹'+(ci-P/100)],`Amount = ${P} × (1 + ${r}/100)² = ${P+ci}; CI = ${ci}.`)},
+'arith-ratio':()=>{let a=R(1,9),b=R(1,9);while(gcd(a,b)!==1||a===b){a=R(1,9);b=R(1,9)}const k=R(5,60),N=(a+b)*k,big=Math.max(a,b)*k;return mk(`₹${N} is divided between A and B in the ratio ${a} : ${b}. What is the larger share?`,'₹'+big,['₹'+Math.min(a,b)*k,'₹'+(big+k),'₹'+(N/2),'₹'+(big-k)],`Total parts ${a+b}; one part = ${k}; larger = ${Math.max(a,b)} × ${k} = ${big}.`)},
+'arith-average':()=>{if(Math.random()<.5){const m=R(20,90),d=shuffle([-6,-3,0,4,5]);const xs=d.map(x=>m+x);return mk(`Find the average of ${xs.join(', ')}.`,m,near(m,1),`Sum = ${5*m}; ${5*m}/5 = ${m}.`)}
+ const n=R(20,40),A=R(12,16),t=A+(n+1);return mk(`The average age of ${n} cadets is ${A} years. When the instructor's age is included, the average rises by 1 year. What is the instructor's age?`,t,[A+n,t+1,t-2,A+n-1],`New total = ${n+1} × ${A+1} = ${(n+1)*(A+1)}; old total = ${n*A}; difference = ${t}.`)},
+'arith-time-work':()=>{const [a,b,c]=pick(PAIRS_TW);return mk(`A can finish a job in ${a} days and B in ${b} days. Working together, how many days will they take?`,c,[(a+b)/2,c+2,c-1,Math.round(b-a)],`Together per day = 1/${a} + 1/${b} = 1/${c}.`)},
+'arith-sdt':()=>{if(Math.random()<.5){const v=18*R(2,8),ms=v*5/18;return mk(`Convert ${v} km/h into m/s.`,ms+' m/s',[ms+5+' m/s',v/3+' m/s',ms*2+' m/s',ms-2+' m/s'],`Multiply by 5/18: ${v} × 5/18 = ${ms}.`)}
+ const v=18*R(2,6),ms=v*5/18,t=R(6,20),L=ms*t;return mk(`A train ${L} m long runs at ${v} km/h. How long does it take to pass a pole?`,t+' s',[t+2+' s',t*2+' s',Math.round(L/v)+' s',t-1+' s'],`${v} km/h = ${ms} m/s; ${L} ÷ ${ms} = ${t} s.`)},
+'arith-number':()=>{let x=R(2,9),y=R(2,9);while(gcd(x,y)!==1||x===y){x=R(2,9);y=R(2,9)}const h=R(2,15),a=h*x,b=h*y;
+ if(Math.random()<.5)return mk(`Find the HCF of ${a} and ${b}.`,h,[h*2,x,y,h+1].filter(v=>v!==h),`${a} = ${h}×${x}, ${b} = ${h}×${y}; HCF = ${h}.`);
+ const l=h*x*y;return mk(`Find the LCM of ${a} and ${b}.`,l,[a*b,l*2,l/x*(x+1),h*(x+y)],`LCM = HCF × ${x} × ${y} = ${l}.`)},
+'alg-linear':()=>{let x=R(-9,12);if(!x)x=4;const a=R(2,9),b=R(-20,20),c=a*x+b;return mk(`Solve: ${a}x${sgn(b)} = ${c}`,`x = ${x}`,[`x = ${x+1}`,`x = ${-x}`,`x = ${x-2}`,`x = ${frac(c+b,a)}`],`${a}x = ${c-b}, so x = ${x}.`)},
+'alg-quadratic':()=>{const r1=R(-9,9),r2=R(-9,9),p=-(r1+r2),q=r1*r2;const eq=`x²${p?sgn(p)+'x':''}${q?sgn(q):''} = 0`;const t=R(0,2);
+ if(t===0)return mk(`Find the sum of the roots of ${eq}.`,r1+r2,[-(r1+r2)||1,q,r1+r2+1,r1+r2-2],`Sum of roots = −b/a = ${r1+r2}.`);
+ if(t===1)return mk(`Find the product of the roots of ${eq}.`,q,[-q||2,r1+r2,q+1,q-2],`Product of roots = c/a = ${q}.`);
+ const A=Math.min(r1,r2),B=Math.max(r1,r2);return mk(`Find the roots of ${eq}.`,`${A}, ${B}`,[`${-B}, ${-A}`,`${A+1}, ${B-1}`,`${A}, ${-B}`,`${-A}, ${B}`],`(x − ${A})(x − ${B}) factorises it, giving ${A} and ${B}.`.replace(/− -/g,'+ '))},
+'alg-progressions':()=>{const t=R(0,2);if(t===0){const a=R(-5,15),d=R(2,9),n=R(8,30),v=a+(n-1)*d;return mk(`Find the ${n}th term of the AP ${a}, ${a+d}, ${a+2*d}, …`,v,[a+n*d,v-d,v+2*d,a*n],`aₙ = a + (n−1)d = ${a} + ${n-1}×${d} = ${v}.`)}
+ if(t===1){const a=R(1,10),d=R(1,6),n=R(6,20),S=n*(2*a+(n-1)*d)/2;return mk(`Find the sum of the first ${n} terms of the AP ${a}, ${a+d}, ${a+2*d}, …`,S,[S+n,S-d*n,n*(a+(n-1)*d),S+a],`Sₙ = n/2 [2a + (n−1)d] = ${n}/2 × ${2*a+(n-1)*d} = ${S}.`)}
+ const a=R(1,5),r=pick([2,3]),n=R(4,7),v=a*r**(n-1);return mk(`Find the ${n}th term of the GP ${a}, ${a*r}, ${a*r*r}, …`,v,[a*r**n,v/r,v+a,a*r*n],`aₙ = a·rⁿ⁻¹ = ${a} × ${r}^${n-1} = ${v}.`)},
+'trig-values':()=>{const [q,a]=pick(TRIG);return mk(`Find the value of ${q}.`,a,shuffle(TRIGV.filter(v=>v!==a)),`Standard value: ${q} = ${a}.`)},
+'calc-diff':()=>{const a=R(1,6),n=R(2,4),b=R(1,9),k=R(1,3),v=a*n*k**(n-1)+b;return mk(`If f(x) = ${a===1?'':a}x${['','','²','³','⁴'][n]} + ${b}x, find f′(${k}).`,v,[a*k**n+b*k,v-b,v+a,a*n*k**n+b],`f′(x) = ${a*n}x${['','','','²','³'][n]} + ${b}; at x = ${k}: ${v}.`)},
+'calc-int':()=>{const a=2*R(1,5),b=R(1,9),k=R(1,5),v=a*k*k/2+b*k;return mk(`Evaluate ∫₀^${k} (${a}x + ${b}) dx.`,v,[a*k*k+b*k,v+b,a*k+b,v-k],`[${a/2}x² + ${b}x] from 0 to ${k} = ${a/2*k*k} + ${b*k} = ${v}.`)},
+'matrices':()=>{if(Math.random()<.6){const m=[R(-5,9),R(-5,9),R(-5,9),R(-5,9)],d=m[0]*m[3]-m[1]*m[2];return mk(`Find the determinant of [[${m[0]}, ${m[1]}], [${m[2]}, ${m[3]}]].`,d,[m[0]*m[3]+m[1]*m[2],-d||1,d+1,m[0]+m[3]],`|A| = (${m[0]})(${m[3]}) − (${m[1]})(${m[2]}) = ${d}.`)}
+ const m=R(2,5),n=R(2,5),p=R(2,5);return mk(`A is a ${m}×${n} matrix and B is a ${n}×${p} matrix. What is the order of AB?`,`${m}×${p}`,[`${n}×${n}`,`${p}×${m}`,`${m}×${n}`,`${n}×${p}`],`Order of AB = (rows of A) × (columns of B).`)},
+'stats-prob':()=>{const t=R(0,2);if(t===0){const s=R(2,12),c=6-Math.abs(7-s),f=frac(c,36);return mk(`Two dice are thrown. What is the probability that the sum is ${s}?`,f,[frac(c+1,36),frac(c,6),frac(s,36),frac(1,6)===f?'1/12':'1/6'],`${c} favourable outcomes out of 36.`)}
+ if(t===1){const k=R(0,3),c=[1,3,3,1][k];return mk(`Three fair coins are tossed. What is the probability of exactly ${k} head${k===1?'':'s'}?`,frac(c,8),['1/2','1/4','3/4','1/8','3/8'].filter(v=>v!==frac(c,8)),`${c} of the 8 equally likely outcomes.`)}
+ const xs=Array.from({length:7},()=>R(10,60)),sorted=[...xs].sort((a,b)=>a-b),md=sorted[3];return mk(`Find the median of ${xs.join(', ')}.`,md,[sorted[2],sorted[4],Math.round(xs.reduce((a,b)=>a+b)/7),xs[3]],`Sorted: ${sorted.join(', ')}; the 4th value is ${md}.`)},
+'geo-coord':()=>{const t=R(0,2),x1=R(-6,6),y1=R(-6,6);if(t===0){const [a,b,c]=pick(TRIPLES);return mk(`Find the distance between (${x1}, ${y1}) and (${x1+a}, ${y1+b}).`,c,[a+b,c+1,c*c,Math.abs(a-b)+c],`√(${a}² + ${b}²) = √${c*c} = ${c}.`)}
+ const x2=R(-6,6),y2=R(-6,6);if(t===1||x1===x2){const mx=frac(x1+x2,2),my=frac(y1+y2,2);return mk(`Find the midpoint of (${x1}, ${y1}) and (${x2}, ${y2}).`,`(${mx}, ${my})`,[`(${frac(x2-x1,2)}, ${frac(y2-y1,2)})`,`(${x1+x2}, ${y1+y2})`,`(${my}, ${mx})`,`(${frac(x1-x2,2)}, ${my})`],`((x₁+x₂)/2, (y₁+y₂)/2).`)}
+ const s=frac(y2-y1,x2-x1);return mk(`Find the slope of the line through (${x1}, ${y1}) and (${x2}, ${y2}).`,s,[frac(x2-x1,(y2-y1)||1),frac(y1-y2+1,x2-x1),frac(-(y2-y1),x2-x1),frac(y2+y1,x2-x1)],`(y₂ − y₁)/(x₂ − x₁) = ${y2-y1}/${x2-x1} = ${s}.`)},
+'mensuration':()=>{const t=R(0,4);if(t===0){const r=7*R(1,5),A=22*r*r/7;return mk(`Find the area of a circle of radius ${r} cm. (π = 22/7)`,A+' cm²',[2*22*r/7+' cm²',A*2+' cm²',A/2+' cm²',r*r*3+' cm²'],`πr² = 22/7 × ${r}² = ${A}.`)}
+ if(t===1){const r=7*R(1,3),h=R(2,10),V=22*r*r*h/7;return mk(`Find the volume of a cylinder with radius ${r} cm and height ${h} cm. (π = 22/7)`,V+' cm³',[2*22*r*h/7+' cm³',V*2+' cm³',22*r*h/7+' cm³',V+22*r+' cm³'],`πr²h = 22/7 × ${r}² × ${h} = ${V}.`)}
+ if(t===2){const a=R(2,15);return mk(`Find the total surface area of a cube of side ${a} cm.`,6*a*a+' cm²',[a*a*a+' cm³',4*a*a+' cm²',12*a+' cm²',6*a+' cm²'],`6a² = 6 × ${a}² = ${6*a*a}.`)}
+ if(t===3){const l=R(5,30),b=R(3,20);return mk(`A rectangular parade ground is ${l} m by ${b} m. Find its perimeter.`,2*(l+b)+' m',[l*b+' m',(l+b)+' m',2*l+b+' m',4*(l+b)+' m'],`2(l + b) = 2(${l} + ${b}) = ${2*(l+b)}.`)}
+ const b=2*R(3,20),h=R(3,20);return mk(`Find the area of a triangle with base ${b} cm and height ${h} cm.`,b*h/2+' cm²',[b*h+' cm²',b+h+' cm²',b*h/4+' cm²',(b*h/2+h)+' cm²'],`½ × ${b} × ${h} = ${b*h/2}.`)},
+'vectors':()=>{if(Math.random()<.5){const [a,b,c,m]=pick(VEC);return mk(`Find the magnitude of the vector ${a}i + ${b}j + ${c}k.`,m,[a+b+c,m+1,m*m,m-1],`√(${a}² + ${b}² + ${c}²) = √${m*m} = ${m}.`)}
+ const u=[R(-4,6),R(-4,6),R(-4,6)],v=[R(-4,6),R(-4,6),R(-4,6)],d=u[0]*v[0]+u[1]*v[1]+u[2]*v[2];const f=w=>`${w[0]}i ${w[1]<0?'−':'+'} ${Math.abs(w[1])}j ${w[2]<0?'−':'+'} ${Math.abs(w[2])}k`;
+ return mk(`Find a · b if a = ${f(u)} and b = ${f(v)}.`,d,[d+1,-d||3,u[0]*v[0]+u[1]*v[1]-u[2]*v[2],d+2],`(${u[0]})(${v[0]}) + (${u[1]})(${v[1]}) + (${u[2]})(${v[2]}) = ${d}.`)},
+'phy-num':()=>{const t=R(0,6);
+ if(t===0){const u=R(0,20),a=R(1,5),tt=R(2,10),v=u+a*tt;return mk(`A vehicle with initial velocity ${u} m/s accelerates at ${a} m/s² for ${tt} s. Find its final velocity.`,v+' m/s',[u*a+' m/s',a*tt+' m/s',v+a+' m/s',u+tt+' m/s'],`v = u + at = ${u} + ${a}×${tt} = ${v}.`)}
+ if(t===1){const m=R(2,50),a=R(2,10);return mk(`Find the force needed to accelerate a ${m} kg mass at ${a} m/s².`,m*a+' N',[m+a+' N',m*a*10+' N',Math.round(m/a)+' N',m*a/2+' N'],`F = ma = ${m} × ${a} = ${m*a} N.`)}
+ if(t===2){const m=2*R(1,10),v=R(2,10),K=m*v*v/2;return mk(`Find the kinetic energy of a ${m} kg body moving at ${v} m/s.`,K+' J',[m*v*v+' J',m*v+' J',K/2+' J',m*v/2+' J'],`KE = ½mv² = ½ × ${m} × ${v}² = ${K} J.`)}
+ if(t===3){const I=R(1,10),Rr=R(2,20);return mk(`A current of ${I} A flows through a ${Rr} Ω resistor. Find the voltage across it.`,I*Rr+' V',[I+Rr+' V',frac(Rr,I)+' V',I*Rr*2+' V',I*I*Rr+' V'],`V = IR = ${I} × ${Rr} = ${I*Rr} V.`)}
+ if(t===4){const V=pick([6,12,24,110,220]),I=R(1,10);return mk(`A device draws ${I} A at ${V} V. What is its power?`,V*I+' W',[V+I+' W',V*I*2+' W',frac(V,I)+' W',I*I*V+' W'],`P = VI = ${V} × ${I} = ${V*I} W.`)}
+ if(t===5){const m=R(2,80);return mk(`What is the weight of a ${m} kg mass on Earth? (g = 10 m/s²)`,m*10+' N',[m+' N',m*9.8+' N',m+10+' N',m*100+' N'],`W = mg = ${m} × 10 = ${m*10} N.`)}
+ const f=R(2,50)*10,l=pick([1,2,5]),v=f*l;return mk(`A wave of frequency ${f} Hz has a wavelength of ${l} m. Find its speed.`,v+' m/s',[f+l+' m/s',f/l+' m/s',v*2+' m/s',v+10+' m/s'],`v = fλ = ${f} × ${l} = ${v} m/s.`)},
+'rsn-series':()=>{const t=R(0,5);let xs,nx,ex;
+ if(t===0){const a=R(1,30),d=R(3,15);xs=[0,1,2,3,4].map(i=>a+i*d);nx=a+5*d;ex=`Add ${d} each time.`}
+ else if(t===1){const a=R(1,5),r=R(2,3);xs=[0,1,2,3,4].map(i=>a*r**i);nx=a*r**5;ex=`Multiply by ${r} each time.`}
+ else if(t===2){const s=R(1,8);xs=[0,1,2,3,4].map(i=>(s+i)**2);nx=(s+5)**2;ex=`Squares of ${s} to ${s+4}; next is ${s+5}².`}
+ else if(t===3){const s=R(1,5);xs=[0,1,2,3,4].map(i=>(s+i)**3);nx=(s+5)**3;ex=`Cubes; next is ${s+5}³.`}
+ else if(t===4){const a=R(1,10),d=R(1,4),k=R(1,3);xs=[a];let dd=d;for(let i=0;i<4;i++){xs.push(xs[i]+dd);dd+=k}nx=xs[4]+dd;ex=`Differences increase by ${k}: next difference is ${dd}.`}
+ else{const s=R(1,6),c=pick([1,-1]);xs=[0,1,2,3,4].map(i=>(s+i)**2+c);nx=(s+5)**2+c;ex=`n² ${c>0?'+':'−'} 1 for n = ${s} to ${s+5}.`}
+ return mk(`Find the next number: ${xs.join(', ')}, ?`,nx,near(nx,Math.max(1,Math.round((nx-xs[4])/3))),ex)},
+'rsn-letter-series':()=>{const k=R(1,4)*pick([1,-1]),s=k>0?R(0,6):R(19,25);const L=i=>String.fromCharCode(65+((s+i*k)%26+26)%26);const nx=L(5);
+ return mk(`Find the next letter: ${[0,1,2,3,4].map(L).join(', ')}, ?`,nx,[L(6),L(4),String.fromCharCode(65+((s+5*k+1)%26+26)%26),String.fromCharCode(65+((s+5*k-1)%26+26)%26)],`Each letter moves ${Math.abs(k)} step${Math.abs(k)>1?'s':''} ${k>0?'forward':'back'}.`)},
+'rsn-coding':()=>{const [w1,w2]=shuffle(WORDS);const k=R(1,3)*pick([1,-1]);const c=shiftW(w2,k);return mk(`If ${w1} is coded as ${shiftW(w1,k)}, how is ${w2} coded?`,c,[shiftW(w2,-k),shiftW(w2,k+1),shiftW(w2,k).split('').reverse().join(''),shiftW(w2,k*2)],`Each letter moves ${Math.abs(k)} place${Math.abs(k)>1?'s':''} ${k>0?'forward':'back'}.`)},
+'rsn-odd':()=>{const t=R(0,2);let good,odd,ex;
+ if(t===0){good=shuffle([11,13,17,19,23,29,31,37,41,43,47,53]).slice(0,3);odd=pick([21,27,33,39,49,51,57,63,91]);ex=`${odd} is not prime; the others are.`}
+ else if(t===1){good=shuffle([16,25,36,49,64,81,100,121,144,169]).slice(0,3);odd=pick([50,72,90,110,130,150]);ex=`${odd} is not a perfect square.`}
+ else{good=shuffle([14,21,28,35,42,49,56,63,77,84]).slice(0,3);odd=pick([22,33,45,52,65,74]);ex=`${odd} is not a multiple of 7.`}
+ const opts=shuffle([...good,odd]).map(String);return {s:`Which number is the odd one out?`,o:opts,a:opts.indexOf(String(odd)),e:ex}},
+'rsn-direction':()=>{if(Math.random()<.5){const [a,b,c]=pick(TRIPLES);const d1=pick(['north','south']),d2=pick(['east','west']);return mk(`A cadet walks ${a} km ${d1}, then ${b} km ${d2}. How far is he from the start?`,c+' km',[a+b+' km',Math.abs(b-a)+' km',c+1+' km',c*2+' km'],`√(${a}² + ${b}²) = ${c} km.`)}
+ const dirs=['North','East','South','West'];let d=R(0,3);const s0=dirs[d];const turns=Array.from({length:R(2,4)},()=>pick(['right','left','right']));turns.forEach(t=>d=(d+(t==='right'?1:3))%4);
+ return mk(`You face ${s0}. You turn ${turns.join(', then ')}. Which way do you face now?`,dirs[d],dirs.filter(x=>x!==dirs[d]),`Right = 90° clockwise, left = 90° anticlockwise.`)},
+'rsn-clock':()=>{const h=R(1,12),m=5*R(0,11);let a=Math.abs(30*h-5.5*m);if(a>180)a=360-a;const s=x=>(Number.isInteger(x)?x:x.toFixed(1))+'°';
+ return mk(`What is the angle between the hands of a clock at ${h}:${String(m).padStart(2,'0')}?`,s(a),[s(Math.abs(30*h-6*m)%360>180?360-Math.abs(30*h-6*m)%360:Math.abs(30*h-6*m)%360),s(a+15),s(Math.abs(a-30)),s(360-a)],`|30h − 5.5m| = |${30*h} − ${5.5*m}| = ${s(Math.abs(30*h-5.5*m))}${Math.abs(30*h-5.5*m)>180?'; take 360° minus it':''}.`)},
+'rsn-calendar':()=>{const d1=R(1,10),d2=d1+R(8,20),w=R(0,6),ans=DAYS[(w+d2-d1)%7];const ord=n=>n+((n%100>=11&&n%100<=13)?'th':['th','st','nd','rd'][n%10<4?n%10:0]);return mk(`If the ${ord(d1)} of a month is a ${DAYS[w]}, what day is the ${ord(d2)}?`,ans,DAYS.filter(x=>x!==ans),`${d2-d1} days later; ${d2-d1} mod 7 = ${(d2-d1)%7}.`)},
+'rsn-ranking':()=>{if(Math.random()<.5){const l=R(3,25),r=R(3,25),n=l+r-1;return mk(`In a squad, Ravi is ${l}th from the left and ${r}th from the right. How many cadets are in the squad?`,n,[n+1,n+2,n-1,l+r+1],`${l} + ${r} − 1 = ${n}.`)}
+ const n=R(20,60),l=R(2,n-1),r=n-l+1;return mk(`In a row of ${n} cadets, Arjun is ${l}th from the left. What is his position from the right?`,r,[r+1,r-1,n-l,n+l],`${n} − ${l} + 1 = ${r}.`)},
+'rsn-figures':()=>{const t=R(0,2);
+ if(t===0){const st=pick([45,90])*pick([1,-1]),s0=45*R(0,7);const seq=[0,1,2].map(i=>s0+i*st),nx=s0+3*st;const o=[nx,nx+st,nx-st*2,nx+180].map(a=>((a%360)+360)%360);const uniq=[...new Set(o)];while(uniq.length<4)uniq.push((uniq[uniq.length-1]+135)%360);const sh=shuffle(uniq);
+  return {s:'Which figure comes next?',fig:seq.map(svgArrow).join(' ')+' <b style="font-size:1.4rem">?</b>',o:sh.map(svgArrow),html:true,a:sh.indexOf(((nx%360)+360)%360),e:`The arrow turns ${Math.abs(st)}° ${st>0?'clockwise':'anticlockwise'} each step.`}}
+ if(t===1){const s=R(3,5),nx=s+3;const o=shuffle([nx,nx+1,s+1,s]);return {s:'Which figure comes next?',fig:[s,s+1,s+2].map(svgPoly).join(' ')+' <b style="font-size:1.4rem">?</b>',o:o.map(svgPoly),html:true,a:o.indexOf(nx),e:'One side is added each time.'}}
+ const s=R(1,3),k=R(1,2),nx=s+3*k;const o=shuffle([nx,nx+1,nx-1,nx+k+1].filter((v,i,a)=>a.indexOf(v)===i&&v>0).concat([nx+3]).slice(0,4));return {s:'How many dots come next?',fig:[s,s+k,s+2*k].map(svgDots).join(' ')+' <b style="font-size:1.4rem">?</b>',o:o.map(svgDots),html:true,a:o.indexOf(nx),e:`${k} dot${k>1?'s are':' is'} added each step: ${nx}.`}}
+};
+const LEX=[['abandon','desert','retain'],['abundant','plentiful','scarce'],['candid','frank','secretive'],['diligent','hardworking','lazy'],['benevolent','kind','cruel'],['obstinate','stubborn','flexible'],['lucid','clear','obscure'],['meagre','scanty','ample'],['brave','courageous','cowardly'],['affluent','wealthy','poor'],['hostile','unfriendly','friendly'],['prudent','wise','reckless'],['frugal','thrifty','extravagant'],['humble','modest','arrogant'],['conceal','hide','reveal'],['diminish','reduce','increase'],['eminent','distinguished','unknown'],['feeble','weak','strong'],['gloomy','dismal','cheerful'],['immense','huge','tiny'],['jubilant','joyful','sorrowful'],['lethargic','sluggish','energetic'],['mandatory','compulsory','optional'],['novice','beginner','expert'],['obsolete','outdated','modern'],['quarrelsome','argumentative','peaceable'],['reluctant','unwilling','eager'],['serene','tranquil','turbulent'],['tedious','boring','interesting'],['zeal','enthusiasm','apathy'],['ascend','climb','descend'],['vacant','empty','occupied'],['genuine','authentic','fake'],['hazardous','dangerous','safe'],['rigid','stiff','pliable'],['victory','triumph','defeat'],['loyal','faithful','treacherous'],['ancient','antique','recent'],['commence','begin','conclude'],['vigilant','watchful','careless']];
+G['eng-syn']=()=>{const w=pick(LEX);const others=shuffle(LEX.filter(x=>x!==w)).slice(0,2).map(x=>x[1]);return mk(`Choose the word closest in meaning to ${w[0].toUpperCase()}.`,w[1],[w[2],...others],`${w[0]} means ${w[1]}; its opposite is ${w[2]}.`)};
+G['eng-ant']=()=>{const w=pick(LEX);const others=shuffle(LEX.filter(x=>x!==w)).slice(0,2).map(x=>x[2]);return mk(`Choose the word opposite in meaning to ${w[0].toUpperCase()}.`,w[2],[w[1],...others],`${w[0]} means ${w[1]}; its opposite is ${w[2]}.`)};
+
+/* curated bank (bank.json) + current-affairs questions (db) */
+let BANK={},CAQ=[];
+const CH={
+ 'arith-percent':'Percentage','arith-profit':'Profit & loss','arith-si-ci':'Simple & compound interest','arith-ratio':'Ratio & proportion','arith-average':'Averages','arith-time-work':'Time & work','arith-sdt':'Speed, time & distance','arith-number':'Number system: HCF & LCM',
+ 'alg-linear':'Linear equations','alg-quadratic':'Quadratic equations','alg-progressions':'Sequences & series (AP, GP)','trig-values':'Trigonometry','calc-diff':'Differentiation','calc-int':'Integration','matrices':'Matrices & determinants','stats-prob':'Statistics & probability','geo-coord':'Coordinate geometry','mensuration':'Mensuration','vectors':'Vectors',
+ 'rsn-series':'Number series','rsn-letter-series':'Letter series','rsn-coding':'Coding–decoding','rsn-odd':'Odd one out','rsn-direction':'Direction sense','rsn-clock':'Clocks','rsn-calendar':'Calendar','rsn-ranking':'Ranking & order','rsn-figures':'Non-verbal: figure series','rsn-verbal':'Analogy, relations & syllogism',
+ 'eng-syn':'Synonyms','eng-ant':'Antonyms','eng-idioms':'Idioms & phrases','eng-ows':'One-word substitution','eng-grammar':'Grammar & usage','eng-spelling':'Spelling',
+ 'sci-physics':'Physics concepts','phy-num':'Physics numericals','sci-chemistry':'Chemistry','sci-biology':'Biology','gk-history':'History','gk-polity':'Polity & Constitution','gk-geography':'Geography','gk-defence':'Defence & military GK','ca':'Current affairs'};
+const isGen=c=>!!G[c];
+const poolSize=c=>isGen(c)?Infinity:c==='ca'?CAQ.length:(BANK[c]||[]).length;
+function fromBank(c,it){const sh=shuffle(it.slice(1,5));return {s:it[0],o:sh,a:sh.indexOf(it[1]),e:it[5]||'',ch:c}}
+function drawQs(chs,n){const out=[],used=new Set(),bags={};chs=chs.filter(c=>poolSize(c)>0);if(!chs.length)return out;
+ chs.forEach(c=>{if(!isGen(c))bags[c]=shuffle(c==='ca'?CAQ.map(q=>[q.q,q.o[q.a],...q.o.filter((_,i)=>i!==q.a),q.e]):BANK[c])});
+ let i=0,guard=0;while(out.length<n&&guard<n*20){guard++;const c=chs[i++%chs.length];let q=null;
+  if(isGen(c)){q=G[c]();q.ch=c}else if(bags[c].length){q=fromBank(c,bags[c].pop())}else continue;
+  const key=q.s+'|'+q.o[q.a];if(used.has(key))continue;used.add(key);out.push(q)}
+ return shuffle(out)}
+
+/* ================= EXAMS ================= */
+const ARITH=['arith-percent','arith-profit','arith-si-ci','arith-ratio','arith-average','arith-time-work','arith-sdt','arith-number'];
+const RSN=['rsn-series','rsn-letter-series','rsn-coding','rsn-odd','rsn-direction','rsn-clock','rsn-calendar','rsn-ranking','rsn-figures','rsn-verbal'];
+const ENG=['eng-syn','eng-ant','eng-idioms','eng-ows','eng-grammar','eng-spelling'];
+const GK=['gk-history','gk-polity','gk-geography','gk-defence','ca'];
+const SCI=['sci-physics','phy-num','sci-chemistry','sci-biology'];
+const EXAMS={
+ NDA:{name:'NDA & NA',by:'UPSC · twice a year',subs:[
+   {name:'Mathematics',ch:['alg-linear','alg-quadratic','alg-progressions','matrices','trig-values','geo-coord','calc-diff','calc-int','vectors','stats-prob']},
+   {name:'GAT · English',ch:ENG},{name:'GAT · General Knowledge',ch:[...SCI,...GK]}],
+  mocks:[{name:'Paper I · Mathematics',q:'120 Q · 150 min · +2.5 / −0.83',min:150,pos:2.5,neg:0.83,sec:[[120,'Mathematics']]},
+         {name:'Paper II · General Ability Test',q:'150 Q · 150 min · +4 / −1.33',min:150,pos:4,neg:1.33,sec:[[50,'GAT · English'],[100,'GAT · General Knowledge']]}]},
+ CDS:{name:'CDS',by:'UPSC · twice a year',subs:[{name:'English',ch:ENG},{name:'General Knowledge',ch:[...GK,...SCI]},{name:'Elementary Mathematics',ch:[...ARITH,'alg-linear','alg-quadratic','trig-values','mensuration','stats-prob']}],
+  mocks:[{name:'English',q:'120 Q · 120 min · 100 marks',min:120,pos:.83,neg:.28,sec:[[120,'English']]},{name:'General Knowledge',q:'120 Q · 120 min · 100 marks',min:120,pos:.83,neg:.28,sec:[[120,'General Knowledge']]},{name:'Elementary Mathematics',q:'100 Q · 120 min · 100 marks',min:120,pos:1,neg:.33,sec:[[100,'Elementary Mathematics']]}]},
+ AFCAT:{name:'AFCAT',by:'Indian Air Force · twice a year',subs:[{name:'General Awareness',ch:[...GK,'sci-physics','sci-chemistry','sci-biology']},{name:'Verbal Ability',ch:ENG},{name:'Numerical Ability',ch:ARITH},{name:'Reasoning & Military Aptitude',ch:[...RSN,'gk-defence']}],
+  mocks:[{name:'AFCAT full paper',q:'100 Q · 120 min · +3 / −1',min:120,pos:3,neg:1,sec:[[25,'General Awareness'],[25,'Verbal Ability'],[20,'Numerical Ability'],[30,'Reasoning & Military Aptitude']]}]},
+ CGCAT:{name:'CGCAT',by:'Indian Coast Guard',subs:[{name:'English',ch:ENG},{name:'Reasoning & Numerical Ability',ch:[...RSN,...ARITH]},{name:'General Science & Maths',ch:[...SCI,'alg-linear','mensuration','trig-values','stats-prob']},{name:'General Knowledge',ch:GK}],
+  mocks:[{name:'CGCAT practice paper',q:'100 Q · 120 min · +1 / no negative (check notification)',min:120,pos:1,neg:0,sec:[[25,'English'],[25,'Reasoning & Numerical Ability'],[25,'General Science & Maths'],[25,'General Knowledge']]}]},
+ INET:{name:'INET (Officers)',by:'Indian Navy',subs:[{name:'English',ch:ENG},{name:'Reasoning & Numerical Ability',ch:[...RSN,...ARITH]},{name:'General Science & Maths',ch:[...SCI,'alg-linear','alg-quadratic','mensuration','trig-values']},{name:'General Knowledge',ch:GK}],
+  mocks:[{name:'INET practice paper',q:'100 Q · 120 min · +1 / no negative (check notification)',min:120,pos:1,neg:0,sec:[[25,'English'],[25,'Reasoning & Numerical Ability'],[25,'General Science & Maths'],[25,'General Knowledge']]}]}};
+let curExam=LS.get('exam','NDA');if(!EXAMS[curExam])curExam='NDA';
+function stats(){return LS.get('stats',{})}
+function drawWritten(){$('#exam-tabs').innerHTML=Object.keys(EXAMS).map(k=>`<button role="tab" aria-selected="${k===curExam}" data-k="${k}">${EXAMS[k].name}</button>`).join('');
+ $('#exam-tabs').querySelectorAll('button').forEach(b=>b.onclick=()=>{curExam=b.dataset.k;LS.set('exam',curExam);drawWritten()});
+ const E=EXAMS[curExam],st=stats();
+ $('#exam-body').innerHTML=`<p class="muted">${E.by}</p>
+ <div class="card"><p class="eyebrow">Full mock papers</p>${E.mocks.map((m,i)=>`<div class="mock" style="padding:8px 0;border-top:${i?'1px solid var(--line)':'0'}"><div><h3>${m.name}</h3><span class="mono muted" style="font-size:.8rem">${m.q}</span></div><button class="btn saf small" data-mock="${i}">Start mock</button></div>`).join('')}</div>
+ ${E.subs.map((s,si)=>`<div class="subj"><div class="subj-h"><h3>${s.name}</h3><div class="row"><button class="btn small" data-sub="${si}" data-n="25">Mixed test · 25</button></div></div>
+  ${s.ch.map(c=>{const p=poolSize(c),a=st[c];return `<div class="chap"><div><b>${CH[c]}</b>${a?` <span class="acc ${a.c/a.t>=.7?'ok':a.c/a.t>=.4?'wn':'no'}">${Math.round(100*a.c/a.t)}% of ${a.t}</span>`:''}</div><span class="cnt">${p===Infinity?'unlimited · generated':p+' questions'}</span><div class="row"><button class="btn alt small" data-ch="${c}" data-n="10" ${p?'':'disabled'}>Practise 10</button><button class="btn alt small" data-ch="${c}" data-n="25" ${p?'':'disabled'}>25</button></div></div>`}).join('')}</div>`).join('')}`;
+ $('#exam-body').querySelectorAll('[data-ch]').forEach(b=>b.onclick=()=>startRun({title:CH[b.dataset.ch],eyebrow:E.name+' · practice',qs:drawQs([b.dataset.ch],+b.dataset.n),mode:'practice'}));
+ $('#exam-body').querySelectorAll('[data-sub]').forEach(b=>b.onclick=()=>{const s=E.subs[+b.dataset.sub];startRun({title:s.name+' · mixed test',eyebrow:E.name,qs:drawQs(s.ch,25),mode:'test',min:25,pos:1,neg:0})});
+ $('#exam-body').querySelectorAll('[data-mock]').forEach(b=>b.onclick=()=>{const m=E.mocks[+b.dataset.mock];let qs=[];m.sec.forEach(([n,sn])=>{const s=E.subs.find(x=>x.name===sn);qs=qs.concat(drawQs(s.ch,n).map(q=>Object.assign(q,{sec:sn})))});
+  startRun({title:m.name,eyebrow:E.name+' · full mock',qs,mode:'test',min:m.min,pos:m.pos,neg:m.neg,ordered:true})})}
+
+/* ================= RUN ENGINE ================= */
+let RUN=null;
+function startRun(cfg){if(!cfg.qs.length){toast('No questions available in this chapter yet.');return}RUN=cfg;location.hash='run';if(location.hash==='#run')route()}
+function record(qs,ans){const st=stats();qs.forEach((q,i)=>{if(ans[i]===null||!q.ch)return;const s=st[q.ch]||{t:0,c:0};s.t++;if(ans[i]===q.a)s.c++;st[q.ch]=s});LS.set('stats',st)}
+function addAttempt(a){const l=LS.get('attempts',[]);l.unshift(Object.assign({at:Date.now()},a));LS.set('attempts',l.slice(0,80))}
+const optHTML=(q,o)=>q.html?o:esc(o);
+function runRun(){const C=RUN;$('#r-title').textContent=C.title;$('#r-eyebrow').textContent=C.eyebrow;$('#r-leave').href=C.back||'#written';
+ const qs=C.qs,ans=new Array(qs.length).fill(null);let cur=0;
+ if(C.mode==='practice'){let right=0;const draw=()=>{const q=qs[cur],done=ans[cur]!==null;
+   $('#r-body').innerHTML=`<div class="room"><div class="card q"><p class="eyebrow">Question ${cur+1} of ${qs.length}${q.ch?' · '+CH[q.ch]:''}</p><p class="stem">${esc(q.s)}</p>${q.fig?`<div class="row">${q.fig}</div>`:''}
+   <div class="opts">${q.o.map((o,i)=>`<button class="opt ${done&&i===q.a?'right':''} ${done&&i===ans[cur]&&i!==q.a?'wrong':''}" data-i="${i}" ${done?'disabled':''}><span class="k">${'ABCD'[i]}</span>${optHTML(q,o)}</button>`).join('')}</div>
+   ${done?`<div class="expl ${ans[cur]===q.a?'':'bad'}"><b>${ans[cur]===q.a?'Correct.':'Not quite.'}</b> ${q.html?'Answer: option '+'ABCD'[q.a]+'. ':'Answer: '+esc(q.o[q.a])+'. '}${esc(q.e)}</div><div class="row"><button class="btn" id="nx">${cur<qs.length-1?'Next question':'See result'}</button></div>`:''}</div>
+   <div class="side card"><span class="phase">Practice</span><div class="big">${right} / ${qs.filter((_,i)=>ans[i]!==null).length}</div><p class="muted">correct so far</p><div class="bar-p"><i style="width:${100*cur/qs.length}%"></i></div></div></div>`;
+   $('#r-body').querySelectorAll('.opt').forEach(b=>b.onclick=()=>{ans[cur]=+b.dataset.i;if(ans[cur]===q.a)right++;draw()});
+   const nx=$('#nx');if(nx)nx.onclick=()=>{if(cur<qs.length-1){cur++;draw()}else finish()}};
+  const finish=()=>{record(qs,ans);addAttempt({test:C.eyebrow+' · '+C.title,detail:`${right}/${qs.length} correct`});
+   $('#r-body').innerHTML=`<div class="card"><p class="eyebrow">Result</p><div class="big">${right} / ${qs.length}</div><p class="muted">${Math.round(100*right/qs.length)}% accuracy</p><div class="row"><button class="btn saf" id="again">Another set</button><a class="btn alt" href="${C.back||'#written'}">Back</a></div></div>`;
+   $('#again').onclick=()=>{const chs=[...new Set(qs.map(q=>q.ch))];startRun(Object.assign({},C,{qs:drawQs(chs,qs.length)}))}};
+  draw();return}
+ // test mode
+ $('#r-body').innerHTML=`<div class="room"><div class="card q" id="qbox"></div><div class="side card"><span class="phase">${C.q||(qs.length+' questions')}</span><div class="clock" id="clk">00:00</div><div class="bar-p"><i id="pb"></i></div><p class="mono muted" id="att"></p><div class="qnav" id="qnav"></div><button class="btn saf small" id="submit">Submit paper</button><p class="muted" style="font-size:.82rem" id="mk">Marking: +${C.pos} correct${C.neg?', −'+C.neg+' wrong':''}, 0 unattempted.</p></div></div>`;
+ const draw=()=>{const q=qs[cur];$('#qbox').innerHTML=`<p class="eyebrow">Q ${cur+1} of ${qs.length}${q.sec?' · '+esc(q.sec):''}</p><p class="stem">${esc(q.s)}</p>${q.fig?`<div class="row">${q.fig}</div>`:''}<div class="opts">${q.o.map((o,i)=>`<button class="opt ${ans[cur]===i?'sel':''}" data-i="${i}"><span class="k">${'ABCD'[i]}</span>${optHTML(q,o)}</button>`).join('')}</div><div class="row"><button class="btn alt small" id="prev" ${cur?'':'disabled'}>Previous</button><button class="btn alt small" id="clr">Clear</button><button class="btn small" id="next" ${cur<qs.length-1?'':'disabled'}>Save & next</button></div>`;
+  $('#qbox').querySelectorAll('.opt').forEach(b=>b.onclick=()=>{ans[cur]=+b.dataset.i;draw()});
+  $('#prev').onclick=()=>{cur--;draw()};$('#next').onclick=()=>{cur++;draw()};$('#clr').onclick=()=>{ans[cur]=null;draw()};
+  $('#qnav').innerHTML=qs.map((_,i)=>`<button class="${ans[i]!==null?'done':''} ${i===cur?'cur':''}" data-i="${i}">${i+1}</button>`).join('');
+  $('#qnav').querySelectorAll('button').forEach(b=>b.onclick=()=>{cur=+b.dataset.i;draw()});
+  $('#att').textContent=ans.filter(a=>a!==null).length+' / '+qs.length+' attempted'};
+ draw();
+ const finish=()=>{stopActive();const c=ans.filter((a,i)=>a===qs[i].a).length,w=ans.filter((a,i)=>a!==null&&a!==qs[i].a).length,u=qs.length-c-w;const score=+(c*C.pos-w*C.neg).toFixed(2),max=+(qs.length*C.pos).toFixed(2);
+  record(qs,ans);addAttempt({test:C.eyebrow+' · '+C.title,detail:`${score}/${max} marks · ${c} right, ${w} wrong, ${u} skipped`});
+  const secs={};qs.forEach((q,i)=>{const k=q.sec||(q.ch?CH[q.ch]:'Mixed');const s=secs[k]||{c:0,w:0,t:0};s.t++;if(ans[i]===q.a)s.c++;else if(ans[i]!==null)s.w++;secs[k]=s});
+  $('#r-body').innerHTML=`<div class="card" style="gap:16px"><p class="eyebrow">Result</p><div class="big">${score} / ${max}</div><p class="muted">${c} correct · ${w} wrong · ${u} not attempted</p>
+  <div class="tbl"><table><thead><tr><th>Section</th><th>Correct</th><th>Wrong</th><th>Accuracy</th></tr></thead><tbody>${Object.entries(secs).map(([k,s])=>`<tr><td>${esc(k)}</td><td>${s.c}/${s.t}</td><td>${s.w}</td><td><div class="meter"><i style="width:${s.c+s.w?100*s.c/(s.c+s.w):0}%"></i></div></td></tr>`).join('')}</tbody></table></div>
+  <p class="eyebrow">Answers and explanations</p><ol class="review">${qs.map((q,i)=>`<li><b>${esc(q.s)}</b>${q.fig?`<div class="row">${q.fig}</div>`:''}<br>${ans[i]===q.a?'<span class="ok">Correct</span>':ans[i]===null?'<span class="wn">Not attempted</span>':'<span class="no">Wrong</span>'} · Answer: ${q.html?q.o[q.a]:esc(q.o[q.a])}<br><span class="muted">${esc(q.e)}</span></li>`).join('')}</ol><div class="row"><a class="btn" href="${C.back||'#written'}">Back</a><a class="btn alt" href="#record">My record</a></div></div>`;window.scrollTo(0,0)};
+ $('#submit').onclick=finish;countdown(C.min*60,$('#clk'),$('#pb'),finish)}
+
+/* ================= TIMER ================= */
+let active=null;
+function stopActive(){if(active){clearInterval(active.iv);active=null}}
+function countdown(sec,clockEl,barEl,onEnd){stopActive();const end=Date.now()+sec*1000;const c={iv:null,skip(){fin()}};
+ function tick(){const left=(end-Date.now())/1000;if(clockEl){clockEl.textContent=fmt(left);clockEl.classList.toggle('low',left<=10)}if(barEl)barEl.style.width=(100*(1-left/sec))+'%';if(left<=0)fin()}
+ function fin(){clearInterval(c.iv);if(active===c)active=null;onEnd()}
+ c.iv=setInterval(tick,250);active=c;tick();return c}
+
+/* ================= SSB TESTS ================= */
+const INK='#2b2b2b';
+function man(x,y,h,o={}){const r=h*.11,sw=h*.085,rot=o.rot||0;let arms;const sh=-h*.7;
+ if(o.arm==='point')arms=`<line x1="0" y1="${sh}" x2="${h*.34}" y2="${-h*.82}"/><line x1="0" y1="${sh}" x2="${-h*.13}" y2="${-h*.42}"/>`;
+ else if(o.arm==='reach')arms=`<line x1="0" y1="${sh}" x2="${h*.3}" y2="${-h*.5}"/><line x1="0" y1="${sh}" x2="${h*.26}" y2="${-h*.6}"/>`;
+ else if(o.arm==='up')arms=`<line x1="0" y1="${sh}" x2="${-h*.2}" y2="${-h*1.02}"/><line x1="0" y1="${sh}" x2="${h*.2}" y2="${-h*1.02}"/>`;
+ else arms=`<line x1="0" y1="${sh}" x2="${-h*.14}" y2="${-h*.4}"/><line x1="0" y1="${sh}" x2="${h*.14}" y2="${-h*.4}"/>`;
+ const legs=o.run?`<line x1="0" y1="${-h*.4}" x2="${-h*.24}" y2="${-h*.04}"/><line x1="0" y1="${-h*.4}" x2="${h*.2}" y2="0"/>`:`<line x1="0" y1="${-h*.4}" x2="${-h*.1}" y2="0"/><line x1="0" y1="${-h*.4}" x2="${h*.1}" y2="0"/>`;
+ return `<g transform="translate(${x} ${y}) rotate(${rot})" stroke="${INK}" stroke-width="${sw}" stroke-linecap="round" fill="${INK}"><circle cx="0" cy="${-h*.89}" r="${r}" stroke="none"/><line x1="0" y1="${-h*.77}" x2="0" y2="${-h*.4}"/>${arms}${legs}</g>`}
+function tree(x,y,s){return `<g fill="#6d6d6d"><rect x="${x-s*.06}" y="${y-s*.5}" width="${s*.12}" height="${s*.5}" fill="#4a4a4a"/><circle cx="${x}" cy="${y-s*.68}" r="${s*.32}"/><circle cx="${x-s*.22}" cy="${y-s*.55}" r="${s*.22}"/><circle cx="${x+s*.22}" cy="${y-s*.55}" r="${s*.22}"/></g>`}
+const SCENES={
+ river:`<rect width="400" height="260" fill="#e6e6e2"/><path d="M0 120 Q80 90 160 110 T320 100 T400 110 V260 H0Z" fill="#b9b9b4"/><path d="M0 170 Q120 150 220 185 T400 175 V215 Q300 230 200 220 T0 210Z" fill="#8f8f8a"/><path d="M250 186 h60 l-10 14 h-42z" fill="#3c3c3c"/>${tree(60,150,70)}${man(140,175,48,{arm:'point'})}${man(195,200,44,{rot:-84})}${man(95,180,46,{run:true})}`,
+ village:`<rect width="400" height="260" fill="#e4e4e0"/><rect y="180" width="400" height="80" fill="#b3b3ae"/><rect x="230" y="100" width="130" height="85" fill="#9a9a95"/><path d="M220 104 L295 60 L370 104Z" fill="#5a5a56"/><rect x="282" y="140" width="24" height="45" fill="#3a3a3a"/>${tree(60,185,80)}${man(250,212,50,{arm:'point'})}${man(195,222,44)}${man(175,226,44)}${man(155,222,42)}${man(215,228,42)}<g stroke="${INK}" stroke-width="4" fill="none"><circle cx="90" cy="230" r="14"/><circle cx="130" cy="230" r="14"/><path d="M90 230 L108 212 L130 230 M108 212 L120 212"/></g>`,
+ study:`<rect width="400" height="260" fill="#dcdcd8"/><rect x="40" y="30" width="110" height="90" fill="#7c7c78"/><circle cx="115" cy="60" r="14" fill="#efefea"/><line x1="95" y1="30" x2="95" y2="120" stroke="#dcdcd8" stroke-width="5"/><rect x="170" y="170" width="200" height="14" fill="#3e3e3e"/><rect x="180" y="184" width="10" height="70" fill="#3e3e3e"/><rect x="350" y="184" width="10" height="70" fill="#3e3e3e"/><path d="M320 170 l6 -50 l-16 -6 M300 116 l30 0 l-6 -14 l-18 0z" stroke="${INK}" stroke-width="4" fill="${INK}"/><rect x="215" y="150" width="50" height="20" fill="#6a6a66"/>${man(270,172,72,{arm:'reach'})}`,
+ climb:`<rect width="400" height="260" fill="#e2e2de"/><path d="M0 260 L170 40 L250 110 L300 70 L400 200 V260Z" fill="#a3a39e"/><path d="M170 40 L195 70 L160 75Z" fill="#f2f2ee"/>${man(150,110,40,{rot:-20,arm:'reach'})}${man(105,168,40,{rot:-12,arm:'up'})}<path d="M160 92 Q140 120 108 132" stroke="#3a3a3a" stroke-width="2.5" fill="none"/>`,
+ door:`<rect width="400" height="260" fill="#d8d8d4"/><rect x="40" y="20" width="320" height="230" fill="#a8a8a3"/><rect x="150" y="70" width="90" height="180" fill="#3b3b3b"/><path d="M240 70 L280 82 V238 L240 250Z" fill="#6d6d68"/>${man(195,250,92)}<rect x="210" y="190" width="30" height="26" fill="#545450"/>${man(300,250,78,{rot:6})}`,
+ tractor:`<rect width="400" height="260" fill="#e6e6e2"/><rect y="150" width="400" height="110" fill="#c1c1bc"/><rect x="210" y="150" width="90" height="40" fill="#4b4b47"/><rect x="250" y="120" width="40" height="32" fill="#5d5d59"/><circle cx="285" cy="200" r="24" fill="#2e2e2e"/><circle cx="222" cy="206" r="14" fill="#2e2e2e"/>${man(170,215,64,{arm:'reach'})}${man(90,200,52,{arm:'point'})}`,
+ blank:`<rect width="400" height="260" fill="#f4f4f0"/>`};
+function scene(key,blur){const id='b'+Math.random().toString(36).slice(2,7);return `<svg class="scene" viewBox="0 0 400 260" role="img" aria-label="Test picture"><defs><filter id="${id}"><feGaussianBlur stdDeviation="${blur}"/></filter></defs><g filter="url(#${id})">${SCENES[key]}</g></svg>`}
+function sideHTML(extra=''){return `<div class="side card"><span class="phase" id="ph"></span><div class="clock" id="clk">00:00</div><div class="bar-p"><i id="pb"></i></div><p class="muted" id="ph-note" style="font-size:.9rem"></p>${extra}<button class="btn alt small" id="skip">Skip ahead (practice only)</button></div>`}
+function setHead(eb,t){$('#t-eyebrow').textContent=eb;$('#t-title').textContent=t}
+function intro(html,start){$('#t-body').innerHTML=`<div class="card" style="max-width:720px;gap:14px">${html}<div class="row"><button class="btn saf" id="go">Start test</button></div></div>`;$('#go').onclick=start}
+const back=`<div class="row"><a class="btn" href="#ssb">Back to SSB practice</a></div>`;
+const TESTS={};
+TESTS.oir=()=>{setHead('Screening · Officer Intelligence Rating','OIR test');intro(`<p>The board gives two OIR booklets of mixed verbal and non-verbal reasoning. This set has <b>40 fresh questions in 25 minutes</b>, a new set every time.</p><p class="note">Speed matters more than perfection. Don't get stuck on one question.</p>`,
+ ()=>{const qs=drawQs(RSN,40);RUN={title:'OIR test',eyebrow:'Screening',qs,mode:'test',min:25,pos:1,neg:0,back:'#ssb'};location.hash='run'})};
+TESTS.ppdt=()=>{setHead('Screening · Picture Perception & Description','PPDT');const pic=pick(['river','village']);
+ intro(`<p>You will see a hazy picture for <b>30 seconds</b>, then get <b>1 minute</b> for the character box and <b>4 minutes</b> to write a story.</p><p class="note">At the board you then narrate in about a minute, followed by a group discussion.</p>`,()=>{
+ $('#t-body').innerHTML=`<div class="room"><div class="stagebox" id="stg">${scene(pic,2.4)}</div>${sideHTML()}</div><div id="ppdt-w" class="card" hidden style="margin-top:16px"></div>`;
+ $('#ph').textContent='Observe';$('#ph-note').textContent='Note the number of characters, their mood and what is happening.';
+ let c=countdown(30,$('#clk'),$('#pb'),charBox);$('#skip').onclick=()=>c.skip();
+ function charBox(){$('#stg').innerHTML='<p class="muted">Picture removed</p>';$('#ph').textContent='Character box';$('#ph-note').textContent='Fill in details for the characters you saw.';const w=$('#ppdt-w');w.hidden=false;
+  w.innerHTML=`<div class="form"><label class="f">Number of characters<input type="number" id="pp-n" min="0" max="9"></label><label class="f">Main character (gender, age)<input type="text" id="pp-m" placeholder="e.g. M, 22"></label><label class="f">Mood<select id="pp-mood"><option>Positive</option><option>Neutral</option><option>Negative</option></select></label><label class="f">What led to the scene<input type="text" id="pp-act"></label></div>`;c=countdown(60,$('#clk'),$('#pb'),story)}
+ function story(){const meta={n:$('#pp-n').value,mood:$('#pp-mood').value};$('#ph').textContent='Write your story';$('#ph-note').textContent='What led to it, what is happening, the outcome.';
+  $('#ppdt-w').innerHTML=`<label class="f">Story<textarea id="pp-s" placeholder="Third person. Give the hero a name, a clear action and an outcome."></textarea></label>`;$('#pp-s').focus();c=countdown(240,$('#clk'),$('#pb'),()=>done(meta))}
+ function done(meta){const s=$('#pp-s').value.trim(),wc=s?s.split(/\s+/).length:0;addAttempt({test:'SSB · PPDT',detail:wc+' words'});
+  $('#t-body').innerHTML=`<div class="room"><div class="stagebox">${scene(pic,2.4)}</div><div class="card"><p class="eyebrow">Review</p><p><b>${wc}</b> words · ${esc(meta.n||'?')} characters noted · mood ${esc(meta.mood)}</p><ul><li class="${wc>=80?'ok':'wn'}">${wc>=80?'Good length for 4 minutes.':'Aim for 80 to 120 words.'}</li><li>Does your hero act and reach a realistic, positive outcome?</li><li>Now narrate it aloud in one minute without reading.</li></ul><div style="white-space:pre-wrap;border-top:1px solid var(--line);padding-top:10px">${esc(s)||'<span class="muted">No story written.</span>'}</div>${back}</div></div>`}})};
+TESTS.tat=()=>{setHead('Psychology · Thematic Apperception Test','TAT');const set=['study','climb','door','tractor','blank'];
+ intro(`<p>The board shows 11 pictures and one blank slide. This set has <b>${set.length}</b>, the last one blank. Each picture shows for <b>30 seconds</b>, then you write for <b>4 minutes</b>.</p>`,()=>{const stories=[];let i=0;
+ $('#t-body').innerHTML=`<div class="room"><div class="stagebox" id="stg"></div>${sideHTML()}</div><div class="card" id="tw" hidden style="margin-top:16px"><label class="f"><span id="tl"></span><textarea id="tt"></textarea></label></div>`;let c;$('#skip').onclick=()=>c&&c.skip();
+ const view=()=>{$('#tw').hidden=true;$('#stg').innerHTML=scene(set[i],0.8);$('#ph').textContent=`Picture ${i+1} of ${set.length} · observe`;$('#ph-note').textContent=set[i]==='blank'?'Blank slide. Imagine your own picture.':'Look at the picture.';c=countdown(30,$('#clk'),$('#pb'),write)};
+ const write=()=>{$('#stg').innerHTML='<p class="muted">Write your story</p>';$('#tw').hidden=false;$('#tl').textContent='Story '+(i+1);$('#tt').value='';$('#tt').focus();$('#ph').textContent=`Picture ${i+1} · write`;$('#ph-note').textContent='Past, present, future. A hero who acts.';
+  c=countdown(240,$('#clk'),$('#pb'),()=>{stories.push($('#tt').value.trim());i++;i<set.length?view():done()})};
+ const done=()=>{addAttempt({test:'SSB · TAT',detail:stories.filter(Boolean).length+'/'+set.length+' stories'});
+  $('#t-body').innerHTML=`<div class="card"><p class="eyebrow">Review</p>${stories.map((s,k)=>{const wc=s?s.split(/\s+/).length:0;return `<div class="iq"><b>Story ${k+1} · ${wc} words <span class="${wc>=70?'ok':'wn'}">${wc>=70?'complete':'too short'}</span></b><div style="white-space:pre-wrap">${esc(s)||'<span class="muted">Blank</span>'}</div></div>`}).join('')}<p class="note">For each story: who is the hero, what problem do they face, what do they do, how does it end?</p>${back}</div>`};view()})};
+const WAT=['Army','Mother','Fear','Win','Friend','Leader','Death','Team','Failure','Duty','Discipline','Help','Risk','Society','Defeat','Love','Attack','Courage','Weak','Sports','Nation','Problem','Enemy','Brave','Responsibility','Alone','Trust','Hard','Success','Crowd','Accident','Money','Officer','River','Night','Dark','Challenge','Village','Hospital','Exam','Cheat','Character','Unity','Order','Punish','Gun','Blood','Peace','Water','Hope','Mistake','Teacher','Time','Power','Ideal','Father','Lazy','Rain','Fight','Future','Border','Flag','Salute','March','Soldier','Patience','Honest','Weapon','Sacrifice','Mountain','Storm','Victory','Lead','Wound','Rescue','Respect','Order','Uniform','Ship','Sky'];
+TESTS.wat=()=>{setHead('Psychology · Word Association Test','WAT');const ws=shuffle([...new Set(WAT)]).slice(0,60);
+ intro(`<p><b>60 words</b>, each for <b>15 seconds</b>. Write the first meaningful sentence that comes to mind. The slide moves on by itself. A fresh mix every time.</p><p class="note">Keep sentences short and natural. Avoid preaching ("one should…") and avoid blanks.</p>`,()=>{const res=[];let i=0;
+ $('#t-body').innerHTML=`<div class="room"><div class="stagebox" style="min-height:220px"><span class="word" id="w"></span></div>${sideHTML()}</div><div class="card" style="margin-top:16px"><label class="f">Your sentence<input type="text" id="wi" autocomplete="off"></label></div>`;let c;$('#skip').onclick=()=>c&&c.skip();
+ const next=()=>{$('#w').textContent=ws[i];$('#wi').value='';$('#wi').focus();$('#ph').textContent=`Word ${i+1} of 60`;c=countdown(15,$('#clk'),$('#pb'),()=>{res.push($('#wi').value.trim());i++;i<60?next():done()})};
+ const done=()=>{const blank=res.filter(r=>!r).length,neg=res.filter(r=>/\b(not|never|no|can't|cannot|don't)\b/i.test(r)).length,pr=res.filter(r=>/\b(should|must)\b/i.test(r)).length,lg=res.filter(r=>r.split(/\s+/).length>10).length;addAttempt({test:'SSB · WAT',detail:(60-blank)+'/60 answered'});
+  $('#t-body').innerHTML=`<div class="card"><p class="eyebrow">Review</p><div class="row"><span class="tag">${60-blank} answered</span><span class="tag ${blank?'saf':''}">${blank} blank</span><span class="tag ${neg?'saf':''}">${neg} with negatives</span><span class="tag ${pr?'saf':''}">${pr} preachy</span><span class="tag ${lg?'saf':''}">${lg} over 10 words</span></div><div class="tbl"><table><tbody>${ws.map((w,k)=>`<tr><td class="mono" style="width:150px"><b>${w}</b></td><td>${esc(res[k])||'<span class="no">blank</span>'}</td></tr>`).join('')}</tbody></table></div>${back}</div>`};next()})};
+const SRT=['He was going for his SSB and his train got cancelled at the last moment. He…','While trekking, his friend slipped and broke a leg far from any road. He…','He saw a classmate copying in the final exam. He…','His village had no proper road and students missed school in the rains. He…','He was made captain, but senior players refused to follow him. He…','At night he heard someone trying to break into the neighbour\'s house. He…','He found a wallet with cash and an ID card on the road. He…','His father fell seriously ill the day before his exam. He…','During a group task his team was losing and members started blaming each other. He…','He was offered a well-paid private job while waiting for his SSB result. He…','A fire broke out in the hostel kitchen while he was nearby. He…','He was not recommended at his first SSB. He…','His boss asked him to sign papers he knew were wrong. He…','He was travelling by bus when the driver had a heart attack. He…','His friends planned a party on the night before his interview. He…','He was asked to organise a blood donation camp in two days. He…','He was lost in a forest at dusk with a dead phone. He…','Two groups in his college clashed over an election. He…','He saw a child drowning in a canal. He…','He was given a task beyond his knowledge with a strict deadline. He…','His younger brother started skipping school and keeping bad company. He…','During a flood, his village was cut off and food was running out. He…','He was put on duty on the day of his sister\'s wedding. He…','His teammate was injured just before the final match. He…','He was falsely accused of stealing in his hostel. He…','He reached the station and found his ticket and money stolen. He…','His group leader made a wrong decision during a trek. He…','He saw a road accident and people only making videos. He…','He had to speak in front of 500 people with no preparation. He…','His colleague was taking credit for his work. He…','He noticed smoke coming from a railway coach while the train was moving. He…','Villagers refused to get their children vaccinated because of rumours. He…','He was elected class representative but the class was divided. He…','His bicycle broke down 10 km from the exam centre with 40 minutes left. He…','He saw a stranger taking photographs near an army cantonment. He…','His mother wanted him to take a government clerk job instead of joining the forces. He…','His senior asked him to cover up a mistake made by the senior. He…','He was leading a patrol when one member fell ill. He…','He was given charge of a mess that had lost money for months. He…','He found that his best friend was taking drugs. He…'];
+TESTS.srt=()=>{setHead('Psychology · Situation Reaction Test','SRT');const set=shuffle(SRT).slice(0,30);
+ intro(`<p>The board gives 60 situations in 30 minutes. This half set has <b>30 situations in 15 minutes</b>, the same pace. Write a short, action-focused reaction.</p>`,()=>{
+ $('#t-body').innerHTML=`<div class="room"><div class="card"><div class="srt-list">${set.map((s,i)=>`<div class="srt-item"><p><span class="mono muted">${String(i+1).padStart(2,'0')}</span> ${esc(s)}</p><input type="text" id="srt${i}" autocomplete="off"></div>`).join('')}</div></div>${sideHTML('<p class="mono" id="srt-c"></p><button class="btn saf small" id="srt-done">Submit</button>')}</div>`;
+ $('#ph').textContent='Write reactions';$('#ph-note').textContent='About 30 seconds per situation.';const cnt=()=>{$('#srt-c').textContent=set.filter((_,i)=>$('#srt'+i).value.trim()).length+' / 30 attempted'};cnt();$('#t-body').addEventListener('input',cnt);
+ const done=()=>{stopActive();const r=set.map((_,i)=>$('#srt'+i).value.trim()),n=r.filter(Boolean).length;addAttempt({test:'SSB · SRT',detail:n+'/30 attempted'});
+  $('#t-body').innerHTML=`<div class="card"><p class="eyebrow">Review</p><div class="big">${n} / 30</div><ol class="review">${set.map((s,i)=>`<li>${esc(s)}<br>${r[i]?'<b>'+esc(r[i])+'</b>':'<span class="no">Not attempted</span>'}</li>`).join('')}</ol><p class="note">A strong reaction is practical, solves the whole problem and stays realistic.</p>${back}</div>`};
+ $('#srt-done').onclick=done;const c=countdown(900,$('#clk'),$('#pb'),done);$('#skip').onclick=()=>c.skip()})};
+TESTS.sd=()=>{setHead('Psychology · Self Description','Self Description');const H=['What your parents think of you','What your teachers or employers think of you','What your friends and colleagues think of you','What you think of yourself','What qualities you want to develop'];
+ intro(`<p>Five headings in <b>15 minutes</b>. Write honestly, with examples, consistent with your PIQ.</p>`,()=>{
+ $('#t-body').innerHTML=`<div class="room"><div class="card">${H.map((h,i)=>`<label class="f">${i+1}. ${h}<textarea id="sd${i}" style="min-height:110px"></textarea></label>`).join('')}</div>${sideHTML('<button class="btn saf small" id="sd-done">Submit</button>')}</div>`;$('#ph').textContent='Write';$('#ph-note').textContent='About 3 minutes per heading.';
+ const done=()=>{stopActive();const v=H.map((_,i)=>$('#sd'+i).value.trim());addAttempt({test:'SSB · Self Description',detail:v.filter(Boolean).length+'/5 headings'});
+  $('#t-body').innerHTML=`<div class="card"><p class="eyebrow">Review</p>${H.map((h,i)=>`<div class="iq"><b>${h}</b><div style="white-space:pre-wrap">${esc(v[i])||'<span class="no">Blank</span>'}</div></div>`).join('')}<p class="note">Your interviewing officer may read this. Every claim needs an example you can talk about.</p>${back}</div>`};
+ $('#sd-done').onclick=done;const c=countdown(900,$('#clk'),$('#pb'),done);$('#skip').onclick=()=>c.skip()})};
+const GDT=['Should India bring back compulsory military service?','Social media does more harm than good to the youth','Women in combat roles','Agnipath scheme: strengths and concerns','AI in warfare: boon or threat?','India–China relations: competition or cooperation?','Should India host the Olympics?','Brain drain: problem or opportunity?','Disaster management in coastal states','Is cricket overshadowing other sports in India?','Electric vehicles in India','Online education versus classroom education'];
+TESTS.gd=()=>{setHead('GTO · Group discussion','Group discussion');const t=pick(GDT);
+ intro(`<p>Topic: <b>${esc(t)}</b></p><p>A GTO discussion runs about 20 minutes. Practise alone or with friends: jot points and log each time you enter the discussion. The Briefing Room has full notes on many of these topics.</p>`,()=>{let n=0;
+ $('#t-body').innerHTML=`<div class="room"><div class="card"><p class="eyebrow">Topic</p><h3>${esc(t)}</h3><label class="f">Your points<textarea id="gd-p" placeholder="Facts, both sides, a way forward"></textarea></label></div>${sideHTML('<button class="btn small" id="gd-e">I spoke (+1 entry)</button><p class="mono" id="gd-c">0 entries</p>')}</div>`;
+ $('#ph').textContent='Discussion';$('#ph-note').textContent='Aim for 4 to 6 quality entries.';$('#gd-e').onclick=()=>{n++;$('#gd-c').textContent=n+' entries'};
+ const c=countdown(1200,$('#clk'),$('#pb'),()=>{addAttempt({test:'SSB · GD',detail:t+' · '+n+' entries'});$('#t-body').innerHTML=`<div class="card"><p>${n} entries on "${esc(t)}".</p><div class="row"><a class="btn" href="#briefing">Read GD notes</a><a class="btn alt" href="#ssb">Back</a></div></div>`});$('#skip').onclick=()=>c.skip()})};
+const LEC=['My idea of an ideal officer','Indian Ocean and its strategic importance','Cyber security','Space programme of India','Make in India in defence','Climate change and coastal cities','Role of youth in nation building','Drones in modern warfare','Disaster response by the armed forces','Sports culture in India','Startups in India','Water scarcity','Digital India','Women empowerment','Terrorism','Tourism in my state','Artificial intelligence','India–Japan relations','Border infrastructure','The Quad'];
+TESTS.lecturette=()=>{setHead('GTO · Lecturette','Lecturette');const p4=shuffle(LEC).slice(0,4);
+ $('#t-body').innerHTML=`<div class="card" style="max-width:720px"><p>Pick one of four topics. You get <b>3 minutes</b> to prepare and <b>3 minutes</b> to speak.</p><div class="opts">${p4.map((p,i)=>`<button class="opt" data-i="${i}"><span class="k">${i+1}</span>${esc(p)}</button>`).join('')}</div></div>`;
+ $('#t-body').querySelectorAll('.opt').forEach(b=>b.onclick=()=>{const t=p4[+b.dataset.i];
+  $('#t-body').innerHTML=`<div class="room"><div class="card"><p class="eyebrow">Topic</p><h3>${esc(t)}</h3><label class="f">Notes: opening, three points, close<textarea id="lec-n"></textarea></label></div>${sideHTML()}</div>`;$('#ph').textContent='Prepare';$('#ph-note').textContent='Plan an opening, three points and a close.';
+  let c=countdown(180,$('#clk'),$('#pb'),()=>{$('#ph').textContent='Speak now';$('#ph-note').textContent='Stand, face the group, keep eye contact.';c=countdown(180,$('#clk'),$('#pb'),()=>{addAttempt({test:'SSB · Lecturette',detail:t});$('#ph').textContent='Time up';$('#ph-note').textContent='Did you finish within time?';$('#skip').hidden=true})});$('#skip').onclick=()=>c.skip()})};
+TESTS.gpe=()=>{setHead('GTO · Group Planning Exercise','GPE');
+ const map=`<svg class="scene" viewBox="0 0 400 260" role="img" aria-label="GPE map"><rect width="400" height="260" fill="#e9e7dc"/><path d="M0 150 C80 140 140 170 220 150 S360 120 400 130" stroke="#7b9bb0" stroke-width="14" fill="none"/><text x="10" y="138" font-size="10" fill="#335">Canal</text><path d="M0 70 L400 90" stroke="#444" stroke-width="3" stroke-dasharray="10 5"/><text x="300" y="80" font-size="10" fill="#333">Railway</text><rect x="196" y="72" width="22" height="22" fill="none" stroke="#a63a2b" stroke-width="2"/><text x="186" y="66" font-size="10" fill="#a63a2b">Rly bridge</text><path d="M60 260 L120 150 L140 40" stroke="#8b6d3a" stroke-width="5" fill="none"/><text x="66" y="250" font-size="10" fill="#333">Road</text><rect x="110" y="140" width="22" height="20" fill="none" stroke="#a63a2b" stroke-width="2"/><text x="136" y="176" font-size="10" fill="#a63a2b">Bus in canal</text><circle cx="300" cy="200" r="26" fill="#cfc8a8"/><text x="276" y="204" font-size="10" fill="#333">Sonpur vill.</text><path d="M318 186 l6 -10 l6 10z" fill="#a63a2b"/><text x="332" y="182" font-size="9" fill="#a63a2b">Fire</text><path d="M20 30 l25 -22 l25 22z" fill="#9a9a90"/><text x="16" y="44" font-size="10" fill="#333">Hill (network)</text><circle cx="70" cy="210" r="5" fill="#2f7a45"/><text x="80" y="214" font-size="10" fill="#2f7a45">Group</text><text x="290" y="30" font-size="10" fill="#333">Police stn 12 km →</text><text x="262" y="250" font-size="9" fill="#555">Not to scale: use narration</text></svg>`;
+ const nar=`Six students of Government College, Rampur, are on a cycling trip near Sonpur village. At 1600 hrs, while resting near the road, they notice: (1) a private bus has slipped off the road into the canal about 2 km away; passengers are shouting for help. (2) Through the trees they see two men leave a bag under the railway bridge and run away; the Express is due over the bridge at 1730 hrs. (3) Smoke is rising from the grain godown in Sonpur village, 4 km away. (4) One of their own members has sprained his ankle. Resources: six bicycles, a rope, a first-aid kit, two mobile phones with no network (network only on the hill, 3 km away). A tractor is working in a field nearby. The police station is 12 km away. As a member of the group, write what the group should do.`;
+ intro(`<p>The GTO narrates the situation on a model. You get <b>5 minutes</b> to read it, then <b>10 minutes</b> to write your plan. The group then agrees a common plan.</p>`,()=>{
+ $('#t-body').innerHTML=`<div class="room"><div class="card"><div class="stagebox" style="padding:8px">${map}</div><p>${esc(nar)}</p></div>${sideHTML()}</div><div class="card" id="gpe-w" hidden style="margin-top:16px"><label class="f">Your plan: priorities, who does what, timings<textarea id="gpe-t"></textarea></label></div>`;
+ $('#ph').textContent='Read the problem';$('#ph-note').textContent='Rank the problems by danger to life and time available.';
+ let c=countdown(300,$('#clk'),$('#pb'),()=>{$('#gpe-w').hidden=false;$('#gpe-t').focus();$('#ph').textContent='Write your plan';$('#ph-note').textContent='Divide the group. Give each task a time.';
+  c=countdown(600,$('#clk'),$('#pb'),()=>{const t=$('#gpe-t').value.trim();addAttempt({test:'SSB · GPE',detail:(t?t.split(/\s+/).length:0)+' words'});
+   $('#t-body').innerHTML=`<div class="card"><p class="eyebrow">Self-check</p><ul><li>Did you put the train first? Hundreds of lives, a fixed time of 1730, and only your group knows.</li><li>Did someone reach the hill to call police, railway and fire services?</li><li>Did you use the tractor and rope for the bus, and first aid for the injured?</li><li>Did you look after your own injured member?</li><li>Are your timings and distances realistic on cycles?</li></ul><div style="white-space:pre-wrap;border-top:1px solid var(--line);padding-top:10px">${esc(t)||'<span class="muted">No plan written.</span>'}</div>${back}</div>`})});$('#skip').onclick=()=>c.skip()})};
+const PIQ0={name:'Example: Aarav',town:'Jaipur',state:'Rajasthan',school:'Kendriya Vidyalaya, Jaipur',qual:'B.Tech Mechanical',pct:'71',hobbies:'Reading biographies, trekking',sports:'Football',entry:'Army SSB (NDA/CDS)',attempts:'0'};
+TESTS.interview=()=>{setHead('Interview · Personal interview','PIQ-based mock interview');const f=(k,l)=>`<label class="f">${l}<input type="text" id="piq-${k}" value="${esc(PIQ0[k])}"></label>`;
+ $('#t-body').innerHTML=`<div class="card" style="gap:14px"><p class="muted">Fill your PIQ details. The values shown are a sample; replace them with your own.</p><div class="form">${f('name','Name')}${f('town','Hometown')}${f('state','State')}${f('school','School')}${f('qual','Highest qualification')}${f('pct','Percentage')}${f('hobbies','Hobbies (comma separated)')}${f('sports','Sports (comma separated)')}<label class="f">Entry<select id="piq-entry">${['Army SSB (NDA/CDS)','Navy SSB (NDA/CDS/INET)','AFSB (AFCAT/NDA/CDS)','Coast Guard (CGCAT)'].map(o=>`<option ${o===PIQ0.entry?'selected':''}>${o}</option>`).join('')}</select></label>${f('attempts','Previous SSB attempts')}</div><div class="row"><button class="btn saf" id="gen">Generate my interview</button></div></div><div id="iv"></div>`;
+ $('#gen').onclick=()=>{const v={};Object.keys(PIQ0).forEach(k=>v[k]=($('#piq-'+k).value||'').trim());const town=v.town||'your hometown',hob=v.hobbies.split(',').map(s=>s.trim()).filter(Boolean),sp=v.sports.split(',').map(s=>s.trim()).filter(Boolean),att=parseInt(v.attempts)||0;
+  const Q=[],add=(c,q)=>Q.push({c,q});
+  add('Home',`Tell me about ${town}. What is it known for, and what are its three biggest problems?`);add('Home',`If you were the District Magistrate of ${town} for a year, what would you change first?`);add('Home',`What do you know about the history and economy of ${v.state||'your state'}?`);
+  add('Education',`Tell me about ${v.school||'your school'}. Which teacher did you like most, and which one did you not get along with? Why?`);add('Education',`You scored ${v.pct||'—'}% in ${v.qual||'your degree'}. Were you satisfied? What stopped you from scoring more?`);add('Education',`Why did you choose ${v.qual||'your subject'}? Explain one concept from it as if to a class 8 student.`);
+  hob.forEach(h=>add('Hobbies',`You have written ${h} as a hobby. When did you start, and what is the most recent thing you did in it?`));sp.forEach(s=>add('Sports',`What position do you play in ${s}? Explain three rules, and tell me the highest level you have played at.`));
+  if(/AFSB/.test(v.entry)){add('Service','Why the Air Force and not the Army or Navy?');add('Service','Name some aircraft in IAF service and their roles.');add('Service','What does the branch you have opted for do day to day?')}
+  if(/Coast/.test(v.entry)){add('Service','What is the role of the Indian Coast Guard, and how is it different from the Navy?');add('Service','Under which ministry does the Coast Guard work? What is the Exclusive Economic Zone?');add('Service','What would you do on your first day as an Assistant Commandant on a patrol vessel?')}
+  if(/Army/.test(v.entry)){add('Service','Why the Army? Which arm or service would you like, and why?');add('Service','What do you know about the regiment of your choice and its war cry?')}
+  if(/Navy/.test(v.entry)){add('Service','Why the Navy? What do you know about life at sea?');add('Service','Name the commands of the Indian Navy and their headquarters.')}
+  if(att>0){add('Repeater',`This is attempt number ${att+1}. Why do you think you were not recommended earlier, and what have you changed since?`);add('Repeater','What will you do if you are not recommended this time?')}
+  add('Self','Give me three strengths and two weaknesses, each with a real example.');add('Self','Tell me about a time you failed, and what you did next.');add('Self','Who is your role model and why?');
+  add('Current','Name three national and two international events from the last month, and give your view on one of them. (See the Briefing Room.)');add('Current','What is the current situation on the India–China border?');add('Stress','Your friends say you are over-confident. Convince me they are wrong.');
+  const ciq=`Tell me about yourself from class 10 till now: the schools and colleges you studied in, your marks at each stage, the teachers you liked and disliked and why, your best friends and what you do together, how you help at home, your hobbies${hob.length?' ('+hob.join(', ')+')':''} and sports${sp.length?' ('+sp.join(', ')+')':''}, your achievements and failures, and why you want to join.`;
+  addAttempt({test:'SSB · Interview',detail:Q.length+' questions generated'});
+  $('#iv').innerHTML=`<div class="room" style="margin-top:20px"><div class="card"><p class="eyebrow">Comprehensive rapid-fire question</p><p style="font-size:1.05rem">${esc(ciq)}</p><p class="note">Answer in the order asked. Aim for 4 to 5 minutes. Practise out loud.</p><div class="row"><button class="btn small" id="ciq-t">Start 5 min timer</button><span class="clock" id="ciq-c" style="font-size:1.6rem">05:00</span></div>
+  <p class="eyebrow" style="margin-top:12px">Your likely questions</p>${Q.map((x,i)=>`<div class="iq"><span class="tag">${x.c}</span><p>${esc(x.q)}</p><div class="chips" data-i="${i}"><button class="chip c1" aria-pressed="false">Confident</button><button class="chip c2" aria-pressed="false">Shaky</button><button class="chip c3" aria-pressed="false">Unprepared</button></div></div>`).join('')}</div>
+  <div class="side card"><p class="eyebrow">Readiness</p><div class="big" id="rd">0 / ${Q.length}</div><p class="muted">marked confident</p><p class="note">Practise every "Shaky" and "Unprepared" answer out loud before your SSB.</p></div></div>`;
+  $('#ciq-t').onclick=()=>countdown(300,$('#ciq-c'),null,()=>toast('Time up for the CIQ'));
+  $('#iv').querySelectorAll('.chips').forEach(g=>g.querySelectorAll('.chip').forEach(ch=>ch.onclick=()=>{g.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed','false'));ch.setAttribute('aria-pressed','true');$('#rd').textContent=$('#iv').querySelectorAll('.chip.c1[aria-pressed="true"]').length+' / '+Q.length}));
+  $('#iv').scrollIntoView({behavior:'smooth'})}};
+
+/* ================= BRIEFING ROOM ================= */
+let ARTICLES=null,briefState={period:'week',cat:'all',open:null},dbState='loading';
+const CATS=[['all','All'],['defence','Defence'],['borders','Borders & neighbours'],['geopolitics','Geopolitics'],['ai','AI & technology'],['national','National'],['gd','GD topics'],['lecturette','Lecturette']];
+const catName=c=>(CATS.find(x=>x[0]===c)||[c,c])[1];
+const PERIODS=[['today','Today'],['week','This week'],['month','This month'],['all','All'],['evergreen','Evergreen']];
+const fmtDate=s=>{if(!s)return 'Evergreen';const d=new Date(s+'T00:00:00');return d.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})};
+function daysAgo(s){if(!s)return Infinity;return Math.floor((new Date(todayStr()+'T00:00:00')-new Date(s+'T00:00:00'))/86400000)}
+function filtered(){const P=briefState.period;return (ARTICLES||[]).filter(a=>{if(briefState.cat!=='all'&&a.cat!==briefState.cat)return false;
+ if(P==='evergreen')return a.kind==='static';if(P==='all')return true;if(a.kind==='static')return false;const d=daysAgo(a.date);return P==='today'?d<=0:P==='week'?d<=6:d<=30})}
+function artRow(a){return `<button class="art" data-id="${esc(a.id)}"><span class="dt">${a.kind==='static'?'Evergreen':fmtDate(a.date)}<br><span class="tag ${a.cat==='gd'||a.cat==='lecturette'?'saf':''}">${esc(catName(a.cat))}</span></span><span><h3>${esc(a.title)}</h3><p>${esc(a.summary)}</p></span></button>`}
+function drawBrief(){const B=$('#brief-body');
+ if(dbState==='off'){B.innerHTML=`<div class="empty">The Briefing Room needs you to be signed in to claude.ai to load articles. Sign in and reopen this page.</div>`;return}
+ if(!ARTICLES){B.innerHTML=`<div class="empty">Loading today's briefings…</div>`;return}
+ if(briefState.open){const a=ARTICLES.find(x=>x.id===briefState.open);if(a){B.innerHTML=`<div class="reader"><button class="btn alt small" id="bk" style="align-self:flex-start">← All briefings</button><span class="eyebrow">${esc(catName(a.cat))} · ${a.kind==='static'?'Evergreen':fmtDate(a.date)}</span><h2 style="text-transform:none">${esc(a.title)}</h2><p class="muted" style="font-size:1.1rem">${esc(a.summary)}</p>
+  ${(a.body||[]).map(p=>p.startsWith('## ')?`<h3>${esc(p.slice(3))}</h3>`:p.startsWith('- ')?`<ul>${p.split('\n').map(l=>`<li>${esc(l.replace(/^- /,''))}</li>`).join('')}</ul>`:`<p>${esc(p)}</p>`).join('')}
+  ${a.pros||a.cons?`<div class="pc"><div class="card"><p class="eyebrow ok">For</p><ul>${(a.pros||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div><div class="card"><p class="eyebrow no">Against</p><ul>${(a.cons||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div></div>`:''}
+  ${a.interview?`<div class="card"><p class="eyebrow">Likely interview questions</p><ul>${a.interview.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}
+  ${a.sources&&a.sources.length?`<p class="muted" style="font-size:.88rem">Sources: ${a.sources.map(s=>`<a href="${esc(s.u)}" target="_blank" rel="noopener">${esc(s.t)}</a>`).join(' · ')}</p>`:''}</div>`;$('#bk').onclick=()=>{briefState.open=null;drawBrief()};window.scrollTo(0,0);return}}
+ const list=filtered();
+ B.innerHTML=`<div class="filters"><div class="chips">${PERIODS.map(p=>`<button class="chip" aria-pressed="${briefState.period===p[0]}" data-p="${p[0]}">${p[1]}</button>`).join('')}</div><div class="chips">${CATS.map(c=>`<button class="chip" aria-pressed="${briefState.cat===c[0]}" data-c="${c[0]}">${c[1]}</button>`).join('')}</div></div>
+ <div class="row" style="justify-content:space-between;margin-top:16px"><span class="mono muted">${list.length} briefing${list.length===1?'':'s'}</span><button class="btn saf small" id="caq" ${CAQ.length?'':'disabled'}>Current affairs quiz · ${CAQ.length} Q</button></div>
+ ${list.length?`<div class="alist">${list.map(artRow).join('')}</div>`:`<div class="empty" style="margin-top:12px">Nothing here for this filter yet. Try "This month" or "All".</div>`}`;
+ B.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{briefState.period=b.dataset.p;drawBrief()});B.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{briefState.cat=b.dataset.c;drawBrief()});
+ B.querySelectorAll('.art').forEach(b=>b.onclick=()=>{briefState.open=b.dataset.id;drawBrief()});
+ const cq=$('#caq');if(cq)cq.onclick=()=>startRun({title:'Current affairs quiz',eyebrow:'Briefing Room',qs:drawQs(['ca'],Math.min(25,CAQ.length)),mode:'practice',back:'#briefing'})}
+function drawHomeBrief(){const H=$('#home-brief');if(dbState==='off'){H.innerHTML=`<div class="empty">Sign in to claude.ai to see the daily briefings.</div>`;return}
+ if(!ARTICLES){H.innerHTML=`<div class="empty">Loading today's briefings…</div>`;return}
+ const l=ARTICLES.filter(a=>a.kind!=='static').slice(0,4);H.innerHTML=l.length?`<div class="alist">${l.map(artRow).join('')}</div><div class="row" style="margin-top:12px"><a class="btn" href="#briefing">Open the Briefing Room</a></div>`:`<div class="empty">The first briefings are on their way.</div>`;
+ H.querySelectorAll('.art').forEach(b=>b.onclick=()=>{briefState.open=b.dataset.id;location.hash='briefing'})}
+async function loadDB(){const to=setTimeout(()=>{if(!ARTICLES){dbState='off';drawBrief();drawHomeBrief()}},10000);
+ try{const db=window.claude&&window.claude.use?await window.claude.use('db'):null;if(!db){clearTimeout(to);dbState='off';drawBrief();drawHomeBrief();drawWritten();return}
+  db.collection('articles').onSnapshot(s=>{clearTimeout(to);dbState='on';ARTICLES=s.docs.map(d=>Object.assign({id:d.id},d.data())).sort((a,b)=>(b.date||'').localeCompare(a.date||''));drawBrief();drawHomeBrief()},()=>{dbState='off';drawBrief();drawHomeBrief()});
+  db.collection('caq').onSnapshot(s=>{CAQ=s.docs.map(d=>d.data()).filter(q=>q&&q.q&&Array.isArray(q.o));if(location.hash==='#written')drawWritten();if(location.hash==='#briefing'&&!briefState.open)drawBrief()},()=>{})}
+ catch(e){clearTimeout(to);dbState='off';drawBrief();drawHomeBrief()}}
+
+/* ================= RECORD ================= */
+function renderRecord(){const st=stats(),l=LS.get('attempts',[]);const rows=Object.entries(st).filter(([k])=>CH[k]).sort((a,b)=>b[1].t-a[1].t);
+ $('#record').innerHTML=(rows.length||l.length)?`${rows.length?`<div class="tbl"><table><thead><tr><th>Chapter</th><th>Attempted</th><th>Accuracy</th><th></th></tr></thead><tbody>${rows.map(([k,s])=>`<tr><td><b>${CH[k]}</b></td><td class="mono">${s.t}</td><td class="mono ${s.c/s.t>=.7?'ok':s.c/s.t>=.4?'wn':'no'}">${Math.round(100*s.c/s.t)}%</td><td style="width:30%"><div class="meter"><i style="width:${100*s.c/s.t}%"></i></div></td></tr>`).join('')}</tbody></table></div>`:''}
+ ${l.length?`<p class="eyebrow" style="margin-top:20px">Recent attempts</p><div class="tbl"><table><thead><tr><th>When</th><th>Test</th><th>Result</th></tr></thead><tbody>${l.map(a=>`<tr><td class="mono">${new Date(a.at).toLocaleString('en-IN')}</td><td><b>${esc(a.test)}</b></td><td>${esc(a.detail)}</td></tr>`).join('')}</tbody></table></div>`:''}<div class="row" style="margin-top:12px"><button class="btn alt small" id="clr">Clear my record</button></div>`
+ :`<div class="card"><p>No attempts yet. Your accuracy by chapter will appear here after your first set.</p><div class="row"><a class="btn saf" href="#written">Start written practice</a></div></div>`;
+ const c=$('#clr');if(c)c.onclick=()=>{LS.set('stats',{});LS.set('attempts',[]);renderRecord()}}
+
+/* ================= ROUTER ================= */
+const PAGES=['home','written','ssb','briefing','record','run'];
+function route(){stopActive();const h=(location.hash||'#home').slice(1);let page=PAGES.includes(h)?h:(TESTS[h]?'test':'home');if(page==='run'&&!RUN)page='written';
+ document.querySelectorAll('section.view').forEach(s=>s.hidden=s.dataset.view!==page);
+ const navKey=page==='test'?'ssb':page==='run'?(RUN&&RUN.back==='#ssb'?'ssb':RUN&&RUN.back==='#briefing'?'briefing':'written'):page;
+ document.querySelectorAll('#nav a').forEach(a=>{if(a.getAttribute('href')==='#'+navKey)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
+ if(page==='test')TESTS[h]();if(page==='written')drawWritten();if(page==='run')runRun();if(page==='record')renderRecord();if(page==='briefing')drawBrief();window.scrollTo(0,0)}
+window.addEventListener('hashchange',route);
+fetch('bank.json').then(r=>r.json()).then(b=>{BANK=b;if(location.hash==='#written')drawWritten()}).catch(()=>{});
+route();drawHomeBrief();loadDB();
+})();
+</script>
+
+</body>
+</html>
