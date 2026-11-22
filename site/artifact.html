@@ -197,6 +197,17 @@ a.task:hover{border-color:var(--saffron)}
 @media (max-width:600px){.pc{grid-template-columns:1fr}}
 .empty{padding:28px;border:1px dashed var(--line);border-radius:4px;color:var(--muted)}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:3px;font-size:.92rem;z-index:20;max-width:calc(100% - 32px)}
+a.locked,.btn.locked{border-style:dashed}
+.lk{width:13px;height:13px;flex:none}
+.paybar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:12px 16px;border:1px solid var(--saffron);border-radius:4px;background:color-mix(in srgb,var(--saffron) 8%,var(--surface))}
+.ownerbar{background:var(--green-soft);color:var(--green);border:1px solid var(--green);border-radius:4px;padding:8px 14px;font-size:.9rem}
+.plans{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.plan{position:relative}
+.plan.hl{outline:3px solid var(--saffron)}
+.plan .price{font-family:var(--display);font-size:2.8rem;line-height:1}
+.plan .price small{font-family:var(--body);font-size:.9rem;color:var(--muted)}
+.plan ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:.94rem}
+.lockcard{border:1px dashed var(--saffron);border-radius:4px;padding:18px;display:flex;flex-direction:column;gap:10px}
 footer{border-top:1px solid var(--line);padding-block:20px;font-size:.84rem;color:var(--muted)}
 @media (prefers-reduced-motion:no-preference){.jet{animation:fly 9s linear infinite}}
 @keyframes fly{from{transform:translateX(-30px)}to{transform:translateX(30px)}}
@@ -210,12 +221,14 @@ footer{border-top:1px solid var(--line);padding-block:20px;font-size:.84rem;colo
       <a href="#written">Written practice</a>
       <a href="#ssb">SSB practice</a>
       <a href="#briefing">Briefing Room</a>
+      <a href="#plans">Plans</a>
       <a href="#record">My record</a>
     </nav>
   </div>
 </header>
 
 <main id="app">
+<div class="wrap" id="ownerbar" hidden style="padding-top:14px"><div class="ownerbar">Owner view: everything is unlocked for you. Visitors see the free samples and the plan prices.</div></div>
 
 <!-- HOME -->
 <section class="view" data-view="home">
@@ -292,27 +305,27 @@ footer{border-top:1px solid var(--line);padding-block:20px;font-size:.84rem;colo
   <p class="muted">Screening is on the first morning: OIR and PPDT. Only screened-in candidates stay for psychology, GTO and the interview, which test the same officer-like qualities from three sides. Each test has a "Skip ahead" button for trying the format quickly.</p></div>
   <div class="days">
     <div class="day"><div class="d">Day 1<small>Screening</small></div><div class="tasks">
-      <a class="task" href="#oir"><span class="t">PRACTISE →</span><b>OIR test</b><span>40 questions · 25 min, new set every time</span></a>
-      <a class="task" href="#ppdt"><span class="t">PRACTISE →</span><b>PPDT</b><span>30 s picture · 1 min character box · 4 min story</span></a>
+      <a class="task" href="#oir"><span class="t">FREE SAMPLE · FULL IN SSB PLAN</span><b>OIR test</b><span>40 questions · 25 min, new set every time</span></a>
+      <a class="task" href="#ppdt"><span class="t">FREE →</span><b>PPDT</b><span>30 s picture · 1 min character box · 4 min story</span></a>
       <div class="task"><span class="t">AT THE BOARD</span><b>Narration & discussion</b><span>Narrate in about 1 min, then the group agrees a common story</span></div>
     </div></div>
     <div class="day"><div class="d">Day 2<small>Psychology</small></div><div class="tasks">
-      <a class="task" href="#tat"><span class="t">PRACTISE →</span><b>TAT</b><span>30 s view · 4 min story per picture, with a blank slide</span></a>
-      <a class="task" href="#wat"><span class="t">PRACTISE →</span><b>WAT</b><span>60 words · 15 s each</span></a>
-      <a class="task" href="#srt"><span class="t">PRACTISE →</span><b>SRT</b><span>30 situations · 15 min (half a board set)</span></a>
-      <a class="task" href="#sd"><span class="t">PRACTISE →</span><b>Self Description</b><span>5 headings · 15 min</span></a>
+      <a class="task" href="#tat"><span class="t">FREE SAMPLE · FULL IN SSB PLAN</span><b>TAT</b><span>30 s view · 4 min story per picture, with a blank slide</span></a>
+      <a class="task" href="#wat"><span class="t">FREE SAMPLE · FULL IN SSB PLAN</span><b>WAT</b><span>60 words · 15 s each</span></a>
+      <a class="task" href="#srt"><span class="t">FREE SAMPLE · FULL IN SSB PLAN</span><b>SRT</b><span>30 situations · 15 min (half a board set)</span></a>
+      <a class="task" href="#sd"><span class="t">SSB PLAN</span><b>Self Description</b><span>5 headings · 15 min</span></a>
     </div></div>
     <div class="day"><div class="d">Day 3–4<small>GTO · Interview</small></div><div class="tasks">
-      <a class="task" href="#gd"><span class="t">PRACTISE →</span><b>Group discussion</b><span>20 min on a live topic</span></a>
-      <a class="task" href="#gpe"><span class="t">PRACTISE →</span><b>GPE</b><span>Map, 5 min read, 10 min written plan</span></a>
-      <a class="task" href="#lecturette"><span class="t">PRACTISE →</span><b>Lecturette</b><span>1 of 4 topics · 3 min prep · 3 min talk</span></a>
+      <a class="task" href="#gd"><span class="t">FREE →</span><b>Group discussion</b><span>20 min on a live topic</span></a>
+      <a class="task" href="#gpe"><span class="t">SSB PLAN</span><b>GPE</b><span>Map, 5 min read, 10 min written plan</span></a>
+      <a class="task" href="#lecturette"><span class="t">FREE →</span><b>Lecturette</b><span>1 of 4 topics · 3 min prep · 3 min talk</span></a>
       <div class="task"><span class="t">OUTDOOR</span><b>PGT</b><span>4 obstacles with helping material, whole group</span></div>
       <div class="task"><span class="t">OUTDOOR</span><b>Snake race</b><span>Group obstacle race carrying the snake</span></div>
       <div class="task"><span class="t">OUTDOOR</span><b>HGT</b><span>PGT with half the group</span></div>
       <div class="task"><span class="t">OUTDOOR</span><b>Individual obstacles</b><span>10 obstacles, 1–10 points each, 3 min</span></div>
       <div class="task"><span class="t">OUTDOOR</span><b>Command task</b><span>You lead two subordinates across an obstacle</span></div>
       <div class="task"><span class="t">OUTDOOR</span><b>Final group task</b><span>One last group obstacle</span></div>
-      <a class="task" href="#interview"><span class="t">PRACTISE →</span><b>Personal interview</b><span>Questions built from your PIQ</span></a>
+      <a class="task" href="#interview"><span class="t">FREE SAMPLE · FULL IN SSB PLAN</span><b>Personal interview</b><span>Questions built from your PIQ</span></a>
     </div></div>
     <div class="day"><div class="d">Day 5<small>Conference</small></div><div class="tasks">
       <div class="task"><span class="t">AT THE BOARD</span><b>Conference</b><span>A short appearance before all assessors, then results</span></div>
@@ -330,8 +343,16 @@ footer{border-top:1px solid var(--line);padding-block:20px;font-size:.84rem;colo
 <!-- BRIEFING -->
 <section class="view wrap" data-view="briefing" hidden>
   <div class="sechead"><p class="eyebrow">Briefing Room</p><h2>Read like an officer. Every day.</h2>
-  <p class="muted">Current affairs for the written exam and the interview, plus ready-to-use GD and lecturette topics. New briefings are added every day.</p></div>
+  <p class="muted">Current affairs for the written exam and the interview, plus ready-to-use GD and lecturette topics. New briefings are added every day. The latest three briefings, one GD and one lecturette are free; the full room is ₹299 + GST a month.</p></div>
   <div id="brief-body"></div>
+</section>
+
+<!-- PLANS -->
+<section class="view wrap" data-view="plans" hidden>
+  <div class="sechead"><p class="eyebrow">Plans</p><h2>Start free. Unlock the full drill when you are ready.</h2>
+  <p class="muted">AFCAT, CGCAT and INET practice, the daily drill and sample tests are free for everyone. Paid plans unlock the complete NDA and CDS question banks and mocks, the full SSB battery, and the daily Briefing Room.</p></div>
+  <div class="plans" id="plans"></div>
+  <p class="note">Prices are exclusive of GST at 18%; the total is shown under each price. One-time plans are valid until your exam; the current affairs plan renews monthly and can be cancelled any time.</p>
 </section>
 
 <!-- RECORD -->
@@ -356,6 +377,25 @@ const gcd=(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b]}return a};
 const frac=(n,d)=>{if(d<0){n=-n;d=-d}const g=gcd(n,d)||1;n/=g;d/=g;return d===1?String(n):n+'/'+d};
 const todayStr=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
 const LS={get(k,d){try{const v=localStorage.getItem('ps-'+k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem('ps-'+k,JSON.stringify(v))}catch(e){}}};
+
+/* ================= PLANS & ACCESS ================= */
+const PLANS={
+ nda:{name:'NDA Written',price:399,per:'one time',inc:['Every chapter of Mathematics and GAT: 25-question sets and mixed tests','Full Paper I and Paper II mocks with negative marking','Unlimited generated maths questions with worked answers','Section-wise analysis after every mock']},
+ cds:{name:'CDS Written',price:599,per:'one time',inc:['English, GK and Elementary Maths: every chapter, 25-question sets','All three full CDS papers on the clock','Mixed tests per subject','Section-wise analysis after every mock']},
+ ssb:{name:'SSB Complete',price:999,per:'one time',inc:['Full OIR (40 Q), TAT (5 pictures with blank), WAT (60 words), SRT (30 situations)','Self Description, GPE with map and self-check','Full PIQ-based interview question set','New sets every attempt']},
+ ca:{name:'Current Affairs',price:299,per:'per month',inc:['Daily briefings: defence, borders, geopolitics, AI, national','GD notes with points for and against, lecturette outlines','Full current affairs quiz, updated daily','Current affairs chapter inside every exam']}};
+const GST=.18,inr=n=>'₹'+n.toLocaleString('en-IN',{minimumFractionDigits:n%1?2:0,maximumFractionDigits:2});
+const withGst=p=>Math.round(p*(1+GST)*100)/100;
+let OWNER=false;const has=p=>OWNER;
+const EXAM_PLAN={NDA:'nda',CDS:'cds'};
+const LOCK='<svg class="lk" viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="7" width="10" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>';
+const lockBtn=(label,plan,cls='alt')=>`<a class="btn ${cls} small locked" href="#plans" data-plan="${plan}" title="Part of the ${PLANS[plan].name} plan">${LOCK} ${label}</a>`;
+let planFocus=null;
+document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('a[data-plan]');if(a)planFocus=a.dataset.plan});
+function drawPlans(){$('#plans').innerHTML=Object.entries(PLANS).map(([k,p])=>`<div class="card plan ${planFocus===k?'hl':''}" id="plan-${k}"><span class="tag saf">${p.per}</span><h3>${p.name}</h3><div class="price">${inr(p.price)} <small>+ GST</small></div><p class="mono muted" style="font-size:.82rem">${inr(withGst(p.price))} incl. 18% GST${p.per==='per month'?' / month':''}</p><ul>${p.inc.map(x=>`<li>${x}</li>`).join('')}</ul>${OWNER?'<span class="tag">Unlocked in owner view</span>':`<button class="btn saf buy" data-k="${k}">Buy · ${inr(withGst(p.price))}</button>`}</div>`).join('')+
+ `<div class="card plan"><span class="tag">always free</span><h3>Free for everyone</h3><div class="price">₹0</div><ul><li>AFCAT, CGCAT and INET: every chapter and full mocks</li><li>10-question sample sets in every NDA and CDS chapter</li><li>PPDT, GD, lecturette and sample SSB tests</li><li>Daily drill, war cries, My record</li><li>Latest three briefings and a 5-question quiz</li></ul></div>`;
+ document.querySelectorAll('.buy').forEach(b=>b.onclick=()=>toast('Online payments open at launch. Until then, keep practising the free sets.'));
+ if(planFocus){const el=$('#plan-'+planFocus);if(el)setTimeout(()=>el.scrollIntoView({block:'center'}),50)}}
 
 /* ================= HOME ================= */
 const SVC=[
@@ -517,10 +557,11 @@ const CH={
  'eng-syn':'Synonyms','eng-ant':'Antonyms','eng-idioms':'Idioms & phrases','eng-ows':'One-word substitution','eng-grammar':'Grammar & usage','eng-spelling':'Spelling',
  'sci-physics':'Physics concepts','phy-num':'Physics numericals','sci-chemistry':'Chemistry','sci-biology':'Biology','gk-history':'History','gk-polity':'Polity & Constitution','gk-geography':'Geography','gk-defence':'Defence & military GK','ca':'Current affairs'};
 const isGen=c=>!!G[c];
-const poolSize=c=>isGen(c)?Infinity:c==='ca'?CAQ.length:(BANK[c]||[]).length;
+let DBBANK={};const bankFor=c=>(BANK[c]||[]).concat(DBBANK[c]||[]);
+const poolSize=c=>isGen(c)?Infinity:c==='ca'?CAQ.length:bankFor(c).length;
 function fromBank(c,it){const sh=shuffle(it.slice(1,5));return {s:it[0],o:sh,a:sh.indexOf(it[1]),e:it[5]||'',ch:c}}
-function drawQs(chs,n){const out=[],used=new Set(),bags={};chs=chs.filter(c=>poolSize(c)>0);if(!chs.length)return out;
- chs.forEach(c=>{if(!isGen(c))bags[c]=shuffle(c==='ca'?CAQ.map(q=>[q.q,q.o[q.a],...q.o.filter((_,i)=>i!==q.a),q.e]):BANK[c])});
+function drawQs(chs,n,allowCA){const out=[],used=new Set(),bags={};chs=chs.filter(c=>poolSize(c)>0&&(c!=='ca'||allowCA||has('ca')));if(!chs.length)return out;
+ chs.forEach(c=>{if(!isGen(c))bags[c]=shuffle(c==='ca'?CAQ.map(q=>[q.q,q.o[q.a],...q.o.filter((_,i)=>i!==q.a),q.e]):bankFor(c))});
  let i=0,guard=0;while(out.length<n&&guard<n*20){guard++;const c=chs[i++%chs.length];let q=null;
   if(isGen(c)){q=G[c]();q.ch=c}else if(bags[c].length){q=fromBank(c,bags[c].pop())}else continue;
   const key=q.s+'|'+q.o[q.a];if(used.has(key))continue;used.add(key);out.push(q)}
@@ -550,11 +591,12 @@ let curExam=LS.get('exam','NDA');if(!EXAMS[curExam])curExam='NDA';
 function stats(){return LS.get('stats',{})}
 function drawWritten(){$('#exam-tabs').innerHTML=Object.keys(EXAMS).map(k=>`<button role="tab" aria-selected="${k===curExam}" data-k="${k}">${EXAMS[k].name}</button>`).join('');
  $('#exam-tabs').querySelectorAll('button').forEach(b=>b.onclick=()=>{curExam=b.dataset.k;LS.set('exam',curExam);drawWritten()});
- const E=EXAMS[curExam],st=stats();
- $('#exam-body').innerHTML=`<p class="muted">${E.by}</p>
- <div class="card"><p class="eyebrow">Full mock papers</p>${E.mocks.map((m,i)=>`<div class="mock" style="padding:8px 0;border-top:${i?'1px solid var(--line)':'0'}"><div><h3>${m.name}</h3><span class="mono muted" style="font-size:.8rem">${m.q}</span></div><button class="btn saf small" data-mock="${i}">Start mock</button></div>`).join('')}</div>
- ${E.subs.map((s,si)=>`<div class="subj"><div class="subj-h"><h3>${s.name}</h3><div class="row"><button class="btn small" data-sub="${si}" data-n="25">Mixed test · 25</button></div></div>
-  ${s.ch.map(c=>{const p=poolSize(c),a=st[c];return `<div class="chap"><div><b>${CH[c]}</b>${a?` <span class="acc ${a.c/a.t>=.7?'ok':a.c/a.t>=.4?'wn':'no'}">${Math.round(100*a.c/a.t)}% of ${a.t}</span>`:''}</div><span class="cnt">${p===Infinity?'unlimited · generated':p+' questions'}</span><div class="row"><button class="btn alt small" data-ch="${c}" data-n="10" ${p?'':'disabled'}>Practise 10</button><button class="btn alt small" data-ch="${c}" data-n="25" ${p?'':'disabled'}>25</button></div></div>`}).join('')}</div>`).join('')}`;
+ const E=EXAMS[curExam],st=stats(),plan=EXAM_PLAN[curExam],paid=!!plan&&!has(plan);
+ $('#exam-body').innerHTML=`<p class="muted">${E.by}${plan?'':' · <b class="ok">Free</b>'}</p>
+ ${paid?`<div class="paybar"><span><b>Free:</b> a 10-question set in every chapter. <b>${PLANS[plan].name}</b> unlocks 25-question sets, mixed tests and full mock papers.</span><a class="btn saf small" href="#plans" data-plan="${plan}">${inr(PLANS[plan].price)} + GST</a></div>`:''}
+ <div class="card"><p class="eyebrow">Full mock papers</p>${E.mocks.map((m,i)=>`<div class="mock" style="padding:8px 0;border-top:${i?'1px solid var(--line)':'0'}"><div><h3>${m.name}</h3><span class="mono muted" style="font-size:.8rem">${m.q}</span></div>${paid?lockBtn('Start mock',plan,'saf'):`<button class="btn saf small" data-mock="${i}">Start mock</button>`}</div>`).join('')}</div>
+ ${E.subs.map((s,si)=>`<div class="subj"><div class="subj-h"><h3>${s.name}</h3><div class="row">${paid?lockBtn('Mixed test · 25',plan,''):`<button class="btn small" data-sub="${si}" data-n="25">Mixed test · 25</button>`}</div></div>
+  ${s.ch.map(c=>{const p=poolSize(c),a=st[c],caLock=c==='ca'&&!has('ca');return `<div class="chap"><div><b>${CH[c]}</b>${a?` <span class="acc ${a.c/a.t>=.7?'ok':a.c/a.t>=.4?'wn':'no'}">${Math.round(100*a.c/a.t)}% of ${a.t}</span>`:''}</div><span class="cnt">${p===Infinity?'unlimited · generated':p+' questions'}</span><div class="row">${caLock?lockBtn('Current affairs plan','ca'):`<button class="btn alt small" data-ch="${c}" data-n="10" ${p?'':'disabled'}>Practise 10</button>${paid?lockBtn('25',plan):`<button class="btn alt small" data-ch="${c}" data-n="25" ${p?'':'disabled'}>25</button>`}`}</div></div>`}).join('')}</div>`).join('')}`;
  $('#exam-body').querySelectorAll('[data-ch]').forEach(b=>b.onclick=()=>startRun({title:CH[b.dataset.ch],eyebrow:E.name+' · practice',qs:drawQs([b.dataset.ch],+b.dataset.n),mode:'practice'}));
  $('#exam-body').querySelectorAll('[data-sub]').forEach(b=>b.onclick=()=>{const s=E.subs[+b.dataset.sub];startRun({title:s.name+' · mixed test',eyebrow:E.name,qs:drawQs(s.ch,25),mode:'test',min:25,pos:1,neg:0})});
  $('#exam-body').querySelectorAll('[data-mock]').forEach(b=>b.onclick=()=>{const m=E.mocks[+b.dataset.mock];let qs=[];m.sec.forEach(([n,sn])=>{const s=E.subs.find(x=>x.name===sn);qs=qs.concat(drawQs(s.ch,n).map(q=>Object.assign(q,{sec:sn})))});
@@ -627,9 +669,12 @@ function sideHTML(extra=''){return `<div class="side card"><span class="phase" i
 function setHead(eb,t){$('#t-eyebrow').textContent=eb;$('#t-title').textContent=t}
 function intro(html,start){$('#t-body').innerHTML=`<div class="card" style="max-width:720px;gap:14px">${html}<div class="row"><button class="btn saf" id="go">Start test</button></div></div>`;$('#go').onclick=start}
 const back=`<div class="row"><a class="btn" href="#ssb">Back to SSB practice</a></div>`;
+function intro2(html,sample,full){const owned=has('ssb');$('#t-body').innerHTML=`<div class="card" style="max-width:720px;gap:14px">${html}<div class="row">${owned?`<button class="btn saf" id="go-full">Start full test · ${full.label}</button>`:`<button class="btn saf" id="go-s">Start free sample · ${sample.label}</button>${lockBtn('Full test · '+full.label,'ssb')}`}</div>${owned?'':`<p class="muted" style="font-size:.88rem">The full board-length test is part of the SSB Complete plan (${inr(PLANS.ssb.price)} + GST).</p>`}</div>`;
+ const a=$('#go-s'),b=$('#go-full');if(a)a.onclick=sample.run;if(b)b.onclick=full.run}
+function paidOnly(plan,html){$('#t-body').innerHTML=`<div class="lockcard" style="max-width:720px">${html}<p><b>This test is part of the ${PLANS[plan].name} plan</b> (${inr(PLANS[plan].price)} + GST).</p><div class="row"><a class="btn saf" href="#plans" data-plan="${plan}">See plans</a><a class="btn alt" href="#ssb">Back</a></div></div>`}
 const TESTS={};
-TESTS.oir=()=>{setHead('Screening · Officer Intelligence Rating','OIR test');intro(`<p>The board gives two OIR booklets of mixed verbal and non-verbal reasoning. This set has <b>40 fresh questions in 25 minutes</b>, a new set every time.</p><p class="note">Speed matters more than perfection. Don't get stuck on one question.</p>`,
- ()=>{const qs=drawQs(RSN,40);RUN={title:'OIR test',eyebrow:'Screening',qs,mode:'test',min:25,pos:1,neg:0,back:'#ssb'};location.hash='run'})};
+TESTS.oir=()=>{setHead('Screening · Officer Intelligence Rating','OIR test');const go=(n,m)=>()=>{RUN={title:'OIR test',eyebrow:'Screening',qs:drawQs(RSN,n),mode:'test',min:m,pos:1,neg:0,back:'#ssb'};location.hash='run'};
+ intro2(`<p>The board gives two OIR booklets of mixed verbal and non-verbal reasoning. The full test here has <b>40 fresh questions in 25 minutes</b>, a new set every time.</p><p class="note">Speed matters more than perfection. Don't get stuck on one question.</p>`,{label:'10 Q · 6 min',run:go(10,6)},{label:'40 Q · 25 min',run:go(40,25)})};
 TESTS.ppdt=()=>{setHead('Screening · Picture Perception & Description','PPDT');const pic=pick(['river','village']);
  intro(`<p>You will see a hazy picture for <b>30 seconds</b>, then get <b>1 minute</b> for the character box and <b>4 minutes</b> to write a story.</p><p class="note">At the board you then narrate in about a minute, followed by a group discussion.</p>`,()=>{
  $('#t-body').innerHTML=`<div class="room"><div class="stagebox" id="stg">${scene(pic,2.4)}</div>${sideHTML()}</div><div id="ppdt-w" class="card" hidden style="margin-top:16px"></div>`;
@@ -641,30 +686,33 @@ TESTS.ppdt=()=>{setHead('Screening · Picture Perception & Description','PPDT');
   $('#ppdt-w').innerHTML=`<label class="f">Story<textarea id="pp-s" placeholder="Third person. Give the hero a name, a clear action and an outcome."></textarea></label>`;$('#pp-s').focus();c=countdown(240,$('#clk'),$('#pb'),()=>done(meta))}
  function done(meta){const s=$('#pp-s').value.trim(),wc=s?s.split(/\s+/).length:0;addAttempt({test:'SSB · PPDT',detail:wc+' words'});
   $('#t-body').innerHTML=`<div class="room"><div class="stagebox">${scene(pic,2.4)}</div><div class="card"><p class="eyebrow">Review</p><p><b>${wc}</b> words · ${esc(meta.n||'?')} characters noted · mood ${esc(meta.mood)}</p><ul><li class="${wc>=80?'ok':'wn'}">${wc>=80?'Good length for 4 minutes.':'Aim for 80 to 120 words.'}</li><li>Does your hero act and reach a realistic, positive outcome?</li><li>Now narrate it aloud in one minute without reading.</li></ul><div style="white-space:pre-wrap;border-top:1px solid var(--line);padding-top:10px">${esc(s)||'<span class="muted">No story written.</span>'}</div>${back}</div></div>`}})};
-TESTS.tat=()=>{setHead('Psychology · Thematic Apperception Test','TAT');const set=['study','climb','door','tractor','blank'];
- intro(`<p>The board shows 11 pictures and one blank slide. This set has <b>${set.length}</b>, the last one blank. Each picture shows for <b>30 seconds</b>, then you write for <b>4 minutes</b>.</p>`,()=>{const stories=[];let i=0;
+TESTS.tat=()=>{setHead('Psychology · Thematic Apperception Test','TAT');let set;const start=s=>()=>{set=s;run()};
+ intro2(`<p>The board shows 11 pictures and one blank slide. Each picture shows for <b>30 seconds</b>, then you write for <b>4 minutes</b>. The full set here has 5 pictures, the last one blank.</p>`,{label:'1 picture',run:start(['climb'])},{label:'5 pictures',run:start(['study','climb','door','tractor','blank'])});
+ function run(){const stories=[];let i=0;
  $('#t-body').innerHTML=`<div class="room"><div class="stagebox" id="stg"></div>${sideHTML()}</div><div class="card" id="tw" hidden style="margin-top:16px"><label class="f"><span id="tl"></span><textarea id="tt"></textarea></label></div>`;let c;$('#skip').onclick=()=>c&&c.skip();
  const view=()=>{$('#tw').hidden=true;$('#stg').innerHTML=scene(set[i],0.8);$('#ph').textContent=`Picture ${i+1} of ${set.length} · observe`;$('#ph-note').textContent=set[i]==='blank'?'Blank slide. Imagine your own picture.':'Look at the picture.';c=countdown(30,$('#clk'),$('#pb'),write)};
  const write=()=>{$('#stg').innerHTML='<p class="muted">Write your story</p>';$('#tw').hidden=false;$('#tl').textContent='Story '+(i+1);$('#tt').value='';$('#tt').focus();$('#ph').textContent=`Picture ${i+1} · write`;$('#ph-note').textContent='Past, present, future. A hero who acts.';
   c=countdown(240,$('#clk'),$('#pb'),()=>{stories.push($('#tt').value.trim());i++;i<set.length?view():done()})};
  const done=()=>{addAttempt({test:'SSB · TAT',detail:stories.filter(Boolean).length+'/'+set.length+' stories'});
-  $('#t-body').innerHTML=`<div class="card"><p class="eyebrow">Review</p>${stories.map((s,k)=>{const wc=s?s.split(/\s+/).length:0;return `<div class="iq"><b>Story ${k+1} · ${wc} words <span class="${wc>=70?'ok':'wn'}">${wc>=70?'complete':'too short'}</span></b><div style="white-space:pre-wrap">${esc(s)||'<span class="muted">Blank</span>'}</div></div>`}).join('')}<p class="note">For each story: who is the hero, what problem do they face, what do they do, how does it end?</p>${back}</div>`};view()})};
+  $('#t-body').innerHTML=`<div class="card"><p class="eyebrow">Review</p>${stories.map((s,k)=>{const wc=s?s.split(/\s+/).length:0;return `<div class="iq"><b>Story ${k+1} · ${wc} words <span class="${wc>=70?'ok':'wn'}">${wc>=70?'complete':'too short'}</span></b><div style="white-space:pre-wrap">${esc(s)||'<span class="muted">Blank</span>'}</div></div>`}).join('')}<p class="note">For each story: who is the hero, what problem do they face, what do they do, how does it end?</p>${back}</div>`};view()}};
 const WAT=['Army','Mother','Fear','Win','Friend','Leader','Death','Team','Failure','Duty','Discipline','Help','Risk','Society','Defeat','Love','Attack','Courage','Weak','Sports','Nation','Problem','Enemy','Brave','Responsibility','Alone','Trust','Hard','Success','Crowd','Accident','Money','Officer','River','Night','Dark','Challenge','Village','Hospital','Exam','Cheat','Character','Unity','Order','Punish','Gun','Blood','Peace','Water','Hope','Mistake','Teacher','Time','Power','Ideal','Father','Lazy','Rain','Fight','Future','Border','Flag','Salute','March','Soldier','Patience','Honest','Weapon','Sacrifice','Mountain','Storm','Victory','Lead','Wound','Rescue','Respect','Order','Uniform','Ship','Sky'];
-TESTS.wat=()=>{setHead('Psychology · Word Association Test','WAT');const ws=shuffle([...new Set(WAT)]).slice(0,60);
- intro(`<p><b>60 words</b>, each for <b>15 seconds</b>. Write the first meaningful sentence that comes to mind. The slide moves on by itself. A fresh mix every time.</p><p class="note">Keep sentences short and natural. Avoid preaching ("one should…") and avoid blanks.</p>`,()=>{const res=[];let i=0;
+TESTS.wat=()=>{setHead('Psychology · Word Association Test','WAT');let ws,N;const start=n=>()=>{N=n;ws=shuffle([...new Set(WAT)]).slice(0,n);run()};
+ intro2(`<p>Each word shows for <b>15 seconds</b>. Write the first meaningful sentence that comes to mind. The slide moves on by itself. The board gives 60 words; you get a fresh mix every time.</p><p class="note">Keep sentences short and natural. Avoid preaching ("one should…") and avoid blanks.</p>`,{label:'15 words',run:start(15)},{label:'60 words',run:start(60)});
+ function run(){const res=[];let i=0;
  $('#t-body').innerHTML=`<div class="room"><div class="stagebox" style="min-height:220px"><span class="word" id="w"></span></div>${sideHTML()}</div><div class="card" style="margin-top:16px"><label class="f">Your sentence<input type="text" id="wi" autocomplete="off"></label></div>`;let c;$('#skip').onclick=()=>c&&c.skip();
- const next=()=>{$('#w').textContent=ws[i];$('#wi').value='';$('#wi').focus();$('#ph').textContent=`Word ${i+1} of 60`;c=countdown(15,$('#clk'),$('#pb'),()=>{res.push($('#wi').value.trim());i++;i<60?next():done()})};
- const done=()=>{const blank=res.filter(r=>!r).length,neg=res.filter(r=>/\b(not|never|no|can't|cannot|don't)\b/i.test(r)).length,pr=res.filter(r=>/\b(should|must)\b/i.test(r)).length,lg=res.filter(r=>r.split(/\s+/).length>10).length;addAttempt({test:'SSB · WAT',detail:(60-blank)+'/60 answered'});
-  $('#t-body').innerHTML=`<div class="card"><p class="eyebrow">Review</p><div class="row"><span class="tag">${60-blank} answered</span><span class="tag ${blank?'saf':''}">${blank} blank</span><span class="tag ${neg?'saf':''}">${neg} with negatives</span><span class="tag ${pr?'saf':''}">${pr} preachy</span><span class="tag ${lg?'saf':''}">${lg} over 10 words</span></div><div class="tbl"><table><tbody>${ws.map((w,k)=>`<tr><td class="mono" style="width:150px"><b>${w}</b></td><td>${esc(res[k])||'<span class="no">blank</span>'}</td></tr>`).join('')}</tbody></table></div>${back}</div>`};next()})};
+ const next=()=>{$('#w').textContent=ws[i];$('#wi').value='';$('#wi').focus();$('#ph').textContent=`Word ${i+1} of ${N}`;c=countdown(15,$('#clk'),$('#pb'),()=>{res.push($('#wi').value.trim());i++;i<N?next():done()})};
+ const done=()=>{const blank=res.filter(r=>!r).length,neg=res.filter(r=>/\b(not|never|no|can't|cannot|don't)\b/i.test(r)).length,pr=res.filter(r=>/\b(should|must)\b/i.test(r)).length,lg=res.filter(r=>r.split(/\s+/).length>10).length;addAttempt({test:'SSB · WAT',detail:(N-blank)+'/'+N+' answered'});
+  $('#t-body').innerHTML=`<div class="card"><p class="eyebrow">Review</p><div class="row"><span class="tag">${N-blank} answered</span><span class="tag ${blank?'saf':''}">${blank} blank</span><span class="tag ${neg?'saf':''}">${neg} with negatives</span><span class="tag ${pr?'saf':''}">${pr} preachy</span><span class="tag ${lg?'saf':''}">${lg} over 10 words</span></div><div class="tbl"><table><tbody>${ws.map((w,k)=>`<tr><td class="mono" style="width:150px"><b>${w}</b></td><td>${esc(res[k])||'<span class="no">blank</span>'}</td></tr>`).join('')}</tbody></table></div>${back}</div>`};next()}};
 const SRT=['He was going for his SSB and his train got cancelled at the last moment. He…','While trekking, his friend slipped and broke a leg far from any road. He…','He saw a classmate copying in the final exam. He…','His village had no proper road and students missed school in the rains. He…','He was made captain, but senior players refused to follow him. He…','At night he heard someone trying to break into the neighbour\'s house. He…','He found a wallet with cash and an ID card on the road. He…','His father fell seriously ill the day before his exam. He…','During a group task his team was losing and members started blaming each other. He…','He was offered a well-paid private job while waiting for his SSB result. He…','A fire broke out in the hostel kitchen while he was nearby. He…','He was not recommended at his first SSB. He…','His boss asked him to sign papers he knew were wrong. He…','He was travelling by bus when the driver had a heart attack. He…','His friends planned a party on the night before his interview. He…','He was asked to organise a blood donation camp in two days. He…','He was lost in a forest at dusk with a dead phone. He…','Two groups in his college clashed over an election. He…','He saw a child drowning in a canal. He…','He was given a task beyond his knowledge with a strict deadline. He…','His younger brother started skipping school and keeping bad company. He…','During a flood, his village was cut off and food was running out. He…','He was put on duty on the day of his sister\'s wedding. He…','His teammate was injured just before the final match. He…','He was falsely accused of stealing in his hostel. He…','He reached the station and found his ticket and money stolen. He…','His group leader made a wrong decision during a trek. He…','He saw a road accident and people only making videos. He…','He had to speak in front of 500 people with no preparation. He…','His colleague was taking credit for his work. He…','He noticed smoke coming from a railway coach while the train was moving. He…','Villagers refused to get their children vaccinated because of rumours. He…','He was elected class representative but the class was divided. He…','His bicycle broke down 10 km from the exam centre with 40 minutes left. He…','He saw a stranger taking photographs near an army cantonment. He…','His mother wanted him to take a government clerk job instead of joining the forces. He…','His senior asked him to cover up a mistake made by the senior. He…','He was leading a patrol when one member fell ill. He…','He was given charge of a mess that had lost money for months. He…','He found that his best friend was taking drugs. He…'];
-TESTS.srt=()=>{setHead('Psychology · Situation Reaction Test','SRT');const set=shuffle(SRT).slice(0,30);
- intro(`<p>The board gives 60 situations in 30 minutes. This half set has <b>30 situations in 15 minutes</b>, the same pace. Write a short, action-focused reaction.</p>`,()=>{
+TESTS.srt=()=>{setHead('Psychology · Situation Reaction Test','SRT');let set,N,T;const start=(n,t)=>()=>{N=n;T=t;set=shuffle(SRT).slice(0,n);run()};
+ intro2(`<p>The board gives 60 situations in 30 minutes: about 30 seconds each. Write a short, action-focused reaction.</p>`,{label:'8 situations · 4 min',run:start(8,240)},{label:'30 situations · 15 min',run:start(30,900)});
+ function run(){
  $('#t-body').innerHTML=`<div class="room"><div class="card"><div class="srt-list">${set.map((s,i)=>`<div class="srt-item"><p><span class="mono muted">${String(i+1).padStart(2,'0')}</span> ${esc(s)}</p><input type="text" id="srt${i}" autocomplete="off"></div>`).join('')}</div></div>${sideHTML('<p class="mono" id="srt-c"></p><button class="btn saf small" id="srt-done">Submit</button>')}</div>`;
- $('#ph').textContent='Write reactions';$('#ph-note').textContent='About 30 seconds per situation.';const cnt=()=>{$('#srt-c').textContent=set.filter((_,i)=>$('#srt'+i).value.trim()).length+' / 30 attempted'};cnt();$('#t-body').addEventListener('input',cnt);
- const done=()=>{stopActive();const r=set.map((_,i)=>$('#srt'+i).value.trim()),n=r.filter(Boolean).length;addAttempt({test:'SSB · SRT',detail:n+'/30 attempted'});
-  $('#t-body').innerHTML=`<div class="card"><p class="eyebrow">Review</p><div class="big">${n} / 30</div><ol class="review">${set.map((s,i)=>`<li>${esc(s)}<br>${r[i]?'<b>'+esc(r[i])+'</b>':'<span class="no">Not attempted</span>'}</li>`).join('')}</ol><p class="note">A strong reaction is practical, solves the whole problem and stays realistic.</p>${back}</div>`};
- $('#srt-done').onclick=done;const c=countdown(900,$('#clk'),$('#pb'),done);$('#skip').onclick=()=>c.skip()})};
-TESTS.sd=()=>{setHead('Psychology · Self Description','Self Description');const H=['What your parents think of you','What your teachers or employers think of you','What your friends and colleagues think of you','What you think of yourself','What qualities you want to develop'];
+ $('#ph').textContent='Write reactions';$('#ph-note').textContent='About 30 seconds per situation.';const cnt=()=>{$('#srt-c').textContent=set.filter((_,i)=>$('#srt'+i).value.trim()).length+' / '+N+' attempted'};cnt();$('#t-body').addEventListener('input',cnt);
+ const done=()=>{stopActive();const r=set.map((_,i)=>$('#srt'+i).value.trim()),n=r.filter(Boolean).length;addAttempt({test:'SSB · SRT',detail:n+'/'+N+' attempted'});
+  $('#t-body').innerHTML=`<div class="card"><p class="eyebrow">Review</p><div class="big">${n} / ${N}</div><ol class="review">${set.map((s,i)=>`<li>${esc(s)}<br>${r[i]?'<b>'+esc(r[i])+'</b>':'<span class="no">Not attempted</span>'}</li>`).join('')}</ol><p class="note">A strong reaction is practical, solves the whole problem and stays realistic.</p>${back}</div>`};
+ $('#srt-done').onclick=done;const c=countdown(T,$('#clk'),$('#pb'),done);$('#skip').onclick=()=>c.skip()}};
+TESTS.sd=()=>{setHead('Psychology · Self Description','Self Description');if(!has('ssb')){paidOnly('ssb','<p>Five headings in <b>15 minutes</b>: what your parents, teachers and friends think of you, what you think of yourself, and what you want to improve.</p>');return}const H=['What your parents think of you','What your teachers or employers think of you','What your friends and colleagues think of you','What you think of yourself','What qualities you want to develop'];
  intro(`<p>Five headings in <b>15 minutes</b>. Write honestly, with examples, consistent with your PIQ.</p>`,()=>{
  $('#t-body').innerHTML=`<div class="room"><div class="card">${H.map((h,i)=>`<label class="f">${i+1}. ${h}<textarea id="sd${i}" style="min-height:110px"></textarea></label>`).join('')}</div>${sideHTML('<button class="btn saf small" id="sd-done">Submit</button>')}</div>`;$('#ph').textContent='Write';$('#ph-note').textContent='About 3 minutes per heading.';
  const done=()=>{stopActive();const v=H.map((_,i)=>$('#sd'+i).value.trim());addAttempt({test:'SSB · Self Description',detail:v.filter(Boolean).length+'/5 headings'});
@@ -682,7 +730,7 @@ TESTS.lecturette=()=>{setHead('GTO · Lecturette','Lecturette');const p4=shuffle
  $('#t-body').querySelectorAll('.opt').forEach(b=>b.onclick=()=>{const t=p4[+b.dataset.i];
   $('#t-body').innerHTML=`<div class="room"><div class="card"><p class="eyebrow">Topic</p><h3>${esc(t)}</h3><label class="f">Notes: opening, three points, close<textarea id="lec-n"></textarea></label></div>${sideHTML()}</div>`;$('#ph').textContent='Prepare';$('#ph-note').textContent='Plan an opening, three points and a close.';
   let c=countdown(180,$('#clk'),$('#pb'),()=>{$('#ph').textContent='Speak now';$('#ph-note').textContent='Stand, face the group, keep eye contact.';c=countdown(180,$('#clk'),$('#pb'),()=>{addAttempt({test:'SSB · Lecturette',detail:t});$('#ph').textContent='Time up';$('#ph-note').textContent='Did you finish within time?';$('#skip').hidden=true})});$('#skip').onclick=()=>c.skip()})};
-TESTS.gpe=()=>{setHead('GTO · Group Planning Exercise','GPE');
+TESTS.gpe=()=>{setHead('GTO · Group Planning Exercise','GPE');if(!has('ssb')){paidOnly('ssb','<p>A full planning exercise: a map, a narrated situation with several emergencies, 5 minutes to read and 10 minutes to write your plan, then a self-check against the GTO\'s priorities.</p>');return}
  const map=`<svg class="scene" viewBox="0 0 400 260" role="img" aria-label="GPE map"><rect width="400" height="260" fill="#e9e7dc"/><path d="M0 150 C80 140 140 170 220 150 S360 120 400 130" stroke="#7b9bb0" stroke-width="14" fill="none"/><text x="10" y="138" font-size="10" fill="#335">Canal</text><path d="M0 70 L400 90" stroke="#444" stroke-width="3" stroke-dasharray="10 5"/><text x="300" y="80" font-size="10" fill="#333">Railway</text><rect x="196" y="72" width="22" height="22" fill="none" stroke="#a63a2b" stroke-width="2"/><text x="186" y="66" font-size="10" fill="#a63a2b">Rly bridge</text><path d="M60 260 L120 150 L140 40" stroke="#8b6d3a" stroke-width="5" fill="none"/><text x="66" y="250" font-size="10" fill="#333">Road</text><rect x="110" y="140" width="22" height="20" fill="none" stroke="#a63a2b" stroke-width="2"/><text x="136" y="176" font-size="10" fill="#a63a2b">Bus in canal</text><circle cx="300" cy="200" r="26" fill="#cfc8a8"/><text x="276" y="204" font-size="10" fill="#333">Sonpur vill.</text><path d="M318 186 l6 -10 l6 10z" fill="#a63a2b"/><text x="332" y="182" font-size="9" fill="#a63a2b">Fire</text><path d="M20 30 l25 -22 l25 22z" fill="#9a9a90"/><text x="16" y="44" font-size="10" fill="#333">Hill (network)</text><circle cx="70" cy="210" r="5" fill="#2f7a45"/><text x="80" y="214" font-size="10" fill="#2f7a45">Group</text><text x="290" y="30" font-size="10" fill="#333">Police stn 12 km →</text><text x="262" y="250" font-size="9" fill="#555">Not to scale: use narration</text></svg>`;
  const nar=`Six students of Government College, Rampur, are on a cycling trip near Sonpur village. At 1600 hrs, while resting near the road, they notice: (1) a private bus has slipped off the road into the canal about 2 km away; passengers are shouting for help. (2) Through the trees they see two men leave a bag under the railway bridge and run away; the Express is due over the bridge at 1730 hrs. (3) Smoke is rising from the grain godown in Sonpur village, 4 km away. (4) One of their own members has sprained his ankle. Resources: six bicycles, a rope, a first-aid kit, two mobile phones with no network (network only on the hill, 3 km away). A tractor is working in a field nearby. The police station is 12 km away. As a member of the group, write what the group should do.`;
  intro(`<p>The GTO narrates the situation on a model. You get <b>5 minutes</b> to read it, then <b>10 minutes</b> to write your plan. The group then agrees a common plan.</p>`,()=>{
@@ -709,10 +757,10 @@ TESTS.interview=()=>{setHead('Interview · Personal interview','PIQ-based mock i
   const ciq=`Tell me about yourself from class 10 till now: the schools and colleges you studied in, your marks at each stage, the teachers you liked and disliked and why, your best friends and what you do together, how you help at home, your hobbies${hob.length?' ('+hob.join(', ')+')':''} and sports${sp.length?' ('+sp.join(', ')+')':''}, your achievements and failures, and why you want to join.`;
   addAttempt({test:'SSB · Interview',detail:Q.length+' questions generated'});
   $('#iv').innerHTML=`<div class="room" style="margin-top:20px"><div class="card"><p class="eyebrow">Comprehensive rapid-fire question</p><p style="font-size:1.05rem">${esc(ciq)}</p><p class="note">Answer in the order asked. Aim for 4 to 5 minutes. Practise out loud.</p><div class="row"><button class="btn small" id="ciq-t">Start 5 min timer</button><span class="clock" id="ciq-c" style="font-size:1.6rem">05:00</span></div>
-  <p class="eyebrow" style="margin-top:12px">Your likely questions</p>${Q.map((x,i)=>`<div class="iq"><span class="tag">${x.c}</span><p>${esc(x.q)}</p><div class="chips" data-i="${i}"><button class="chip c1" aria-pressed="false">Confident</button><button class="chip c2" aria-pressed="false">Shaky</button><button class="chip c3" aria-pressed="false">Unprepared</button></div></div>`).join('')}</div>
-  <div class="side card"><p class="eyebrow">Readiness</p><div class="big" id="rd">0 / ${Q.length}</div><p class="muted">marked confident</p><p class="note">Practise every "Shaky" and "Unprepared" answer out loud before your SSB.</p></div></div>`;
+  <p class="eyebrow" style="margin-top:12px">Your likely questions</p>${(has('ssb')?Q:Q.slice(0,6)).map((x,i)=>`<div class="iq"><span class="tag">${x.c}</span><p>${esc(x.q)}</p><div class="chips" data-i="${i}"><button class="chip c1" aria-pressed="false">Confident</button><button class="chip c2" aria-pressed="false">Shaky</button><button class="chip c3" aria-pressed="false">Unprepared</button></div></div>`).join('')}${has('ssb')?'':`<div class="lockcard" style="margin-top:12px"><b>${Q.length-6} more questions built from your PIQ</b><p class="muted">Service-specific, repeater, current affairs and stress questions are part of the SSB Complete plan.</p><div class="row"><a class="btn saf small" href="#plans" data-plan="ssb">${inr(PLANS.ssb.price)} + GST</a></div></div>`}</div>
+  <div class="side card"><p class="eyebrow">Readiness</p><div class="big" id="rd">0 / ${has('ssb')?Q.length:6}</div><p class="muted">marked confident</p><p class="note">Practise every "Shaky" and "Unprepared" answer out loud before your SSB.</p></div></div>`;
   $('#ciq-t').onclick=()=>countdown(300,$('#ciq-c'),null,()=>toast('Time up for the CIQ'));
-  $('#iv').querySelectorAll('.chips').forEach(g=>g.querySelectorAll('.chip').forEach(ch=>ch.onclick=()=>{g.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed','false'));ch.setAttribute('aria-pressed','true');$('#rd').textContent=$('#iv').querySelectorAll('.chip.c1[aria-pressed="true"]').length+' / '+Q.length}));
+  $('#iv').querySelectorAll('.chips').forEach(g=>g.querySelectorAll('.chip').forEach(ch=>ch.onclick=()=>{g.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed','false'));ch.setAttribute('aria-pressed','true');$('#rd').textContent=$('#iv').querySelectorAll('.chip.c1[aria-pressed="true"]').length+' / '+(has('ssb')?Q.length:6)}));
   $('#iv').scrollIntoView({behavior:'smooth'})}};
 
 /* ================= BRIEFING ROOM ================= */
@@ -724,29 +772,34 @@ const fmtDate=s=>{if(!s)return 'Evergreen';const d=new Date(s+'T00:00:00');retur
 function daysAgo(s){if(!s)return Infinity;return Math.floor((new Date(todayStr()+'T00:00:00')-new Date(s+'T00:00:00'))/86400000)}
 function filtered(){const P=briefState.period;return (ARTICLES||[]).filter(a=>{if(briefState.cat!=='all'&&a.cat!==briefState.cat)return false;
  if(P==='evergreen')return a.kind==='static';if(P==='all')return true;if(a.kind==='static')return false;const d=daysAgo(a.date);return P==='today'?d<=0:P==='week'?d<=6:d<=30})}
-function artRow(a){return `<button class="art" data-id="${esc(a.id)}"><span class="dt">${a.kind==='static'?'Evergreen':fmtDate(a.date)}<br><span class="tag ${a.cat==='gd'||a.cat==='lecturette'?'saf':''}">${esc(catName(a.cat))}</span></span><span><h3>${esc(a.title)}</h3><p>${esc(a.summary)}</p></span></button>`}
+function freeIds(){const cur=(ARTICLES||[]).filter(a=>a.kind!=='static').slice(0,3).map(a=>a.id);const st=(ARTICLES||[]).filter(a=>a.kind==='static').sort((a,b)=>a.id.localeCompare(b.id));const g=st.find(a=>a.cat==='gd'),l=st.find(a=>a.cat==='lecturette');return new Set([...cur,g&&g.id,l&&l.id].filter(Boolean))}
+const canRead=a=>has('ca')||freeIds().has(a.id);
+function artRow(a){const lk=!canRead(a);return `<button class="art" data-id="${esc(a.id)}"><span class="dt">${a.kind==='static'?'Evergreen':fmtDate(a.date)}<br><span class="tag ${a.cat==='gd'||a.cat==='lecturette'?'saf':''}">${esc(catName(a.cat))}</span>${lk?'':(has('ca')?'':' <span class="tag">Free</span>')}</span><span><h3>${lk?LOCK+' ':''}${esc(a.title)}</h3><p>${esc(a.summary)}</p></span></button>`}
 function drawBrief(){const B=$('#brief-body');
  if(dbState==='off'){B.innerHTML=`<div class="empty">The Briefing Room needs you to be signed in to claude.ai to load articles. Sign in and reopen this page.</div>`;return}
  if(!ARTICLES){B.innerHTML=`<div class="empty">Loading today's briefings…</div>`;return}
  if(briefState.open){const a=ARTICLES.find(x=>x.id===briefState.open);if(a){B.innerHTML=`<div class="reader"><button class="btn alt small" id="bk" style="align-self:flex-start">← All briefings</button><span class="eyebrow">${esc(catName(a.cat))} · ${a.kind==='static'?'Evergreen':fmtDate(a.date)}</span><h2 style="text-transform:none">${esc(a.title)}</h2><p class="muted" style="font-size:1.1rem">${esc(a.summary)}</p>
-  ${(a.body||[]).map(p=>p.startsWith('## ')?`<h3>${esc(p.slice(3))}</h3>`:p.startsWith('- ')?`<ul>${p.split('\n').map(l=>`<li>${esc(l.replace(/^- /,''))}</li>`).join('')}</ul>`:`<p>${esc(p)}</p>`).join('')}
-  ${a.pros||a.cons?`<div class="pc"><div class="card"><p class="eyebrow ok">For</p><ul>${(a.pros||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div><div class="card"><p class="eyebrow no">Against</p><ul>${(a.cons||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div></div>`:''}
-  ${a.interview?`<div class="card"><p class="eyebrow">Likely interview questions</p><ul>${a.interview.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}
+  ${!canRead(a)?`<div class="lockcard"><b>The full briefing is part of the Current Affairs plan</b><p class="muted">Daily briefings, GD notes, lecturette outlines and the full quiz for ${inr(PLANS.ca.price)} + GST a month. The latest three briefings are always free.</p><div class="row"><a class="btn saf" href="#plans" data-plan="ca">See plans</a></div></div>`:''}
+  ${!canRead(a)?'':(a.body||[]).map(p=>p.startsWith('## ')?`<h3>${esc(p.slice(3))}</h3>`:p.startsWith('- ')?`<ul>${p.split('\n').map(l=>`<li>${esc(l.replace(/^- /,''))}</li>`).join('')}</ul>`:`<p>${esc(p)}</p>`).join('')}
+  ${!canRead(a)?'':''}${canRead(a)&&(a.pros||a.cons)?`<div class="pc"><div class="card"><p class="eyebrow ok">For</p><ul>${(a.pros||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div><div class="card"><p class="eyebrow no">Against</p><ul>${(a.cons||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div></div>`:''}
+  ${canRead(a)&&a.interview?`<div class="card"><p class="eyebrow">Likely interview questions</p><ul>${a.interview.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}
   ${a.sources&&a.sources.length?`<p class="muted" style="font-size:.88rem">Sources: ${a.sources.map(s=>`<a href="${esc(s.u)}" target="_blank" rel="noopener">${esc(s.t)}</a>`).join(' · ')}</p>`:''}</div>`;$('#bk').onclick=()=>{briefState.open=null;drawBrief()};window.scrollTo(0,0);return}}
  const list=filtered();
  B.innerHTML=`<div class="filters"><div class="chips">${PERIODS.map(p=>`<button class="chip" aria-pressed="${briefState.period===p[0]}" data-p="${p[0]}">${p[1]}</button>`).join('')}</div><div class="chips">${CATS.map(c=>`<button class="chip" aria-pressed="${briefState.cat===c[0]}" data-c="${c[0]}">${c[1]}</button>`).join('')}</div></div>
- <div class="row" style="justify-content:space-between;margin-top:16px"><span class="mono muted">${list.length} briefing${list.length===1?'':'s'}</span><button class="btn saf small" id="caq" ${CAQ.length?'':'disabled'}>Current affairs quiz · ${CAQ.length} Q</button></div>
+ <div class="row" style="justify-content:space-between;margin-top:16px"><span class="mono muted">${list.length} briefing${list.length===1?'':'s'}</span><button class="btn saf small" id="caq" ${CAQ.length?'':'disabled'}>${has('ca')?`Current affairs quiz · ${CAQ.length} Q`:'Free sample quiz · 5 Q'}</button></div>
  ${list.length?`<div class="alist">${list.map(artRow).join('')}</div>`:`<div class="empty" style="margin-top:12px">Nothing here for this filter yet. Try "This month" or "All".</div>`}`;
  B.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{briefState.period=b.dataset.p;drawBrief()});B.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{briefState.cat=b.dataset.c;drawBrief()});
  B.querySelectorAll('.art').forEach(b=>b.onclick=()=>{briefState.open=b.dataset.id;drawBrief()});
- const cq=$('#caq');if(cq)cq.onclick=()=>startRun({title:'Current affairs quiz',eyebrow:'Briefing Room',qs:drawQs(['ca'],Math.min(25,CAQ.length)),mode:'practice',back:'#briefing'})}
+ const cq=$('#caq');if(cq)cq.onclick=()=>{let qs;if(has('ca'))qs=drawQs(['ca'],Math.min(25,CAQ.length),true);else{qs=[...CAQ].sort((a,b)=>(b.date||'').localeCompare(a.date||'')).slice(0,5).map(q=>fromBank('ca',[q.q,q.o[q.a],...q.o.filter((_,i)=>i!==q.a),q.e]))}startRun({title:has('ca')?'Current affairs quiz':'Current affairs · free sample',eyebrow:'Briefing Room',qs,mode:'practice',back:'#briefing'})}}
 function drawHomeBrief(){const H=$('#home-brief');if(dbState==='off'){H.innerHTML=`<div class="empty">Sign in to claude.ai to see the daily briefings.</div>`;return}
  if(!ARTICLES){H.innerHTML=`<div class="empty">Loading today's briefings…</div>`;return}
  const l=ARTICLES.filter(a=>a.kind!=='static').slice(0,4);H.innerHTML=l.length?`<div class="alist">${l.map(artRow).join('')}</div><div class="row" style="margin-top:12px"><a class="btn" href="#briefing">Open the Briefing Room</a></div>`:`<div class="empty">The first briefings are on their way.</div>`;
  H.querySelectorAll('.art').forEach(b=>b.onclick=()=>{briefState.open=b.dataset.id;location.hash='briefing'})}
+async function loadOwner(){try{const u=window.claude&&window.claude.use?await window.claude.use('user'):null;if(u&&await u.isOwner()){OWNER=true;$('#ownerbar').hidden=false;route();drawHomeBrief()}}catch(e){}}
 async function loadDB(){const to=setTimeout(()=>{if(!ARTICLES){dbState='off';drawBrief();drawHomeBrief()}},10000);
  try{const db=window.claude&&window.claude.use?await window.claude.use('db'):null;if(!db){clearTimeout(to);dbState='off';drawBrief();drawHomeBrief();drawWritten();return}
   db.collection('articles').onSnapshot(s=>{clearTimeout(to);dbState='on';ARTICLES=s.docs.map(d=>Object.assign({id:d.id},d.data())).sort((a,b)=>(b.date||'').localeCompare(a.date||''));drawBrief();drawHomeBrief()},()=>{dbState='off';drawBrief();drawHomeBrief()});
+  db.collection('bank').onSnapshot(s=>{const m={};s.docs.forEach(d=>{const x=d.data();if(!x||!Array.isArray(x.items)||!CH[x.ch])return;x.items.forEach(q=>{if(q&&q.q&&Array.isArray(q.o)&&q.o.length===4&&q.a>=0&&q.a<4)(m[x.ch]=m[x.ch]||[]).push([q.q,q.o[q.a],...q.o.filter((_,i)=>i!==q.a),q.e||''])})});DBBANK=m;if(location.hash==='#written')drawWritten()},()=>{});
   db.collection('caq').onSnapshot(s=>{CAQ=s.docs.map(d=>d.data()).filter(q=>q&&q.q&&Array.isArray(q.o));if(location.hash==='#written')drawWritten();if(location.hash==='#briefing'&&!briefState.open)drawBrief()},()=>{})}
  catch(e){clearTimeout(to);dbState='off';drawBrief();drawHomeBrief()}}
 
@@ -758,14 +811,14 @@ function renderRecord(){const st=stats(),l=LS.get('attempts',[]);const rows=Obje
  const c=$('#clr');if(c)c.onclick=()=>{LS.set('stats',{});LS.set('attempts',[]);renderRecord()}}
 
 /* ================= ROUTER ================= */
-const PAGES=['home','written','ssb','briefing','record','run'];
+const PAGES=['home','written','ssb','briefing','plans','record','run'];
 function route(){stopActive();const h=(location.hash||'#home').slice(1);let page=PAGES.includes(h)?h:(TESTS[h]?'test':'home');if(page==='run'&&!RUN)page='written';
  document.querySelectorAll('section.view').forEach(s=>s.hidden=s.dataset.view!==page);
  const navKey=page==='test'?'ssb':page==='run'?(RUN&&RUN.back==='#ssb'?'ssb':RUN&&RUN.back==='#briefing'?'briefing':'written'):page;
  document.querySelectorAll('#nav a').forEach(a=>{if(a.getAttribute('href')==='#'+navKey)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
- if(page==='test')TESTS[h]();if(page==='written')drawWritten();if(page==='run')runRun();if(page==='record')renderRecord();if(page==='briefing')drawBrief();window.scrollTo(0,0)}
+ if(page==='test')TESTS[h]();if(page==='written')drawWritten();if(page==='run')runRun();if(page==='record')renderRecord();if(page==='briefing')drawBrief();if(page==='plans')drawPlans();else planFocus=null;if(!(page==='plans'&&planFocus))window.scrollTo(0,0)}
 window.addEventListener('hashchange',route);
 fetch('bank.json').then(r=>r.json()).then(b=>{BANK=b;if(location.hash==='#written')drawWritten()}).catch(()=>{});
-route();drawHomeBrief();loadDB();
+route();drawHomeBrief();loadDB();loadOwner();
 })();
 </script>

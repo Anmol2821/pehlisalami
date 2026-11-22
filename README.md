@@ -6,18 +6,32 @@ A free practice platform for Indian defence aspirants: NDA, CDS, AFCAT, CGCAT, I
 - **SSB practice:** OIR, PPDT, TAT, WAT, SRT, Self Description, GD, GPE, lecturette and a PIQ-based interview, at board timings.
 - **Briefing Room:** daily current affairs (defence, borders, geopolitics, AI, national) and evergreen GD and lecturette topics, filterable by day, week and month.
 
+## Plans
+
+| Plan | Price | Incl. 18% GST | Free sample |
+| --- | --- | --- | --- |
+| NDA Written | ₹399 one time | ₹470.82 | 10-question set in every chapter |
+| CDS Written | ₹599 one time | ₹706.82 | 10-question set in every chapter |
+| SSB Complete | ₹999 one time | ₹1,178.82 | Short OIR, TAT, WAT, SRT; full PPDT, GD, lecturette; 6 interview questions |
+| Current Affairs | ₹299 per month | ₹352.82 / month | Latest 3 briefings, one GD, one lecturette, 5-question quiz |
+
+Always free: AFCAT, CGCAT and INET practice and mocks, daily drill, war cries, My record.
+
+In the Claude prototype the locks are display-only (only the owner sees everything unlocked). Real enforcement and payments come with the Hostinger build, where access is checked on the server.
+
 ## Layout
 
 | Path | What it is |
 | --- | --- |
 | `site/artifact.html` | Source of the live Claude artifact (no document skeleton; the artifact host adds it). |
-| `site/index.html` | The same page wrapped as a standalone HTML document for ordinary hosting. |
+| `site/index.html` | The same page wrapped as a standalone HTML document. Regenerate it with `site/build.sh` after editing `artifact.html`. |
 | `site/bank.json` | Curated question bank loaded by the page. |
 | `content/question-bank/build_bank.py` | Source of the curated bank. Run it from that folder to validate and rebuild `site/bank.json`. |
 | `content/articles/` | Briefing Room articles (one JSON document each). |
 | `content/current-affairs-questions/` | Current-affairs MCQs (one JSON document each). |
+| `content/question-bank/daily/` | Daily additions to the GK, science and English bank (one document per chapter per day). |
 
-The live prototype reads articles and current-affairs questions from the artifact's database, which a daily scheduled task updates. The JSON files here are the seed copies.
+The live prototype reads articles, current-affairs questions and daily bank additions from the artifact's database. A scheduled task runs every day at 05:13 IST, writes new content to the database and backs it up to this repository.
 
 ### Article format
 
