@@ -235,7 +235,7 @@ footer{border-top:1px solid var(--line);padding-block:20px;font-size:.84rem;colo
 </header>
 
 <main id="app">
-<div class="wrap" id="ownerbar" hidden style="padding-top:14px"><div class="ownerbar">Owner view: everything is unlocked for you. Visitors see the free samples and the plan prices.</div></div>
+<div class="wrap" id="ownerbar" hidden style="padding-top:14px"><div class="ownerbar row" style="justify-content:space-between"><span id="ownerbar-t"></span><button class="btn small" id="ownerbar-b"></button></div></div>
 
 <!-- HOME -->
 <section class="view" data-view="home">
@@ -393,13 +393,13 @@ const PLANS={
  ca:{name:'Current Affairs',price:299,per:'per month',inc:['Daily briefings: defence, borders, geopolitics, AI, national','GD notes with points for and against, lecturette outlines','Full current affairs quiz, updated daily','Current affairs chapter inside every exam']}};
 const GST=.18,inr=n=>'₹'+n.toLocaleString('en-IN',{minimumFractionDigits:n%1?2:0,maximumFractionDigits:2});
 const withGst=p=>Math.round(p*(1+GST)*100)/100;
-let OWNER=false;const has=p=>OWNER;
+let OWNER=false,UNLOCK=LS.get('ownerUnlock',false);const has=p=>OWNER&&UNLOCK;
 const EXAM_PLAN={NDA:'nda',CDS:'cds'};
 const LOCK='<svg class="lk" viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="7" width="10" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>';
 const lockBtn=(label,plan,cls='alt')=>`<a class="btn ${cls} small locked" href="#plans" data-plan="${plan}" title="Part of the ${PLANS[plan].name} plan">${LOCK} ${label}</a>`;
 let planFocus=null;
 document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('a[data-plan]');if(a)planFocus=a.dataset.plan});
-function drawPlans(){$('#plans').innerHTML=Object.entries(PLANS).map(([k,p])=>`<div class="card plan ${planFocus===k?'hl':''}" id="plan-${k}"><span class="tag saf">${p.per}</span><h3>${p.name}</h3><div class="price">${inr(p.price)} <small>+ GST</small></div><p class="mono muted" style="font-size:.82rem">${inr(withGst(p.price))} incl. 18% GST${p.per==='per month'?' / month':''}</p><ul>${p.inc.map(x=>`<li>${x}</li>`).join('')}</ul>${OWNER?'<span class="tag">Unlocked in owner view</span>':`<button class="btn saf buy" data-k="${k}">Buy · ${inr(withGst(p.price))}</button>`}</div>`).join('')+
+function drawPlans(){$('#plans').innerHTML=Object.entries(PLANS).map(([k,p])=>`<div class="card plan ${planFocus===k?'hl':''}" id="plan-${k}"><span class="tag saf">${p.per}</span><h3>${p.name}</h3><div class="price">${inr(p.price)} <small>+ GST</small></div><p class="mono muted" style="font-size:.82rem">${inr(withGst(p.price))} incl. 18% GST${p.per==='per month'?' / month':''}</p><ul>${p.inc.map(x=>`<li>${x}</li>`).join('')}</ul>${has(k)?'<span class="tag">Unlocked in owner view</span>':`<button class="btn saf buy" data-k="${k}">Buy · ${inr(withGst(p.price))}</button>`}</div>`).join('')+
  `<div class="card plan"><span class="tag">always free</span><h3>Free for everyone</h3><div class="price">₹0</div><ul><li>AFCAT, CGCAT and INET: every chapter and full mocks</li><li>10-question sample sets in every NDA and CDS chapter</li><li>PPDT, GD, lecturette and sample SSB tests</li><li>Daily drill, war cries, My record</li><li>Latest three briefings and a 5-question quiz</li></ul></div>`;
  document.querySelectorAll('.buy').forEach(b=>b.onclick=()=>toast('Online payments open at launch. Until then, keep practising the free sets.'));
  if(planFocus){const el=$('#plan-'+planFocus);if(el)setTimeout(()=>el.scrollIntoView({block:'center'}),50)}}
@@ -802,7 +802,9 @@ function drawHomeBrief(){const H=$('#home-brief');if(dbState==='off'){H.innerHTM
  if(!ARTICLES){H.innerHTML=`<div class="empty">Loading today's briefings…</div>`;return}
  const l=ARTICLES.filter(a=>a.kind!=='static').slice(0,4);H.innerHTML=l.length?`<div class="alist">${l.map(artRow).join('')}</div><div class="row" style="margin-top:12px"><a class="btn" href="#briefing">Open the Briefing Room</a></div>`:`<div class="empty">The first briefings are on their way.</div>`;
  H.querySelectorAll('.art').forEach(b=>b.onclick=()=>{briefState.open=b.dataset.id;location.hash='briefing'})}
-async function loadOwner(){try{const u=window.claude&&window.claude.use?await window.claude.use('user'):null;if(u&&await u.isOwner()){OWNER=true;$('#ownerbar').hidden=false;route();drawHomeBrief()}}catch(e){}}
+function drawOwnerBar(){$('#ownerbar-t').textContent=UNLOCK?'Owner view: everything is unlocked. Only you can see this.':'You are seeing exactly what visitors see: free samples only. Only you can see this bar.';
+ const b=$('#ownerbar-b');b.textContent=UNLOCK?'Back to visitor view':'Unlock everything (owner)';b.onclick=()=>{UNLOCK=!UNLOCK;LS.set('ownerUnlock',UNLOCK);drawOwnerBar()};route();drawHomeBrief()}
+async function loadOwner(){try{const u=window.claude&&window.claude.use?await window.claude.use('user'):null;if(u&&await u.isOwner()){OWNER=true;$('#ownerbar').hidden=false;drawOwnerBar()}}catch(e){}}
 async function loadDB(){const to=setTimeout(()=>{if(!ARTICLES){dbState='off';drawBrief();drawHomeBrief()}},10000);
  try{const db=window.claude&&window.claude.use?await window.claude.use('db'):null;if(!db){clearTimeout(to);dbState='off';drawBrief();drawHomeBrief();drawWritten();return}
   db.collection('articles').onSnapshot(s=>{clearTimeout(to);dbState='on';ARTICLES=s.docs.map(d=>Object.assign({id:d.id},d.data())).sort((a,b)=>(b.date||'').localeCompare(a.date||''));drawBrief();drawHomeBrief()},()=>{dbState='off';drawBrief();drawHomeBrief()});
