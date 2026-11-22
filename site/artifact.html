@@ -209,6 +209,51 @@ a.locked,.btn.locked{border-style:dashed}
 .plan ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:.94rem}
 .lockcard{border:1px dashed var(--saffron);border-radius:4px;padding:18px;display:flex;flex-direction:column;gap:10px}
 footer{border-top:1px solid var(--line);padding-block:20px;font-size:.84rem;color:var(--muted)}
+.hdr-rec{display:none;margin-left:auto;color:var(--night-ink);text-decoration:none;font-size:.85rem;align-items:center;gap:6px;opacity:.85;padding:6px 4px}
+.mnav{display:none;position:fixed;left:0;right:0;bottom:0;z-index:8;background:var(--night);border-top:2px solid var(--saffron);grid-template-columns:repeat(5,1fr);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
+.mnav a{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 2px 7px;color:var(--night-ink);opacity:.65;text-decoration:none;font-size:.7rem;font-weight:500;line-height:1.1;text-align:center}
+.mnav a svg{width:22px;height:22px}
+.mnav a[aria-current="page"]{opacity:1;color:#ffb366}
+.mini{display:none;position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(74px + env(safe-area-inset-bottom,0px));z-index:7;background:var(--ink);color:var(--bg);font:600 1.05rem var(--mono);font-variant-numeric:tabular-nums;padding:8px 14px;border-radius:20px;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.mini.low{background:var(--bad);color:#fff}
+@media (max-width:720px){
+  nav.main{display:none}
+  .hdr-rec{display:flex}
+  .brand{font-size:1.5rem}
+  .mnav{display:grid}
+  .mini{display:block}
+  body{padding-bottom:calc(64px + env(safe-area-inset-bottom,0px))}
+  section.view{gap:24px;padding-top:20px}
+  h1{font-size:clamp(2.7rem,13vw,3.4rem)}
+  h2{font-size:clamp(1.7rem,8vw,2.1rem)}
+  .hero svg.sky{top:auto;height:210px}
+  .hero .wrap{padding-block:32px 220px;gap:12px}
+  .hero p.lede{font-size:1.02rem}
+  .hero .row .btn{flex:1 1 100%;justify-content:center}
+  .cry-i .d,.svc .cry{font-size:1.6rem}
+  .streak{font-size:2.8rem}
+  blockquote{font-size:1.4rem}
+  .side{gap:6px;padding:10px 14px}
+  .side .clock,.side .bar-p,.side #ph-note{display:none}
+  .side #skip{align-self:flex-start}
+  .stagebox{min-height:110px!important;padding:8px}
+  .hero svg.sky{height:180px}
+  .hero .wrap{padding-bottom:190px}
+  .word{font-size:clamp(2.4rem,12vw,3.4rem)}
+  .q .stem{font-size:1.05rem}
+  .opt{padding:12px}
+  .qnav{max-height:120px}
+  .tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  .tabs button{white-space:nowrap;padding:8px 12px}
+  .subj-h h3{font-size:1.25rem}
+  .chap{gap:8px}
+  .chap .btn.small{padding:7px 9px}
+  .paybar{padding:12px}
+  .art{padding:14px 0}
+  .art h3{font-size:1.25rem}
+  textarea{min-height:160px}
+  .day .d{font-size:1.7rem}
+}
 @media (prefers-reduced-motion:no-preference){.jet{animation:fly 9s linear infinite}}
 @keyframes fly{from{transform:translateX(-30px)}to{transform:translateX(30px)}}
 </style>
@@ -224,9 +269,18 @@ footer{border-top:1px solid var(--line);padding-block:20px;font-size:.84rem;colo
       <a href="#plans">Plans</a>
       <a href="#record">My record</a>
     </nav>
+    <a class="hdr-rec" href="#record" aria-label="My record"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Record</a>
   </div>
 </header>
 
+<nav class="mnav" id="mnav" aria-label="Main">
+  <a href="#home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>Home</a>
+  <a href="#written"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z M13.5 6.5l4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>Written</a>
+  <a href="#ssb"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4 M5 4h12l-2 4 2 4H5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>SSB</a>
+  <a href="#briefing"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h13v14H6a2 2 0 0 1-2-2z M17 9h3v8a2 2 0 0 1-2 2 M7 9h7 M7 13h7 M7 16h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>Briefing</a>
+  <a href="#plans"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12V4h8l10 10-8 8z M7.5 8.5h.01" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg>Plans</a>
+</nav>
+<div class="mini" id="mini" hidden aria-live="off"></div>
 <main id="app">
 <div class="wrap" id="ownerbar" hidden style="padding-top:14px"><div class="ownerbar row" style="justify-content:space-between"><span id="ownerbar-t"></span><button class="btn small" id="ownerbar-b"></button></div></div>
 
@@ -640,10 +694,10 @@ function runRun(){const C=RUN;$('#r-title').textContent=C.title;$('#r-eyebrow').
 
 /* ================= TIMER ================= */
 let active=null;
-function stopActive(){if(active){clearInterval(active.iv);active=null}}
+function stopActive(){if(active){clearInterval(active.iv);active=null}const m=document.getElementById('mini');if(m)m.hidden=true}
 function countdown(sec,clockEl,barEl,onEnd){stopActive();const end=Date.now()+sec*1000;const c={iv:null,skip(){fin()}};
- function tick(){const left=(end-Date.now())/1000;if(clockEl){clockEl.textContent=fmt(left);clockEl.classList.toggle('low',left<=10)}if(barEl)barEl.style.width=(100*(1-left/sec))+'%';if(left<=0)fin()}
- function fin(){clearInterval(c.iv);if(active===c)active=null;onEnd()}
+ function tick(){const left=(end-Date.now())/1000;if(clockEl){clockEl.textContent=fmt(left);clockEl.classList.toggle('low',left<=10)}if(clockEl&&clockEl.id==='clk'){const m=$('#mini');m.hidden=false;m.textContent=fmt(left);m.classList.toggle('low',left<=10)}if(barEl)barEl.style.width=(100*(1-left/sec))+'%';if(left<=0)fin()}
+ function fin(){clearInterval(c.iv);if(active===c)active=null;$('#mini').hidden=true;onEnd()}
  c.iv=setInterval(tick,250);active=c;tick();return c}
 
 /* ================= SSB TESTS ================= */
@@ -817,7 +871,7 @@ const PAGES=['home','written','ssb','briefing','plans','record','run'];
 function route(){stopActive();const h=(location.hash||'#home').slice(1);let page=PAGES.includes(h)?h:(TESTS[h]?'test':'home');if(page==='run'&&!RUN)page='written';
  document.querySelectorAll('section.view').forEach(s=>s.hidden=s.dataset.view!==page);
  const navKey=page==='test'?'ssb':page==='run'?(RUN&&RUN.back==='#ssb'?'ssb':RUN&&RUN.back==='#briefing'?'briefing':'written'):page;
- document.querySelectorAll('#nav a').forEach(a=>{if(a.getAttribute('href')==='#'+navKey)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
+ document.querySelectorAll('#nav a, #mnav a').forEach(a=>{if(a.getAttribute('href')==='#'+navKey)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
  if(page==='test')TESTS[h]();if(page==='written')drawWritten();if(page==='run')runRun();if(page==='record')renderRecord();if(page==='briefing')drawBrief();if(page==='plans')drawPlans();else planFocus=null;if(!(page==='plans'&&planFocus))window.scrollTo(0,0)}
 window.addEventListener('hashchange',route);
 fetch('bank.json').then(r=>r.json()).then(b=>{BANK=b;if(location.hash==='#written')drawWritten()}).catch(()=>{});
